@@ -1,0 +1,39 @@
+::ng-deep #form-container {
+    margin: 10px 10px 30px;
+  }
+  
+  ::ng-deep .long-title h3 {
+    font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+    font-weight: 200;
+    font-size: 23px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+.dx-widget{
+  font-size: 11px;
+  padding-bottom: 10px ;
+}
+::ng-deep .dx-header-row .cell-highlighted {
+    color: rgb(0, 0, 0);
+    background-color: #f8c567;
+    font-style: italic;
+}
+::ng-deep .dx-header-row .cell-highlightedRemark {
+  color: rgb(0, 0, 0);
+  background-color: #f83d3d;
+  font-style: italic;
+}
+.toolbar-label{
+  color: mediumblue;
+}
+.text-red-label{
+  color: red;
+}
+::ng-deep .dx-header-row {
+  font-weight: bold !important; 
+  font-size: 13px !important;
+}
+::ng-deep .toolbar-label,
+::ng-deep .toolbar-label > b {
+  font-size: 16px;
+}

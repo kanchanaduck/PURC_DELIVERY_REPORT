@@ -1,0 +1,55 @@
+<!-- <h2 class="content-block">Input Reason</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+        <dx-toolbar>
+            <dxi-item
+              location="before"
+              widget="dxButton"
+              locateInMenu="auto"
+              [options]="refreshButtonOptions"
+            >
+            </dxi-item>
+
+            <dxi-item location="center" widget="dxButton" locateInMenu="never">
+              <div *dxTemplate>
+                <div class="toolbar-label"><b>Daily Progress PUR 3</b></div>
+              </div>
+            </dxi-item>
+          
+            <dxi-item
+              location="after"
+              widget="dxSelectBox"
+              locateInMenu="auto"
+              [options]="selectBoxOptions"
+            >
+            </dxi-item>
+
+          </dx-toolbar>
+        <dx-data-grid
+        id="gridContainer"
+        [dataSource]="customers"
+        keyExpr="ID"
+        [allowColumnReordering]="true"
+        [showBorders]="true"
+        >
+        <!-- <dxi-column dataField="ct_Domestic"></dxi-column>
+        <dxi-column dataField="ct_oversae"></dxi-column>
+        <dxi-column dataField="po_issued"></dxi-column> -->
+        <dxi-column dataField="dl_Domestic" cellTemplate="celldw"></dxi-column>
+        <dxi-column dataField="dl_oversae" cellTemplate="celldw"></dxi-column>
+        <dxi-column dataField="pu_champ" cellTemplate="celldw"></dxi-column>
+        <dxi-column dataField="ct_evalio" cellTemplate="celldw"></dxi-column>
+        <dxi-column dataField="shot_lt" cellTemplate="celldw"></dxi-column>
+        <dxi-column dataField="subject" [groupIndex]="0"></dxi-column>
+
+        <div *dxTemplate="let cellf of 'celldw'">
+          <div  [ngClass]="cellSt_CheckStyles(cellf.text)">{{cellf.text}}</div>
+        </div>
+
+        <dxo-search-panel [visible]="true"></dxo-search-panel>
+        <dxo-paging [pageSize]="15"></dxo-paging>
+        <dxo-group-panel [visible]="true"></dxo-group-panel>
+        <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+        </dx-data-grid>
+    </div>
+</div>

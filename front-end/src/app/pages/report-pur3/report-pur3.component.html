@@ -1,0 +1,168 @@
+
+<!-- <div class="d-flex mb-3">
+  <div class="col-12" >
+    <div class="col-6" >
+      <h2 class="content-block">Upload Report PUR 3</h2>
+    </div>
+  </div>
+</div> -->
+<div class="content-block">
+  <div class="dx-card responsive-paddings" >
+    <dx-toolbar>
+      <dxi-item
+        location="before"
+        widget="dxButton"
+        locateInMenu="auto"
+        [options]="refreshButtonOptions"
+      >
+      </dxi-item>
+      <dxi-item location="center" widget="dxButton" locateInMenu="never">
+        <div *dxTemplate>
+          <div class="toolbar-label"><b>Upload Report PUR 3</b></div>
+        </div>
+      </dxi-item>
+    </dx-toolbar>
+       <div id="form-container">
+         <dx-form 
+         #formuploadfiles
+          id="form" [colCount]="1" [formData]="dataPur12">
+           <dxi-item
+             dataField="report_daily"
+             [editorOptions]="{ disabled: false }"
+           ></dxi-item>
+           <dxi-item
+             dataField="applicant"
+             [editorOptions]="{ readOnly : true }"
+           ></dxi-item>
+           <dxi-item dataField="dept">
+             <dxo-label text="Department"></dxo-label>
+           </dxi-item>
+           <dxi-item dataField="ext">
+             <dxo-label text="Extension number"></dxo-label>
+             <dxi-validation-rule
+               type="required"
+               message="Hire Extension number is required"
+             ></dxi-validation-rule>
+           </dxi-item>
+           <dxi-item dataField="remark" editorType="dxTextArea" [editorOptions]="{ height: 60 }" [colSpan]="2">
+         </dxi-item>
+         <dxi-item>
+          <dxo-label text="1.Delivery Control (Domestic)"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadDeliDomes($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="2.Delivery Control (Oversea)"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadDeliOver($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="3.PO Issued"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadPO($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="4.Delay (Domestic)"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadDelayDomes($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="5.Delay (Oversea)"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadDelayOver($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="6.PU CHAMP"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadPU($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="7.Delivery Control (Evalio)"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadDeliEvalio($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="8.Short LT Early Delay"></dxo-label>
+          <div class="file-uploader-block" style="float: right">
+          <dx-file-uploader
+            type="required"
+            uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
+            [maxFileSize]="4000000"
+            (onUploadStarted)="onUploadShortLT($event)"
+          >
+          </dx-file-uploader>
+          <!-- <span class="note">Maximum file size: <span>4 MB</span>.</span> -->
+        </div></dxi-item>
+         <dxi-item itemType="button" 
+         [buttonOptions]="buttonConfirm">
+         </dxi-item>
+         <dxi-item 
+            itemType="button"
+            [buttonOptions]="buttonCancel">
+         </dxi-item>
+         </dx-form>
+       </div>
+ </div>
+ </div>
+ <dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#form-container' }"
+  [(visible)]="loadingVisible"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false"
+  (onShown)="onShown()"
+  (onHidden)="onHidden()"
+>
+</dx-load-panel>

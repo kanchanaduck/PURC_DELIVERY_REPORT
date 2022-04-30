@@ -1,0 +1,328 @@
+<!-- <h2 class="content-block">Check Leader</h2>
+<div class="content-block">
+    <div class="dx-card responsive-paddings">Put your content here</div>
+</div> -->
+<!-- <h2 class="content-block">Input Reason Pur12</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+      <dx-toolbar>
+        <dxi-item
+          location="before"
+          widget="dxButton"
+          locateInMenu="auto"
+          [options]="refreshButtonOptions"
+        >
+        </dxi-item>
+
+        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+          <div *dxTemplate>
+            <div class="toolbar-label"><b>Manager check</b></div>
+          </div>
+        </dxi-item>
+      </dx-toolbar>
+      <div id="form-container">
+        <dx-form id="form" [colCount]="12" [formData]="employee">
+          <span>Form width:</span>
+          <dxi-item
+          dataField="Buyer"
+          editorType="dxSelectBox"
+          [editorOptions]="{ items: positions, searchEnabled: true, value: '' }"
+          [colSpan]="3"
+        >
+          <dxi-validation-rule
+            type="required"
+            message="Buyer is required"
+          ></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item
+        dataField="Vendor"
+        editorType="dxSelectBox"
+        [editorOptions]="{ items: positions, searchEnabled: true, value: '' }"
+        [colSpan]="3"
+      >
+        </dxi-item>
+        <dxi-item
+        dataField="Part_no"
+        editorType="dxSelectBox"
+        [editorOptions]="{ items: positions, searchEnabled: true, value: '' }"
+        [colSpan]="3"
+       >
+        </dxi-item>
+        <dxi-item
+        dataField="NO_PO"
+        editorType="dxSelectBox"
+        [editorOptions]="{ items: positions, searchEnabled: true, value: '' }"
+        [colSpan]="3"
+        >
+        </dxi-item>
+          <dxi-item
+          dataField="All"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Short LT"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Delay"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Early"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Early over month"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="IV Term"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="TSS"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Domestic"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Oversea"
+          text="Label"
+          editorType="dxCheckBox"
+          [colSpan]="2"
+          ></dxi-item>
+          <dxi-item
+          dataField="Date"
+          editorType="dxDateBox"
+          [colSpan]="3"
+          ></dxi-item>
+          <dxi-item
+          dataField="To"
+          editorType="dxDateBox"
+          [colSpan]="3"
+        ></dxi-item>
+        </dx-form>
+      </div>
+      <dx-data-grid
+      id="gridContainer"
+      [dataSource]="dataSource"
+      [columnAutoWidth]="true"
+      [showBorders]="true"
+      [rowAlternationEnabled]="true"
+      [repaintChangesOnly]="true"
+      (onSelectionChanged)="selectionChanged($event)"
+      (onExporting)="onExporting($event)"
+    >
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10,50,100]"
+    ></dxo-pager>
+      <dxo-editing mode="batch" [allowUpdating]="true">
+      </dxo-editing>
+      <dxo-selection mode="multiple"></dxo-selection>
+      <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+      
+      <dxi-column dataField="CD_SPLY"
+      [editorOptions]="{ readOnly:true }"
+      [fixed]="true" fixedPosition="left" 
+      >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="NO_PO"
+      [editorOptions]="{ readOnly:true}"
+      [fixed]="true" fixedPosition="left" 
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="NO_PARTS"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="NO_ADJ_DIM"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="DT_PO"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="DT_DELV"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="TM_DELV"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="DT_REC"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="TM_REC"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="DT_ACPTC"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="CD_USE_BLOCK"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="CD_PROCUR_PERSON"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="Check_Short_LT1"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedCheckShort"
+      >
+      </dxi-column>
+      <dxi-column dataField="Check_Short_LT2"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedCheckShort"
+      >
+      </dxi-column>
+      <dxi-column dataField="Check_Early_OnTime_Delay"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedCheckEarly"
+      >
+      </dxi-column>
+      <dxi-column dataField="Early_DV_Over_month"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedCheckEarly"
+      >
+      </dxi-column>
+      <dxi-column dataField="IV_term"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedIV"
+      >
+      </dxi-column>
+      <dxi-column dataField="TSS_Result"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedTSS"
+      >
+      <dxo-lookup [dataSource]="Arr_TSSResult">
+      </dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="MK_Short_LT"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedShotLT"
+      >
+      </dxi-column>
+      <dxi-column dataField="Reason_Short_LT"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedShotLT"
+      >
+      <dxo-lookup [dataSource]="positions" >
+      </dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="Detail_Short_LT_reason"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedShotLT"
+      >
+      </dxi-column>
+      <dxi-column dataField="MK_Delay"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedDelay"
+      >
+      </dxi-column>
+      <dxi-column dataField="Reason_Delay"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedDelay"
+      >
+      </dxi-column>
+      <dxi-column dataField="Detail_delay_reason"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedDelay"
+      >
+      </dxi-column>
+      <dxi-column dataField="MK_Early"
+      cssClass="cell-highlightedEarly"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="Reason_Early"
+      cssClass="cell-highlightedEarly"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="Detail_Early_reason"
+      cssClass="cell-highlightedEarly"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="MK_DV"
+      cssClass="cell-highlightedMKDV"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="Detail_Over_month_reason"
+      cssClass="cell-highlightedMKDV"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="MK_IV"
+      cssClass="cell-highlightedMKIV"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="Reason_IV"
+      cssClass="cell-highlightedMKIV"
+      [editorOptions]="{ readOnly:true}"
+      >
+      </dxi-column>
+      <dxi-column dataField="MK_ONTIME"
+      [editorOptions]="{ readOnly:true}"
+      cssClass="cell-highlightedMKONTIME"
+      >
+      </dxi-column>
+      <dxi-column dataField="status_reason"  cellTemplate="cellStatus"
+      [fixed]="true" fixedPosition="right" 
+      cssClass="cell-highlightedMKONTIME">
+      <dxo-lookup [dataSource]="status_Result"></dxo-lookup>
+    </dxi-column>
+      <div *dxTemplate="let cellf of 'cellStatus'">
+        <div [ngClass] = "{ 'aok': cellf.text == 'OK', 'ang': cellf.text ==  'NG' }" >{{cellf.text}}</div>
+    </div>
+
+      <dxi-column dataField="reason_rk"
+      [fixed]="true" fixedPosition="right" 
+      cssClass="cell-highlightedMKONTIME">
+      </dxi-column>
+      
+      <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+    </dx-data-grid>
+    </div> 
+</div>
+

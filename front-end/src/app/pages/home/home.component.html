@@ -1,0 +1,91 @@
+
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+            <dx-toolbar>
+            <dxi-item
+              location="before"
+              widget="dxButton"
+              locateInMenu="auto"
+              [options]="refreshButtonOptions"
+            >
+            </dxi-item>
+
+            <dxi-item location="center" widget="dxButton" locateInMenu="never">
+              <div *dxTemplate>
+                <div class="toolbar-label"><b>KPI Delivery Control</b></div>
+              </div>
+            </dxi-item>
+          
+            <dxi-item
+              location="after"
+              widget="dxSelectBox"
+              locateInMenu="auto"
+              [options]="selectBoxOptions"
+            >
+            </dxi-item>
+
+          </dx-toolbar>
+    <!-- <div class="d-flex mb-3">
+      <div class="col-12" >
+        <div class="col-6" >
+          <h2 class="content-block">KPI Delivery Control</h2>
+        </div>
+      </div>
+    </div> -->
+    <div id="data-grid-demo"class="data-grid">  
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="dataSource"
+        keyExpr="idkpi"
+        [showBorders]="true"
+      >
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <dxo-editing
+          mode="cell"
+          [allowUpdating]="true"
+        >
+        </dxo-editing>
+        <dxi-column caption="Delivery on time ratio 2022">
+          <dxi-column dataField="dept" caption="Dept." [width]="70"></dxi-column>
+          <dxi-column dataField="jan"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="feb" > 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="mar"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="apr"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="may"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="jun"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="jul"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="aug" > 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="sep"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="oct" >  
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="nov"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+          <dxi-column dataField="dec"> 
+            <dxo-format type="percent" [precision]="1"> </dxo-format>
+          </dxi-column>
+      </dxi-column>
+      </dx-data-grid>
+    </div>
+    
+</div>
+</div>

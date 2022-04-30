@@ -1,0 +1,108 @@
+<!-- <h2 class="content-block">Delivery Control Oversea</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+      <dx-toolbar>
+        <!-- <dxi-item
+          location="before"
+          widget="dxButton"
+          locateInMenu="auto"
+          [options]="refreshButtonOptions"
+        >
+        </dxi-item> -->
+        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+          <div *dxTemplate>
+            <div class="toolbar-label"><b>Delivery Control Oversea</b></div>
+          </div>
+        </dxi-item>
+        <dxi-item
+          location="after"
+          widget="dxSelectBox"
+          locateInMenu="auto"
+          [options]="selectBoxOptions"
+        >
+        </dxi-item>
+
+      </dx-toolbar>
+        <dx-data-grid
+        id="gridContainer"
+        [dataSource]="Oversea"
+        [columnAutoWidth]="true"
+        [showBorders]="true"
+        [rowAlternationEnabled]="true"
+        [repaintChangesOnly]="true"
+        (onSelectionChanged)="selectionChanged($event)"
+        (onExporting)="onExporting($event)"
+      >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+      <dxo-paging [pageSize]="15"></dxo-paging>
+      <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[10,50,100]"
+      ></dxo-pager>
+      <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+        <dxi-column dataField="status" [editorOptions]="{ readOnly:true }" [fixed]="true" fixedPosition="left" ></dxi-column>
+        <dxi-column dataField="po_number" [editorOptions]="{ readOnly:true}" [fixed]="true" fixedPosition="left"  ></dxi-column>
+        <dxi-column dataField="po_line_number" [editorOptions]="{ readOnly:true}" [fixed]="true" fixedPosition="left" ></dxi-column>
+        <dxi-column dataField="po_shipm_number" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="req_no"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="req_details_no"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="order_company_code"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="order_wdw_code"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="pur_incharge"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="buyer_pic_company_name"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="buyer_pic_belong_name"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="buyer_pic_telephone"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="buyer_pic_mailddress"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="supplier"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="supplier_site" [editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="item_desc" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="maker_code"[editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="maker_name"[editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="type" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="price"[editorOptions]="{ readOnly:true}" > </dxi-column>
+        <dxi-column dataField="currency"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="pur_order_qty" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="delivery_qty" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="delivery_balanced_qty" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="balanced_order_qty" [editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="unit" [editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="inspectionyn" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="inspection_dept" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="remark_risk_degree" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="order_date" [editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="req_shipping_date" [editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="promised_date"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="today"></dxi-column>
+        <dxi-column dataField="delay"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="lt" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="check" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="transportation" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="requisitioner" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="request_company" [editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxi-column dataField="request_dept"[editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="requester_telephone"[editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="request_email"[editorOptions]="{ readOnly:true}" ></dxi-column>
+        <dxi-column dataField="remarks"[editorOptions]="{ readOnly:true}"></dxi-column>
+        <dxo-export [enabled]="true"></dxo-export>
+        <!-- <dxo-toolbar>
+          <dxi-item location="before">
+            <dxo-lookup [dataSource]="dateupOptions" >
+
+            </dxo-lookup>
+            <dx-select-box
+              [dataSource]="dateupOptions"
+              placeholder="Select title"
+              [width]="150"
+              [value]="date_up"
+            >
+            </dx-select-box>
+          </dxi-item>
+        </dxo-toolbar> -->
+      </dx-data-grid>
+    </div>
+</div>
