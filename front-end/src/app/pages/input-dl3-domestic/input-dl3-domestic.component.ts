@@ -3,7 +3,7 @@ import { DxDataGridComponent} from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
-import { AuthService, Service } from 'src/app/shared/services';
+import { Service } from 'src/app/shared/services';
 import { environment } from 'src/environments/environment';
 
 
@@ -19,7 +19,6 @@ if (environment.production) {
   templateUrl: './input-dl3-domestic.component.html',
   styleUrls: ['./input-dl3-domestic.component.scss'],
   providers: [Service]
-  // providers: [AuthService]
 })
 export class InputDl3DomesticComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: false })

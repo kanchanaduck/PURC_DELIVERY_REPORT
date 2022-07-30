@@ -20,7 +20,7 @@ const EXCEL_TYPE =
 export class ReportPur12Component implements OnInit {
   @ViewChild(DxFormComponent, { static: false })
   myform!: DxFormComponent;
-  @ViewChild("formupload") formpurup!: DxFormComponent;
+  @ViewChild("form_domestic") formpurup!: DxFormComponent;
   dataPur12: dailyPur12;
   employee: Employee;
   positions: string[];
@@ -32,42 +32,38 @@ export class ReportPur12Component implements OnInit {
     { name: 'Bob', email: 'bob32@gmail.com' },
     { name: 'Jai', email: 'jai87@gmail.com' },
   ];
-  dt_domestic!: string;
-  dt_oversea!: string;
+
+  date: any = {
+    domestic: '05/09/2022',
+    oversea: '05/09/2022'
+  }
+
   loadingVisible = false;
+
+  buttonOptions1 :any = {
+    stylingMode: "contained",
+    type: "success",
+    icon: "download",
+    useSubmitBehavior: "true",
+    onClick: () => {
+      this.pull_domestic()
+    },
+  }
+
+  buttonOptions2 :any = {
+    stylingMode: "contained",
+    type: "success",
+    icon: "download",
+    useSubmitBehavior: "true",
+    onClick: () => {
+      this.pull_oversea()
+    },
+  }
 
   showMessage = () => {
     notify("The button was clicked");
-}
-  /*name of the excel-file which will be downloaded. */ 
-fileName= 'ExcelSheet.xlsx';  
-exportexcel= () => {
-      const link = document.createElement('a');
-      link.setAttribute('target', '_blank');
-      link.setAttribute('href', 'assets/format_PUR1_2/format pur.xlsx');
-      link.setAttribute('download', `format pur.xlsx`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-    // const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.employee33);
-    // const workbook: XLSX.WorkBook = {
-    //   Sheets: { Sheet1: worksheet },
-    //   SheetNames: ['Sheet1'],
-    // };
-
-    // const excelBuffer: any = XLSX.write(workbook, {
-    //   bookType: 'xlsx',
-    //   type: 'array',
-    // });
-
-    // const data: Blob = new Blob([excelBuffer], { type: EXCEL_TYPE });
-    // const date = new Date();
-    // const fileName = 'example.xlsx';
-
-    // FileSaver.saveAs(data, fileName);
-			
-    }
+  }  
+  error: any = {};
 
 
   constructor( service: Service,
@@ -75,15 +71,6 @@ exportexcel= () => {
     this.employee = service.getEmployee();
     this.positions = service.getPositions();
     this.dataPur12 = service.getReportPUR12();
-    
-    this.dwformatButtonOptions = {
-      icon: 'download',
-      text: 'Download',
-      onClick: () => {
-        this.showMessage();
-        this.exportexcel();
-      },
-    };
 
     this.refreshButtonOptions = {
       icon: 'refresh',
@@ -93,45 +80,64 @@ exportexcel= () => {
     };
   }
 
-  form_upload (e: any) {
-      if(e.dataField == "domestic" && e.value != null){ this.dt_domestic = this.convert(e.value);}
-      else if(e.dataField == "oversea" && e.value != null){ this.dt_oversea = this.convert(e.value);}
-      else if(e.dataField == "oversea" && e.value == null){ this.dt_oversea = ""; }
-      else if(e.dataField == "domestic" && e.value == null){ this.dt_domestic = ""; }
+ /*  form_upload (e: any) {
+      if(e.dataField == "domestic" && e.value != null){ this.domestic = this.convert(e.value);}
+      else if(e.dataField == "oversea" && e.value != null){ this.oversea = this.convert(e.value);}
+      else if(e.dataField == "oversea" && e.value == null){ this.oversea = ""; }
+      else if(e.dataField == "domestic" && e.value == null){ this.domestic = ""; }
 
-  }
+  } */
   convert(str: string | number | Date) {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("");
-    }
-  async BtnNewClick(e: any){
-
-    if(this.dt_domestic != "" && this.dt_domestic != undefined){ 
-      this.loadingVisible = true;
-      await this.apiPUR.sv_post_paramEUC("input_domestic/gett_euc_domestic","?dt=" + this.dt_domestic)
-    }
-    if(this.dt_oversea != "" && this.dt_oversea != undefined){ 
-      this.loadingVisible = true;
-      await this.apiPUR.sv_post_paramEUC("input_Oversea/gett_euc_oversea","?dt=" + this.dt_oversea)
-    }
-  
   }
-  onShown() {
-    setTimeout(() => {
+
+  async pull_domestic(){
+    if(this.date.domestic != "" && this.date.domestic != undefined){ 
+      this.loadingVisible = true;
+      console.log(this.loadingVisible)
+      try {
+        await this.apiPUR.sv_post_paramEUC("Domestic/gett_euc_domestic","?dt=" + this.convert(this.date.domestic))
+        this.show_success();
+      } 
+      catch (error: any) {
+        this.show_error(error)
+      }
       this.loadingVisible = false;
-    }, 3000);
+    }
   }
 
-  onHidden() {
-    notify("Complete!");
+  async pull_oversea(){
+    if(this.date.oversea != "" && this.date.oversea != undefined){ 
+      this.loadingVisible = true;
+      console.log(this.loadingVisible)
+      try {
+        await this.apiPUR.sv_post_paramEUC("Oversea/gett_euc_oversea","?dt=" + this.convert(this.date.oversea))    
+        this.show_success();  
+      } 
+      catch (error: any) {
+        this.show_error(error)
+      }
+      this.loadingVisible = false;
+    }
+  }
+
+  show_success(){
+    notify("Complete!", "success");
+  }
+
+  show_error(error: any){
+    var text = typeof error.response.data === 'object'? error.response.data.title:error.response.data
+    notify("Error! "+text, "error");
   }
 
   ngOnInit(): void {
 
   }
+
   ngAfterViewInit() {
-    this.myform.instance.validate();
+    // this.myform.instance.validate();
   }
 }

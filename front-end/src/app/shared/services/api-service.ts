@@ -8,7 +8,16 @@ if (environment.production) {
 
 @Injectable()
 export class Service {
+
+  headers: any = {
+    headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token_purc_delivery_report'),
+      'Content-Type': 'application/json'
+    }
+  }
+
   error: any;
+
   constructor() {}
   
   async sv_post(url: any,data: any) {
@@ -22,6 +31,7 @@ export class Service {
       let pushTonopo=[];
         if(data.Type == 'Domestic'){
           for(let i = 0; i < response.data.length; i++){
+            console.log(response.data[i])
             pushTobuyer.push(response.data[i].cd_procur_person)
             pushTovendor.push(response.data[i].cd_sply)
             pushTopartno.push(response.data[i].no_parts)
@@ -125,15 +135,20 @@ export class Service {
     }
   }
 
-  getvendor(unique:any[]) {
-    return unique;
-  }
-  getbuyer(buyer:any[]) {
-    return buyer;
-  }
-  getpartno() {
-    return kpi_month;
-  }
+  // async get_vendor() {
+  //   let vendor:any = await axios.get(`${environment.api}Person/Vendor`, this.headers);
+  //   return vendor;
+  // } 
+
+  // async get_buyer(){
+  //   let buyer:any = await axios.get(`${environment.api}Person/Buyer`, this.headers);
+  //   return buyer;
+  // }
+
+  // async get_part_no() {
+  //   let part_no:any = await axios.get(`${environment.api}Person/PartNo`, this.headers);
+  //   return part_no;
+  // }
   getnopo() {
     return kpi_month;
   }

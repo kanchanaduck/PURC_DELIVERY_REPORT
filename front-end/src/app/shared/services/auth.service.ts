@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import axios, { AxiosResponse } from 'axios';
+import { environment } from 'src/environments/environment';
 
 export interface IUser {
-  email: string;
+  username?: any;
   avatarUrl?: string
 }
 
+const defaultPath = `/`;
+
+// const defaultUser = null;
 
 
-const defaultPath = '/';
-const defaultUser = {
-  email: 'sandra@example.com',
-  avatarUrl: '/images/employees/06.png'
-};
+// const defaultUser =  {
+//   username: null,
+//   avatarUrl: '/images/employees/06.png'
+// };
 
 @Injectable()
 export class AuthService {
-  private _user: IUser | null = defaultUser;
+  // private _user: IUser | null = defaultUser;
+  private _user:any = null;
   get loggedIn(): boolean {
     return !!this._user;
   }
@@ -28,12 +33,35 @@ export class AuthService {
 
   constructor(private router: Router) { }
 
-  async logIn(email: string, password: string) {
-
+  async logIn(username: string, password: string) {
     try {
-      // Send request
-      console.log(email, password);
-      this._user = { ...defaultUser, email };
+      console.log(username, password);
+      // this._user = { ...defaultUser, username };
+      // this._user =  { ...defaultUser, username };
+
+      
+
+      // try {
+        let response = await axios.post(`${environment.api}Login`,{
+          username: username, 
+          password: password
+        })
+        this._user = response.data
+      //   console.log(response)
+      //   // .then(function(response){
+      //   //   console.log(response)
+      //   //   // this._user = response.data
+      //   // })
+      //   // .catch(function(e){
+      //   //   console.log(e)
+      //   // })
+      // } catch (error) {
+      //   console.log(error)
+      // }
+
+
+      // this._user = { defaultUser,  }
+
       this.router.navigate([this._lastAuthenticatedPath]);
 
       return {
@@ -41,10 +69,11 @@ export class AuthService {
         data: this._user
       };
     }
-    catch {
+    catch(error: any) {
       return {
         isOk: false,
-        message: "Authentication failed"
+        // message: "Authentication failed"
+        message: typeof error.response.data === 'object'? error.response.data.title:error.response.data
       };
     }
   }
@@ -66,10 +95,10 @@ export class AuthService {
     }
   }
 
-  async createAccount(email: string, password: string) {
+  async createAccount(username: string, password: string) {
     try {
       // Send request
-      console.log(email, password);
+      console.log(username, password);
 
       this.router.navigate(['/create-account']);
       return {
@@ -84,10 +113,10 @@ export class AuthService {
     }
   }
 
-  async changePassword(email: string, recoveryCode: string) {
+  async changePassword(username: string, recoveryCode: string) {
     try {
       // Send request
-      console.log(email, recoveryCode);
+      console.log(username, recoveryCode);
 
       return {
         isOk: true
@@ -101,10 +130,10 @@ export class AuthService {
     };
   }
 
-  async resetPassword(email: string) {
+  async resetPassword(username: string) {
     try {
       // Send request
-      console.log(email);
+      console.log(username);
 
       return {
         isOk: true
@@ -120,7 +149,7 @@ export class AuthService {
 
   async logOut() {
     this._user = null;
-    this.router.navigate(['/login-form']);
+    this.router.navigate(["/login-form"]);
   }
 }
 @Injectable()
@@ -136,21 +165,26 @@ export class AuthGuardService implements CanActivate {
       'change-password/:recoveryCode'
     ].includes(route.routeConfig?.path || defaultPath);
 
+    console.log("isLoggedIn", isLoggedIn)
+    console.log("isAuthForm", isAuthForm)
+
     if (isLoggedIn && isAuthForm) {
+      console.log(1)
       this.authService.lastAuthenticatedPath = defaultPath;
       this.router.navigate([defaultPath]);
       return false;
     }
 
     if (!isLoggedIn && !isAuthForm) {
+      console.log(2)
       this.router.navigate(['/login-form']);
     }
 
     if (isLoggedIn) {
+      console.log(3)
       this.authService.lastAuthenticatedPath = route.routeConfig?.path || defaultPath;
     }
 
     return isLoggedIn || isAuthForm;
-  }
+  } 
 }
-

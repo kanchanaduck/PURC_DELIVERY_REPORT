@@ -1,19 +1,37 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols;
 
 namespace api_purdelivery
 {
 public class DataBaseContext : DbContext
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
-        {
-        }
+    public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
+    {
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<T_Role_Claim>()
+                .HasKey(r => new { r.username, r.role } );
+
+        modelBuilder.Entity<T_Role_Claim>()
+                .HasOne(mr => mr.users)
+                .WithMany(u => u.roles)
+                .HasForeignKey(mr => mr.username);
+
+        modelBuilder.Entity<T_Role_Claim>()
+                .HasOne(mb => mb.roles)
+                .WithMany(c => c.users)
+                .HasForeignKey(mb => mb.role);
+    }
     public DbSet<T_Domestic> T_Domestic { get; set; }
     public DbSet<T_Oversea> T_Oversea { get; set; }
     public DbSet<T_Control_Domestic> T_Control_Domestic { get; set; }
@@ -34,7 +52,8 @@ public class DataBaseContext : DbContext
     public DbSet<T_Reason_Evalio> T_Reason_Evalio { get; set; }
     public DbSet<T_Input_Domestic> T_Input_Domestic { get; set; }
     public DbSet<T_Input_Oversea> T_Input_Oversea { get; set; }
-    
+    public DbSet<T_User> T_User { get; set; }
+    public DbSet<T_Role> T_Role { get; set; }
     
     }
 }

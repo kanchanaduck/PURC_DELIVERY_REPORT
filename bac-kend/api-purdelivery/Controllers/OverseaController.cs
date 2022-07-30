@@ -20,20 +20,20 @@ namespace api_purdelivery.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class input_OverseaController : ControllerBase
+    public class OverseaController : ControllerBase
     {
 
          private readonly IConfiguration _config;        
          private readonly DataBaseContext _context;
         
-        public input_OverseaController(IConfiguration config,DataBaseContext context)
+        public OverseaController(IConfiguration config,DataBaseContext context)
         {
              _config = config;
             _context = context;
             
         }
 
-        // GET: api/input_Oversea
+        // GET: api/Oversea
         [HttpGet("get_oversea")]
         public async Task<ActionResult<IEnumerable<T_Oversea>>> GetT_Oversea()
         {
@@ -42,76 +42,82 @@ namespace api_purdelivery.Controllers
         [HttpPost("gett_euc_oversea")]
         public async Task<ActionResult<IEnumerable<T_Oversea>>> GetT_EUC_Oversea(string dt)
         {
+            var exist = _context.T_Oversea.Any(e=>e.dt_rec==dt);
+            Console.WriteLine(exist);
+            if(exist){
+                return Conflict("data is already exist");
+            }
+            
             var Qry = "SELECT * FROM J327_PUR_DELIVERY WHERE DT_REC = '"+ dt + "' ";
             Console.WriteLine(Qry);
             var httpClient = new HttpClient();
-                HttpContent body = new StringContent("{\"command\" :\"" + Qry + "\"} ", Encoding.UTF8, "application/json");
-                HttpResponseMessage data = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
-                //data.EnsureSuccessStatusCode();
-                Console.WriteLine(body);
-                var dataCallApi = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
-                string result = await data.Content.ReadAsStringAsync();
+            HttpContent body = new StringContent("{\"command\" :\"" + Qry + "\"} ", Encoding.UTF8, "application/json");
+            HttpResponseMessage data = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
+            string result = await data.Content.ReadAsStringAsync();
 
-                req_euc_302 dtEUC = JsonConvert.DeserializeObject<req_euc_302>(result.ToString());
-                List<data> DataVendor = new List<data>(dtEUC.data);
+            req_euc_302 dtEUC = JsonConvert.DeserializeObject<req_euc_302>(result.ToString());
+            List<data> DataVendor = new List<data>(dtEUC.data);
+
+            if(!(DataVendor.Count() > 0)){
+                return NotFound("not found oversea data");
+            }
               
-
             DataTable datatable = new DataTable();
-                    datatable.Columns.Add("cd_sply_class", typeof(string));
-                    datatable.Columns.Add("cd_sply", typeof(string));
-                    datatable.Columns.Add("no_arrange", typeof(string));
-                    datatable.Columns.Add("cd_sply_fact", typeof(string));
-                    datatable.Columns.Add("no_po", typeof(string));
-                    datatable.Columns.Add("no_invoice", typeof(string));
-                    datatable.Columns.Add("no_split_deiv_sfx", typeof(string));
-                    datatable.Columns.Add("no_parts", typeof(string));
-                    datatable.Columns.Add("no_adj_dim", typeof(string));
-                    datatable.Columns.Add("cd_process", typeof(string));
-                    datatable.Columns.Add("no_draw", typeof(string));
-                    datatable.Columns.Add("cd_chg_hist_all", typeof(string));
-                    datatable.Columns.Add("dt_po", typeof(string));
-                    datatable.Columns.Add("tm_po", typeof(string));
-                    datatable.Columns.Add("qt_ord", typeof(string));
-                    datatable.Columns.Add("dt_delv", typeof(string));
-                    datatable.Columns.Add("tm_delv", typeof(string));
-                    datatable.Columns.Add("dt_delv_estim", typeof(string));
-                    datatable.Columns.Add("dt_delv_dirct", typeof(string));
-                    datatable.Columns.Add("qt_delv_dirct", typeof(string));
-                    datatable.Columns.Add("dt_delv_bal", typeof(string));
-                    datatable.Columns.Add("dt_rec", typeof(string));
-                    datatable.Columns.Add("tm_rec", typeof(string));
-                    datatable.Columns.Add("qt_rec", typeof(string));
-                    datatable.Columns.Add("qt_ng", typeof(string));
-                    datatable.Columns.Add("cd_delv_place", typeof(string));
-                    datatable.Columns.Add("cd_destin", typeof(string));
-                    datatable.Columns.Add("cd_use_block", typeof(string));
-                    datatable.Columns.Add("cd_insp_type_eiaj", typeof(string));
-                    datatable.Columns.Add("cd_estim_person", typeof(string));
-                    datatable.Columns.Add("cf_rpt_parts_ord", typeof(string));
-                    datatable.Columns.Add("cd_ord_resn", typeof(string));
-                    datatable.Columns.Add("cm_coment", typeof(string));
-                    datatable.Columns.Add("ck_shortlt1", typeof(string));
-                    datatable.Columns.Add("ck_shortlt2", typeof(string));
-                    datatable.Columns.Add("ck_eod", typeof(string));
-                    datatable.Columns.Add("early_dv", typeof(string));
-                    datatable.Columns.Add("iv_term", typeof(string));
-                    datatable.Columns.Add("tss_result", typeof(string));
-                    datatable.Columns.Add("mk_shortlt", typeof(string));
-                    datatable.Columns.Add("reason_shortlt", typeof(string));
-                    datatable.Columns.Add("detail_shortlt", typeof(string));
-                    datatable.Columns.Add("mk_delay", typeof(string));
-                    datatable.Columns.Add("reason_delay", typeof(string));
-                    datatable.Columns.Add("detail_delay", typeof(string));
-                    datatable.Columns.Add("mk_early", typeof(string));
-                    datatable.Columns.Add("reason_early", typeof(string));
-                    datatable.Columns.Add("detail_early", typeof(string));
-                    datatable.Columns.Add("mk_dv", typeof(string));
-                    datatable.Columns.Add("detail_dv", typeof(string));
-                    datatable.Columns.Add("mk_iv", typeof(string));
-                    datatable.Columns.Add("reason_iv", typeof(string));
-                    datatable.Columns.Add("mk_ontime", typeof(string));
-                    datatable.Columns.Add("upd_dt", typeof(string));		
-                    datatable.Columns.Add("upd_by", typeof(string));
+            datatable.Columns.Add("cd_sply_class", typeof(string));
+            datatable.Columns.Add("cd_sply", typeof(string));
+            datatable.Columns.Add("no_arrange", typeof(string));
+            datatable.Columns.Add("cd_sply_fact", typeof(string));
+            datatable.Columns.Add("no_po", typeof(string));
+            datatable.Columns.Add("no_invoice", typeof(string));
+            datatable.Columns.Add("no_split_deiv_sfx", typeof(string));
+            datatable.Columns.Add("no_parts", typeof(string));
+            datatable.Columns.Add("no_adj_dim", typeof(string));
+            datatable.Columns.Add("cd_process", typeof(string));
+            datatable.Columns.Add("no_draw", typeof(string));
+            datatable.Columns.Add("cd_chg_hist_all", typeof(string));
+            datatable.Columns.Add("dt_po", typeof(string));
+            datatable.Columns.Add("tm_po", typeof(string));
+            datatable.Columns.Add("qt_ord", typeof(string));
+            datatable.Columns.Add("dt_delv", typeof(string));
+            datatable.Columns.Add("tm_delv", typeof(string));
+            datatable.Columns.Add("dt_delv_estim", typeof(string));
+            datatable.Columns.Add("dt_delv_dirct", typeof(string));
+            datatable.Columns.Add("qt_delv_dirct", typeof(string));
+            datatable.Columns.Add("dt_delv_bal", typeof(string));
+            datatable.Columns.Add("dt_rec", typeof(string));
+            datatable.Columns.Add("tm_rec", typeof(string));
+            datatable.Columns.Add("qt_rec", typeof(string));
+            datatable.Columns.Add("qt_ng", typeof(string));
+            datatable.Columns.Add("cd_delv_place", typeof(string));
+            datatable.Columns.Add("cd_destin", typeof(string));
+            datatable.Columns.Add("cd_use_block", typeof(string));
+            datatable.Columns.Add("cd_insp_type_eiaj", typeof(string));
+            datatable.Columns.Add("cd_estim_person", typeof(string));
+            datatable.Columns.Add("cf_rpt_parts_ord", typeof(string));
+            datatable.Columns.Add("cd_ord_resn", typeof(string));
+            datatable.Columns.Add("cm_coment", typeof(string));
+            datatable.Columns.Add("ck_shortlt1", typeof(string));
+            datatable.Columns.Add("ck_shortlt2", typeof(string));
+            datatable.Columns.Add("ck_eod", typeof(string));
+            datatable.Columns.Add("early_dv", typeof(string));
+            datatable.Columns.Add("iv_term", typeof(string));
+            datatable.Columns.Add("tss_result", typeof(string));
+            datatable.Columns.Add("mk_shortlt", typeof(string));
+            datatable.Columns.Add("reason_shortlt", typeof(string));
+            datatable.Columns.Add("detail_shortlt", typeof(string));
+            datatable.Columns.Add("mk_delay", typeof(string));
+            datatable.Columns.Add("reason_delay", typeof(string));
+            datatable.Columns.Add("detail_delay", typeof(string));
+            datatable.Columns.Add("mk_early", typeof(string));
+            datatable.Columns.Add("reason_early", typeof(string));
+            datatable.Columns.Add("detail_early", typeof(string));
+            datatable.Columns.Add("mk_dv", typeof(string));
+            datatable.Columns.Add("detail_dv", typeof(string));
+            datatable.Columns.Add("mk_iv", typeof(string));
+            datatable.Columns.Add("reason_iv", typeof(string));
+            datatable.Columns.Add("mk_ontime", typeof(string));
+            datatable.Columns.Add("upd_dt", typeof(string));		
+            datatable.Columns.Add("upd_by", typeof(string));
 
             foreach (data item in DataVendor)
             {

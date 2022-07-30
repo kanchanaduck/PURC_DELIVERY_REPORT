@@ -25,31 +25,14 @@
        <div id="form-container">
          <dx-form 
          #formuploadfiles
-          id="form" [colCount]="1" [formData]="dataPur12">
-           <dxi-item
-             dataField="report_daily"
-             [editorOptions]="{ disabled: false }"
-           ></dxi-item>
-           <dxi-item
-             dataField="applicant"
-             [editorOptions]="{ readOnly : true }"
-           ></dxi-item>
-           <dxi-item dataField="dept">
-             <dxo-label text="Department"></dxo-label>
-           </dxi-item>
-           <dxi-item dataField="ext">
-             <dxo-label text="Extension number"></dxo-label>
-             <dxi-validation-rule
-               type="required"
-               message="Hire Extension number is required"
-             ></dxi-validation-rule>
-           </dxi-item>
-           <dxi-item dataField="remark" editorType="dxTextArea" [editorOptions]="{ height: 60 }" [colSpan]="2">
-         </dxi-item>
-         <dxi-item>
+          id="form" [colCount]="2" [formData]="dataPur12">
+          <!-- <dxi-item>
+          </dxi-item> -->
+          <dxi-item>
           <dxo-label text="1.Delivery Control (Domestic)"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
+          
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
             [maxFileSize]="4000000"
@@ -60,7 +43,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="2.Delivery Control (Oversea)"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -72,7 +55,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="3.PO Issued"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -84,7 +67,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="4.Delay (Domestic)"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -96,7 +79,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="5.Delay (Oversea)"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -108,7 +91,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="6.PU CHAMP"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -120,7 +103,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="7.Delivery Control (Evalio)"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
@@ -132,7 +115,7 @@
         </div></dxi-item>
         <dxi-item>
           <dxo-label text="8.Short LT Early Delay"></dxo-label>
-          <div class="file-uploader-block" style="float: right">
+          <div class="fileuploader-container">
           <dx-file-uploader
             type="required"
             uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"

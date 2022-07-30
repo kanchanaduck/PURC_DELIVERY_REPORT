@@ -1,38 +1,60 @@
 
 <div class="content-block">
   <div class="dx-card responsive-paddings">
-            <dx-toolbar>
-            <dxi-item
-              location="before"
-              widget="dxButton"
-              locateInMenu="auto"
-              [options]="refreshButtonOptions"
-            >
-            </dxi-item>
 
-            <dxi-item location="center" widget="dxButton" locateInMenu="never">
-              <div *dxTemplate>
-                <div class="toolbar-label"><b>KPI Delivery Control</b></div>
-              </div>
-            </dxi-item>
+    <dx-toolbar>
+        <dxi-item
+            location="before"
+            widget="dxButton"
+            locateInMenu="auto"
+            [options]="refreshButtonOptions"
+        >
+        </dxi-item>
+
+        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+            <div *dxTemplate>
+            <!-- <div class="toolbar-label"><b>KPI Delivery Control</b></div> -->
+            <div class="toolbar-label"><b>Home</b></div>
+            </div>
+        </dxi-item>
+        
+        <dxi-item
+            location="after"
+            widget="dxSelectBox"
+            locateInMenu="auto"
+            [options]="selectBoxOptions"
+        >
+        </dxi-item>
+    </dx-toolbar>
+
           
-            <dxi-item
-              location="after"
-              widget="dxSelectBox"
-              locateInMenu="auto"
-              [options]="selectBoxOptions"
-            >
-            </dxi-item>
+    <div id="form-container" class="data-grid">
+      <dx-form #formupload
+        (onFieldDataChanged)="form_upload($event)"
+        id="form" [colCount]="2"
+        [formData]="target">
+          <dxi-item
+            dataField="yearly"
+            editorType="dxTextBox"
+            [editorOptions]="phoneOptions"
+            [colSpan]="3"
+          ></dxi-item> 
+          <dxi-item
+            dataField="monthly"
+            editorType="dxTextBox"
+            [editorOptions]="phoneOptions"
+            [colSpan]="3"
+          ></dxi-item> 
+      </dx-form>
+      <!-- <dx-button
+      class="btnsubmit"
+      text="Submit"
+      type="success"l
+       >
+      </dx-button> -->
+    </div>
 
-          </dx-toolbar>
-    <!-- <div class="d-flex mb-3">
-      <div class="col-12" >
-        <div class="col-6" >
-          <h2 class="content-block">KPI Delivery Control</h2>
-        </div>
-      </div>
-    </div> -->
-    <div id="data-grid-demo"class="data-grid">  
+    <div id="data-grid-demo" class="data-grid">  
       <dx-data-grid
         id="gridContainer"
         [dataSource]="dataSource"
@@ -42,7 +64,6 @@
         <dxo-paging [enabled]="false"></dxo-paging>
         <dxo-editing
           mode="cell"
-          [allowUpdating]="true"
         >
         </dxo-editing>
         <dxi-column caption="Delivery on time ratio 2022">

@@ -1,104 +1,78 @@
-<!-- <div class="d-flex mb-3">
-  <div class="col-12" >
-    <div class="col-6" >
-      <h2 class="content-block">Upload Report PUR 1-2</h2>
-    </div>
-  </div>
-</div> -->
 <div class="content-block">
- <div class="dx-card responsive-paddings">
-  <dx-toolbar>
-    <dxi-item
-      location="before"
-      widget="dxButton"
-      locateInMenu="auto"
-      [options]="refreshButtonOptions"
-    >
-    </dxi-item>
-    <dxi-item location="center" widget="dxButton" locateInMenu="never">
-      <div *dxTemplate>
-        <div class="toolbar-label"><b>Upload Report PUR 1-2</b></div>
-      </div>
-    </dxi-item>
-  </dx-toolbar>
-      <div id="form-container">
-        
-        <dx-form #formupload
-        (onFieldDataChanged)="form_upload($event)"
-         id="form" [colCount]="2" [formData]="dataPur12">
-          <!-- <dxi-item
-            dataField="report_daily"
-            [editorOptions]="{ disabled: false }"
-          ></dxi-item>
+  <div class="dx-card responsive-paddings">
+
+    <dx-toolbar>
+      <dxi-item
+        location="before"
+        widget="dxButton"
+        locateInMenu="auto"
+        [options]="refreshButtonOptions"
+      >
+      </dxi-item>
+      <dxi-item location="center" widget="dxButton" locateInMenu="never">
+        <div *dxTemplate>
+          <div class="toolbar-label"><b>Upload Report PUR 1-2</b></div>
+        </div>
+      </dxi-item>
+    </dx-toolbar>
+
+    <dx-box direction="row">
+      <dxi-item class="box-item" [ratio]="1"> 
+        <dx-form #form_domestic [formData]="date" [colCount]="8">
           <dxi-item
-            dataField="applicant"
-            [editorOptions]="{ readOnly : true }"
-          ></dxi-item>
-          <dxi-item dataField="dept">
-            <dxo-label text="Department"></dxo-label>
-          </dxi-item>
-          <dxi-item dataField="ext">
-            <dxo-label text="Extension number"></dxo-label>
-            <dxi-validation-rule
-              type="required"
-              message="Hire Extension number is required"
-            ></dxi-validation-rule>
-          </dxi-item>
-          
-          <dxi-item itemType="button"  [buttonOptions]="dwformatButtonOptions"> 
-            <dxo-label text="Application form"></dxo-label> 
-          </dxi-item>
-          <dxi-item>
-            <dxo-label text="Attachment"></dxo-label>
-            <div class="file-uploader-block" style="float: right">
-            <dx-file-uploader
-              type="required"
-              uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
-              [maxFileSize]="4000000"
-            >
-            </dx-file-uploader>
-          </div></dxi-item>
-          <dxi-item dataField="remark" editorType="dxTextArea" [editorOptions]="{ height: 90 }" [colSpan]="2">
-        </dxi-item> -->
-        <dxi-item
-        dataField="domestic"
-        editorType="dxDateBox"
-        [editorOptions]="{displayFormat:'dd/MM/yyyy'}"  
-        [colSpan]="3"
-        ></dxi-item> 
-        <dxi-item
-        dataField="oversea"
-        editorType="dxDateBox"
-        [editorOptions]="{displayFormat:'dd/MM/yyyy'}"  
-        [colSpan]="3"
-        ></dxi-item> 
-        <!-- <dxi-item itemType="button" >
-          <dxo-button-options text="Confirm" width="30%" type="success"></dxo-button-options>
-        </dxi-item> -->
-        <!-- <dxi-item itemType="button">
-          <dxo-button-options text="Cencel" width="30%" type="normal" ></dxo-button-options>
-        </dxi-item> -->
-        </dx-form>
-        <dx-button
-        class="btnsubmit"
-        text="Submit"
-        type="success"
-        (onClick)="BtnNewClick($event)"
-         >
-        </dx-button>
-      </div>
+            itemType="empty"
+            [colSpan]="1"
+          ></dxi-item> 
+          <dxi-item
+            dataField="domestic"
+            editorType="dxDateBox"
+            [editorOptions]="{displayFormat:'dd/MM/yyyy'}"   
+            [colSpan]="6"
+          ></dxi-item> 
+          <dxi-item
+            icon="download"
+            itemType="button"
+            [buttonOptions]="buttonOptions1" 
+            [colSpan]="1"
+          ></dxi-item> 
+        </dx-form> 
+      </dxi-item>
+      <dxi-item class="box-item" [ratio]="1"> 
+        <dx-form id="form_oversea" [formData]="date" [colCount]="8">
+          <dxi-item
+            itemType="empty"
+            [colSpan]="1"
+          ></dxi-item> 
+          <dxi-item
+            dataField="oversea"
+            editorType="dxDateBox"
+            [editorOptions]="{displayFormat:'dd/MM/yyyy'}"   
+            [colSpan]="6"
+          ></dxi-item> 
+          <dxi-item
+            icon="download"
+            itemType="button"
+            [buttonOptions]="buttonOptions2" 
+            [colSpan]="1"
+          ></dxi-item> 
+        </dx-form> 
+      </dxi-item>
+    </dx-box>
+
+
+  </div>
 </div>
-</div>
-<dx-load-panel
-  #loadPanel
-  shadingColor="rgba(0,0,0,0.4)"
-  [position]="{ of: '#form-container' }"
-  [(visible)]="loadingVisible"
-  [showIndicator]="true"
-  [showPane]="true"
-  [shading]="true"
-  [closeOnOutsideClick]="false"
-  (onShown)="onShown()"
-  (onHidden)="onHidden()"
->
-</dx-load-panel>
+
+
+
+  <dx-load-panel
+    #loadPanel
+    shadingColor="rgba(0,0,0,0.4)"
+    [position]="{ of: '#form-container' }"
+    [(visible)]="loadingVisible"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false"
+  >
+  </dx-load-panel>

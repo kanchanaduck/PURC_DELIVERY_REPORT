@@ -3,7 +3,6 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SingleCardModule } from 'src/app/layouts';
 import { Router } from '@angular/router';
-import { AuthService } from './shared/services';
 
 @Component({
   selector: 'app-not-authorized-container',
@@ -50,6 +49,5 @@ export class NotAuthorizedContainerComponent {
   ],
   declarations: [NotAuthorizedContainerComponent],
   exports: [NotAuthorizedContainerComponent],
-  providers: [AuthService]
 })
 export class NotAuthorizedContainerModule { }

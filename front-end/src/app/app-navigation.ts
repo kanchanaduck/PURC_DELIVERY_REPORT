@@ -4,62 +4,30 @@ export const navigation = [
     path: '/home',
     icon: 'home'
   },
-  // {
-  //   text: 'Create',
-  //   path: '/pages/create',
-  //   icon: 'add'
-  // },
   {
     text: 'Create',
-    //path: '/pages/create',
     icon: 'add',
     items: [
       {
-        text: 'Upload Report PUR 1-2',
+        text: 'PUR 1-2',
         path: '/pages/report-pur12'
       },
       {
-        text: 'Upload Report PUR 3',
+        text: 'PUR 3',
         path: '/pages/report-pur3'
       }
-      // ,{
-      //   text: 'PUR-C',
-      //   items: [
-      //     {
-      //       text: 'Upload Report PUR 1-2',
-      //       path: '/pages/report-pur12'
-      //     },
-      //     {
-      //       text: 'Upload Report PUR 3',
-      //       path: '/pages/report-pur3'
-      //     }
-      //   ]
-      // }
-      // ,
-      // {
-      //   text: 'PUR-3',
-      //   items: [
-      //     {
-      //       text: 'Upload Report Daily',
-      //       path: '/pages/create'
-      //     }
-      //   ]
-      // }
     ]
   },
   {
-    text: 'Input Reason',
+    text: 'Input reason',
     icon: 'cellproperties',
     items: [
       {
         text: 'PUR 1-2',
         path: '/pages/input-reason-pur12',
-        // icon: 'edit'
       },
       {
         text: 'PUR 3',
-        // path: '/pages/input-reason',
-        // icon: 'edit',
         items: [
           {
             text: 'Control (Domestic)',
@@ -106,12 +74,11 @@ export const navigation = [
       {
         text: 'PDC',
         path: '/pages/other-dept',
-        // icon: 'edit'
       }
     ]
   },
   {
-    text: 'Follow Reason',
+    text: 'Follow reason',
     icon: 'clock',
     items: [
       {
@@ -124,7 +91,6 @@ export const navigation = [
       },
       {
         text: 'Check Reason PUR 1-2 ',
-        // path: '/pages/follow-reason'
         items: [
           {
             text: 'Leader check',
@@ -151,28 +117,8 @@ export const navigation = [
     ]
   },
   {
-    text: 'User Management',
+    text: 'User management',
+    path: '/profile',
     icon: 'user',
-    items: [
-      {
-        text: 'Create Profile',
-        path: '/profile'
-      },
-      {
-        text: 'User Profile',
-        path: '/tasks'
-      }
-    ]
   },
-  {
-    text: 'Contract Center',
-    path: '/pages/contract-center',
-    icon: 'group'
-  },
-  {
-    text: 'Help Center',
-    path: '/pages/help-center',
-    icon: 'help'
-  }
-  
 ];

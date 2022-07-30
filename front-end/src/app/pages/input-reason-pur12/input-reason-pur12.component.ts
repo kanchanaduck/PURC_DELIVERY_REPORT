@@ -38,7 +38,7 @@ export class InputReasonPur12Component implements OnInit {
   Arr_TSSResult: string[] = ['Effected','No Effected']
   status_Result: string[] = ['OK','NG']
   ReasonInput: any[] = [];
-  getData:any[] = [];
+  getData:any;
   item:any[] = [];
   buyeritem: string[]= [];
   vendoritem: string[]= [];
@@ -56,26 +56,17 @@ export class InputReasonPur12Component implements OnInit {
   // persearch!: dataformsearch;
   closeButtonOptions: any;
   submitButtonOptions: any;
-  priorities: string[];
-  persearch = {
-    Buyer: '',
-    Vendor: '',
-    Part_no: '',
-    NO_PO: '',
-    All: false,
-    Short_LT: false,
-    Delay: false,
-    Early: false,
-    Early_over_month: false,
-    IV_Term: false,
-    TSS:false,
-    Type: 'Domestic',
-    DateSH:this.convert(this.yesterday.setDate(this.today.getDate()- 1)),
-    ToSH:this.convert(this.yesterday.setDate(this.today.getDate()- 1)),
-    DateS: this.yesterday.setDate(this.today.getDate()- 1),
-    ToS: this.yesterday.setDate(this.today.getDate()- 1)
-  };
+  priorities: string[] = [
+    'Domestic',
+    'Oversea'
+  ];
+  persearch: any = {};
   datepipe: any;
+  loadingVisible_domestic = false;
+  loadingVisible_oversea = false;
+  error: any;
+  buttonOptions: any = {};
+
 
   constructor(service: Service,
     public apiPUR: Service
@@ -84,13 +75,6 @@ export class InputReasonPur12Component implements OnInit {
     this.user = '013380'
     this.positions = service.getPositions12pur();
     this.DataReason = dataReason1;
-
-    this.refreshButtonOptions = {
-      icon: 'refresh',
-      onClick: () => {
-        that.refresh()
-      },
-    };
     this.submitButtonOptions = {
       text: 'Submit',
       onClick(e:any) {
@@ -114,60 +98,118 @@ export class InputReasonPur12Component implements OnInit {
        that.popupVisible = false;
       },
     };
-    this.priorities = [
-      'Domestic',
-      'Oversea'
-    ];
-    }
-    buttonOptions = {
+
+    this.buttonOptions = {
       text: "Search",
       type: "success",
       onClick:async (e:any)=>{
-        if(this.persearch.Type == 'Oversea'){
-          this.dataSourceOversea = [];
-          this.dataSourceOversea =  await this.apiPUR.sv_post_param("input_Oversea/get_oversea_search",this.persearch);
-        }
-        if(this.persearch.Type == 'Domestic'){
-          this.dataSourcePUR12 = [];
-          this.dataSourceOversea = [];
-          let overItem =  await this.apiPUR.sv_post_param("input_domestic/get_domestic_search",this.persearch);
-          this.dataSourcePUR12 = overItem;
-        }
+        this.get_datagrid()
       }
     };
+    }
+
+
 
   ngOnInit(): void {
-    this.persearch.Type 
     // Add 1 Day
-    this.yesterday.setDate(this.today.getDate()- 1);
-     this.get_grid('Domestic');
+    // this.yesterday.setDate(this.today.getDate()- 1);
+    // console.log(this.yesterday)
+    //  this.get_grid('Domestic');
 
-    const dataform = {
+    this.yesterday.setDate(2);
+
+    this.persearch = {
       ID: 1,
       Buyer: '',
       Vendor: '',
       Part_no: '',
       NO_PO: '',
-      All: '',
-      Short_LT: '',
-      Delay: '',
-      Early: '',
-      Early_over_month: '',
-      IV_Term: '',
-      TSS: '',
-      Type: '',
-      DateSH: this.convert(this.yesterday),
-      ToSH: this.convert(this.yesterday),
+      All: false,
+      Short_LT: false,
+      Delay: false,
+      Early: false,
+      Early_over_month: false,
+      IV_Term: false,
+      TSS: false,
+      Type: 'Domestic',
+      /* DateSH: this.convert(this.yesterday),
+      ToSH: this.convert(this.yesterday), */
+      DateSH: "20220602",
+      ToSH: "20220602",
       DateS: this.yesterday,
       ToS: this.yesterday
     };
-    this.formtop =  dataform;
+    // this.formtop =  dataform;
 
+    this.get_datagrid()
+    this.get_reason()
   }
+
+  async get_datagrid(){
+    console.log("this.persearch",this.persearch)
+    if(this.persearch.Type == 'Oversea'){
+      this.loadingVisible_domestic = true;
+      this.dataSourcePUR12 = [];
+      this.dataSourceOversea = [];
+      let oversea_item =  await this.apiPUR.sv_post("Oversea/get_oversea_search",this.persearch);
+      this.dataSourcePUR12 = oversea_item.dataS;
+      this.buyeritem = oversea_item.buyer;
+      this.vendoritem = oversea_item.vendor;
+      // this.partnoitem = oversea_item.partno;
+      // this.nopoitem = oversea_item.nopo;
+    }
+    if(this.persearch.Type == 'Domestic'){
+      this.loadingVisible_oversea = true;
+      this.dataSourcePUR12 = [];
+      this.dataSourceOversea = [];
+      let domestic_item =  await this.apiPUR.sv_post("Domestic/get_domestic_search",this.persearch);
+      this.dataSourcePUR12 = domestic_item.dataS;
+      this.buyeritem = domestic_item.buyer;
+      this.vendoritem = domestic_item.vendor;
+      // this.partnoitem = domestic_item.partno;
+      // this.nopoitem = domestic_item.nopo;
+    }
+    
+  }
+
+  onShown_domestic() {
+    setTimeout(() => {
+      this.loadingVisible_domestic = false;
+    }, 3000);
+  }
+
+  onHidden_domestic() {
+    console.log(this.error)
+    if(this.error==null || this.error=={}){
+      notify("Complete!", "success");
+    }
+    else{
+      var text = typeof this.error.response.data === 'object'? this.error.response.data.title:this.error.response.data
+      notify("Error! "+text, "error");
+    }
+  }
+
+  onShown_oversea() {
+    setTimeout(() => {
+      this.loadingVisible_oversea = false;
+    }, 3000);
+  }
+
+  onHidden_oversea() {
+    console.log(this.error)
+    if(this.error==null || this.error=={}){
+      notify("Complete!", "success");
+    }
+    else{
+      var text = typeof this.error.response.data === 'object'? this.error.response.data.title:this.error.response.data
+      notify("Error! "+text, "error");
+    }
+  }
+
   ngAfterViewInit() {
-    this.myform.instance.validate();
+    // this.myform.instance.validate();
   }
-  refresh() {
+/*   refresh() {
     console.log('refresh');
     this.dataGridDomestic.instance.refresh();
     this.dataSourcesearch = [];
@@ -175,7 +217,7 @@ export class InputReasonPur12Component implements OnInit {
     this.datasearch = [];
 
     this.get_grid('Domestic');
-}
+} */
   selectionChanged(data: any) {
     this.selectedItemKeys = data.selectedRowKeys;
     
@@ -211,7 +253,14 @@ export class InputReasonPur12Component implements OnInit {
 
   }
   showInfo(e: any) {
+    let data : any[] = [];
+    this.selectedItemKeys.forEach(c => data.push(c.id));
+    if(data.length > 0){
       this.popupVisible = true;
+    }
+    else{
+      notify("Warning! please select item", "warning")
+    }
   }
   form_fieldDataChanged (e: any) {
     let updatedField = e.dataField;
@@ -229,19 +278,18 @@ export class InputReasonPur12Component implements OnInit {
       Reason_IV:newValueformData.Reason_IV
     }]
   }
-  form_targetformTop(e: any){
-     if(e.dataField == 'Type'  && e.value == 'Domestic'){
-        this.DomesticGridVisible = true;
-        this.OverseaGridVisible = false;
-
-        this.get_grid(e.value);
-        this.persearch.Type = e.value
-     }
-     else if(e.dataField == 'Type' && e.value == 'Oversea'){
-        this.DomesticGridVisible = false;
-        this.OverseaGridVisible = true;
-        this.persearch.Type = e.value
-        this.get_grid(e.value);
+  /* form_targetformTop(e: any){
+    if(e.dataField == 'Type'  && e.value == 'Domestic'){
+      this.DomesticGridVisible = true;
+      this.OverseaGridVisible = false;
+      this.get_grid(e.value);
+      this.persearch.Type = e.value
+    }
+    else if(e.dataField == 'Type' && e.value == 'Oversea'){
+      this.DomesticGridVisible = false;
+      this.OverseaGridVisible = true;
+      this.get_grid(e.value);
+      this.persearch.Type = e.value
     }
     if(e.dataField == 'Buyer'){ this.persearch.Buyer = e.value}
     if(e.dataField == 'Vendor'){ this.persearch.Vendor = e.value}
@@ -262,12 +310,14 @@ export class InputReasonPur12Component implements OnInit {
        this.persearch.ToSH = this.convert(e.value); 
       }
    
-  }
+  } */
   convert(str: string | number | Date) {
   var date = new Date(str),
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
-  return [date.getFullYear(), mnth, day].join("");
+    console.log(str)
+    console.log([date.getFullYear(), mnth, day].join(""))
+    return [date.getFullYear(), mnth, day].join("");
   }
   async get_db_EUC302(){
     try {
@@ -306,26 +356,29 @@ export class InputReasonPur12Component implements OnInit {
       console.log(err)
   }
   }
-  async get_grid(e: any){
+
+/*   async get_grid(e: any){
     console.log('get_grid : ',e);
     let dataAPI;
     let DTSourceAPI;
     if(e == 'Domestic'){ 
-    dataAPI = 'input_domestic/get_domestic_search' ;
+    dataAPI = 'Domestic/get_domestic_search' ;
     this.dataSourcesearch = [];
     this.dataSourceOversea = [];
     this.dataSourcePUR12 = [];
     DTSourceAPI = this.dataSourcePUR12;
   }
     else if(e == 'Oversea'){  
-    dataAPI = 'input_Oversea/get_oversea_search' ;
+    dataAPI = 'Oversea/get_oversea_search' ;
     this.dataSourcesearch = [];
     this.dataSourceOversea = [];
     this.dataSourcePUR12 = [];
     DTSourceAPI = this.dataSourceOversea;
-  }
+  } 
   
     let dataGet =  await this.apiPUR.sv_post(dataAPI,this.persearch);
+    console.log(dataAPI,this.persearch)
+    console.log(dataGet)
     this.dataSourcesearch = dataGet.dataS;
     this.dataSourceOversea = dataGet.dataS;
     this.dataSourcePUR12 = dataGet.dataS;
@@ -333,38 +386,57 @@ export class InputReasonPur12Component implements OnInit {
     this.vendoritem = dataGet.vendor;
     this.partnoitem = dataGet.partno;
     this.nopoitem = dataGet.nopo;
+  }*/
+  async get_reason(){
     this.rsshortItem=  await this.apiPUR.sv_getreason("Reason/get_reason_dl_shortLT");
     this.rsdelayItem=  await this.apiPUR.sv_getreason("Reason/get_reason_delay");
     this.rsearlyItem=  await this.apiPUR.sv_getreason("Reason/get_reason_early");
   }
-  async search_grid(){
-
-  }
   async onEditingupdate(e: any): Promise<void> {
-    if(this.persearch.Type == 'Domestic'){await this.apiPUR.sv_post_param("input_domestic/update_domestic_row",e.key)}
-    else if(this.persearch.Type == 'Oversea'){await this.apiPUR.sv_post_param("input_Oversea/update_oversea_row",e.key)}
+    if(this.persearch.Type == 'Domestic'){await this.apiPUR.sv_post_param("Domestic/update_domestic_row",e.key)}
+    else if(this.persearch.Type == 'Oversea'){await this.apiPUR.sv_post_param("Oversea/update_oversea_row",e.key)}
   }
+
   async submit_reason(e:any){
-  let data : any[] = [];
-  let Typeup = this.persearch.Type;
-  this.selectedItemKeys.forEach(c => data.push(c.id));
-  let Reasonup = [{
-    id:data,
-    TSS_Result: this.ReasonInput[0].TSS_Result,
-    Reason_Short_LT: this.ReasonInput[0].Reason_Short_LT,
-    Detail_Short_LT_reason: this.ReasonInput[0].Detail_Short_LT_reason,
-    Reason_Delay: this.ReasonInput[0].Reason_Delay,
-    Detail_delay_reason: this.ReasonInput[0].Detail_delay_reason,
-    Reason_Early: this.ReasonInput[0].Reason_Early,
-    Detail_Early_reason: this.ReasonInput[0].Detail_Early_reason,
-    Detail_Over_month_reason: this.ReasonInput[0].Detail_Over_month_reason,
-    Reason_IV:this.ReasonInput[0].Reason_IV,
-    user: this.user
-  }]
-  console.log('submit_reason',Typeup);
-  console.log('submit_reason Type',this.persearch.Type);
-  if(Typeup == 'Domestic'){  console.log('submit_reason Domestic');  await this.apiPUR.sv_post_param("input_domestic/update_domestic_reason",Reasonup[0])}
-  else if(Typeup =='Oversea'){ console.log('submit_reason Oversea');  await this.apiPUR.sv_post_param("input_Oversea/update_oversea_reason",Reasonup[0])}
+    let data : any[] = [];
+    let Typeup = this.persearch.Type;
+    this.selectedItemKeys.forEach(c => data.push(c.id));
+    let Reasonup = {
+      id:data,
+      TSS_Result: this.ReasonInput[0].TSS_Result,
+      Reason_Short_LT: this.ReasonInput[0].Reason_Short_LT,
+      Detail_Short_LT_reason: this.ReasonInput[0].Detail_Short_LT_reason,
+      Reason_Delay: this.ReasonInput[0].Reason_Delay,
+      Detail_delay_reason: this.ReasonInput[0].Detail_delay_reason,
+      Reason_Early: this.ReasonInput[0].Reason_Early,
+      Detail_Early_reason: this.ReasonInput[0].Detail_Early_reason,
+      Detail_Over_month_reason: this.ReasonInput[0].Detail_Over_month_reason,
+      Reason_IV:this.ReasonInput[0].Reason_IV,
+      user: this.user
+    }
+  // console.log('submit_reason',Typeup);
+  // console.log('submit_reason Type',this.persearch.Type);
+  if(Typeup == 'Domestic'){  
+    console.log('submit_reason Domestic');  
+    try {
+      await this.apiPUR.sv_post_param("Domestic/update_domestic_reason",Reasonup)
+      this.get_datagrid()
+    } 
+    catch (error) {
+      notify("Error ! "+error)
+    }
+  }
+  else if(Typeup =='Oversea'){ 
+    console.log('submit_reason Oversea');  
+    try {
+      await this.apiPUR.sv_post_param("Oversea/update_oversea_reason",Reasonup)
+      this.get_datagrid()
+    } 
+    catch (error) {
+      
+    }
+  }
+
   }
 }
 

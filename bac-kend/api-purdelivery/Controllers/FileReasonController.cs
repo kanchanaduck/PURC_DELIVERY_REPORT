@@ -14,16 +14,16 @@ namespace api_purdelivery.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class input_filereasonController : ControllerBase
+    public class FileReasonController : ControllerBase
     {
         private readonly DataBaseContext _context;
 
-        public input_filereasonController(DataBaseContext context)
+        public FileReasonController(DataBaseContext context)
         {
             _context = context;
         }
 
-        // GET: api/input_filereason
+        // GET: api/FileReason
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T_Control_Domestic>>> GetT_Control_Domestic()
         {

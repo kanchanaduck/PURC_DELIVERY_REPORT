@@ -1,22 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginFormComponent, ResetPasswordFormComponent, CreateAccountFormComponent, ChangePasswordFormComponent } from './shared/components';
-import { AuthGuardService, AuthService } from './shared/services';
+import { AuthGuardService } from './shared/services';
+
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
-import { DxCheckBoxModule, 
-  DxDataGridModule, 
-  DxFileUploaderModule, 
-  DxFormModule,
-  DxRadioGroupModule,
-  DxSelectBoxModule,
-  DxTabPanelModule,
-  DxTemplateModule,
-  DxToolbarModule,
-  DxPopupModule, 
-  DxButtonModule,
-  DxLoadPanelModule} from 'devextreme-angular';
+
 import { CreateComponent } from './pages/create/create.component';
 import { ReportPur12Component } from './pages/report-pur12/report-pur12.component';
 import { DailyProgressComponent } from './pages/daily-progress/daily-progress.component';
@@ -39,8 +29,28 @@ import { CheckLeaderComponent } from './pages/check-leader/check-leader.componen
 import { CheckManagerComponent } from './pages/check-manager/check-manager.component';
 import { CheckOtherdeptComponent } from './pages/check-otherdept/check-otherdept.component';
 import { CheckPurcComponent } from './pages/check-purc/check-purc.component';
+
+import { 
+  DxCheckBoxModule, 
+  DxFileUploaderModule, 
+  DxRadioGroupModule,
+  DxTabPanelModule,
+  DxTemplateModule,
+  DxToolbarModule,
+  DxPopupModule, 
+  DxButtonModule,
+  DxLoadPanelModule,
+  DxBoxModule,
+  DxFormModule, 
+  DxDataGridModule, 
+  DxSelectBoxModule, 
+  DxTagBoxModule,
+  DxTextBoxModule,
+  DxTextAreaModule,
+  DxResponsiveBoxModule
+} from 'devextreme-angular';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; 
+
 
 const routes: Routes = [
   {
@@ -197,6 +207,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { useHash: true }),
+    CommonModule,
     DxDataGridModule, 
     DxFormModule,
     DxFileUploaderModule,
@@ -206,15 +217,16 @@ const routes: Routes = [
     DxTabPanelModule,
     DxCheckBoxModule,
     DxRadioGroupModule,
-    CommonModule,
     DxPopupModule, 
     DxButtonModule,
     DxLoadPanelModule,
-    HttpClientModule
+    DxBoxModule,
+    DxResponsiveBoxModule
   ],
-  providers: [AuthGuardService,AuthService],
+  providers: [AuthGuardService],
   exports: [RouterModule],
-  declarations: [HomeComponent, 
+  declarations: [
+    HomeComponent, 
     ProfileComponent,
     TasksComponent,
     CreateComponent, 
@@ -226,6 +238,18 @@ const routes: Routes = [
     InputReasonComponent, 
     ContractCenterComponent, 
     HelpCenterComponent, 
-    InputReasonPur12Component, InputDl3DomesticComponent, InputDl3OverseaComponent, InputDl3PoissuedComponent, InputDl3PuchampComponent, InputDl3EvalioComponent, InputDl3ShotLTComponent, InputDl3DelayDomesticComponent, InputDl3DelayOverseaComponent, CheckLeaderComponent, CheckManagerComponent, CheckOtherdeptComponent, CheckPurcComponent]
+    InputReasonPur12Component, 
+    InputDl3DomesticComponent, 
+    InputDl3OverseaComponent, 
+    InputDl3PoissuedComponent, 
+    InputDl3PuchampComponent,
+    InputDl3EvalioComponent,
+    InputDl3ShotLTComponent,
+    InputDl3DelayDomesticComponent,
+    InputDl3DelayOverseaComponent,
+    CheckLeaderComponent, 
+    CheckManagerComponent, 
+    CheckOtherdeptComponent, 
+    CheckPurcComponent]
 })
 export class AppRoutingModule { }

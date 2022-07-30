@@ -1,7 +1,6 @@
-import { Component, enableProdMode, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, enableProdMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { DxDataGridModule } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
 import { AppComponent } from 'src/app/app.component';
 import { kpi_mnth, Service} from 'src/app/shared/services/api-service';
@@ -9,7 +8,6 @@ import { kpi_mnth, Service} from 'src/app/shared/services/api-service';
 if (!/localhost/.test(document.location.host)) {
   enableProdMode();
 }
-
 
 @Component({
   selector: 'demo-app',
@@ -23,10 +21,20 @@ export class HomeComponent {
   dataSource: kpi_mnth[];
   selectBoxOptions: any;
   refreshButtonOptions: any;
-  dateupOptions: string[] = ['02-11-2021', '02-12-2021', '02-01-2022', '14-02-2022', '18-02-2022', '19-02-2022'];
+  dateupOptions: string[] = [ '2023','2022','2021' ];
+
+  target: any = {};
+  phoneOptions: any;
 
   constructor(service: Service) {
     this.dataSource = service.getkpi_month();
+    
+    this.target = {
+      "monthly": 0,
+      "yearly": 0
+    }
+
+    this.phoneOptions = this.generateNewButtonOptions();
 
     this.refreshButtonOptions = {
         icon: 'refresh',
@@ -41,15 +49,49 @@ export class HomeComponent {
       // displayExpr: 'text',
       value: this.dateupOptions[0],
       onValueChanged: (args: { value: number; }) => {
-     
+        let year = args.value
+        console.log(year)
       },
     };
   }
+
+  form_upload (e: any) {
+    console.log(e)
+    // if(e.dataField == "domestic" && e.value != null)
+  }
+
+
+  generateNewButtonOptions() {
+    return {
+      buttons: [
+        {
+          name: '%',
+          location: 'after',
+          options: {
+            stylingMode: 'text',
+            text: '%',
+          },
+        },
+        {
+          name: 'trash',
+          location: 'after',
+          options: {
+            stylingMode: 'contained',
+            icon: 'save',
+            type: "success",
+            onClick: () => {
+              alert("Save")
+            },
+          },
+        }
+      ],
+    };
+  }
+
 }
 @NgModule({
   imports: [
     BrowserModule,
-    DxDataGridModule,
   ],
   // declarations: [AppComponent],
   bootstrap: [AppComponent],

@@ -14,7 +14,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NO_PROXY": "localhost",
+        "HTTP_PROXY": ""
       }
     },
     "api_purdelivery": {
@@ -24,7 +26,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NO_PROXY": "localhost",
+        "HTTP_PROXY": ""
       }
     }
   }

@@ -21,7 +21,9 @@ using System.Text;
 using Microsoft.Extensions.Options;
 // using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json.Linq;
+using api_purdelivery.Repository;
 
 namespace api_purdelivery
 {
@@ -37,16 +39,46 @@ namespace api_purdelivery
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Service 109\cpttest
+            services.AddDbContext<DataBaseContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("ConnStr109")));
 
+            services.AddScoped<IRepository, Repository<DataBaseContext>>();
+
+            services.AddControllersWithViews()
+                .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null)
+                .AddNewtonsoftJson();
+
+            services.AddControllers().AddNewtonsoftJson(x =>
+                x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddControllers().AddJsonOptions(opt =>
+            {
+                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
+            services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
+
+            // services.AddCors();
+            
+            
             services.AddControllers();
+            
+            services.AddCors();
+            
+            services.AddMvc(setupAction =>
+            {
+                setupAction.EnableEndpointRouting = false;
+            }).AddJsonOptions(jsonOptions =>
+            {
+                jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api_purdelivery", Version = "v1" });
             });
-            services.AddCors();
-            // Service 109\cpttest
-            services.AddDbContext<DataBaseContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ConnStr109")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,18 +90,12 @@ namespace api_purdelivery
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api_purdelivery v1"));
             }
-            //Allow Post Hosting
-            // app.UserCors(option => {
-            //     option.WithOrigins("*").AllowAnyOrigins()
-            //     .AllowAnyHeader()
-            //     .AllowAnyMethod();
-            // });
             
-            // app.UseCors(option => option.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
-            app.UseCors(option => 
-            option.WithOrigins("*")
-            .WithMethods("GET","POST")
-            .AllowAnyHeader());
+             app.UseCors(option => 
+                option.WithOrigins("*").AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+            );
 
             app.UseHttpsRedirection();
 

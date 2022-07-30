@@ -62,3 +62,8 @@
 ::ng-deep .toolbar-label > b {
   font-size: 16px;
 }
+
+::ng-deep .fileuploader-container {
+  border: 1px solid #d3d3d3;
+  margin: 20px 20px 0 20px;
+}

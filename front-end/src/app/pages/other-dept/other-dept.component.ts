@@ -125,12 +125,12 @@ export class OtherDeptComponent implements OnInit {
     onClick:async (e:any)=>{
       if(this.persearch.Type == 'Oversea'){
         this.dataSourceOversea = [];
-        this.dataSourceOversea =  await this.apiPUR.sv_post_param("input_Oversea/get_oversea_search",this.persearch);
+        this.dataSourceOversea =  await this.apiPUR.sv_post_param("Oversea/get_oversea_search",this.persearch);
       }
       if(this.persearch.Type == 'Domestic'){
         this.dataSourcePUR12 = [];
         this.dataSourceOversea = [];
-        let overItem =  await this.apiPUR.sv_post_param("input_domestic/get_domestic_search",this.persearch);
+        let overItem =  await this.apiPUR.sv_post_param("Domestic/get_domestic_search",this.persearch);
         console.log('Search : ' ,overItem )
         this.dataSourcePUR12 = overItem;
       }
@@ -318,14 +318,14 @@ export class OtherDeptComponent implements OnInit {
     let dataAPI;
     let DTSourceAPI;
     if(e == 'Domestic'){ 
-    dataAPI = 'input_domestic/get_domestic_search' ;
+    dataAPI = 'Domestic/get_domestic_search' ;
     this.dataSourcesearch = [];
     this.dataSourceOversea = [];
     this.dataSourcePUR12 = [];
     DTSourceAPI = this.dataSourcePUR12;
   }
     else if(e == 'Oversea'){  
-    dataAPI = 'input_Oversea/get_oversea_search' ;
+    dataAPI = 'Oversea/get_oversea_search' ;
     this.dataSourcesearch = [];
     this.dataSourceOversea = [];
     this.dataSourcePUR12 = [];
@@ -349,8 +349,8 @@ export class OtherDeptComponent implements OnInit {
     console.log('search_grid', this.dataSourcesearch )
   }
   async onEditingupdate(e: any): Promise<void> {
-    if(this.persearch.Type == 'Domestic'){await this.apiPUR.sv_post_param("input_domestic/update_domestic_row",e.key)}
-    else if(this.persearch.Type == 'Oversea'){await this.apiPUR.sv_post_param("input_Oversea/update_oversea_row",e.key)}
+    if(this.persearch.Type == 'Domestic'){await this.apiPUR.sv_post_param("Domestic/update_domestic_row",e.key)}
+    else if(this.persearch.Type == 'Oversea'){await this.apiPUR.sv_post_param("Oversea/update_oversea_row",e.key)}
     
   }
   async submit_reason(e:any){
@@ -372,8 +372,8 @@ export class OtherDeptComponent implements OnInit {
   }]
   console.log('submit_reason',Typeup);
   console.log('submit_reason Type',this.persearch.Type);
-  if(Typeup == 'Domestic'){  console.log('submit_reason Domestic');  await this.apiPUR.sv_post_param("input_domestic/update_domestic_reason",Reasonup[0])}
-  else if(Typeup =='Oversea'){ console.log('submit_reason Oversea');  await this.apiPUR.sv_post_param("input_Oversea/update_oversea_reason",Reasonup[0])}
+  if(Typeup == 'Domestic'){  console.log('submit_reason Domestic');  await this.apiPUR.sv_post_param("Domestic/update_domestic_reason",Reasonup[0])}
+  else if(Typeup =='Oversea'){ console.log('submit_reason Oversea');  await this.apiPUR.sv_post_param("Oversea/update_oversea_reason",Reasonup[0])}
   }
 }
 

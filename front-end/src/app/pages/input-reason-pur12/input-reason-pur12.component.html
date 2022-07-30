@@ -17,21 +17,20 @@
         </dxi-item>
       </dx-toolbar>
       <div id="form-container">
-        <dx-form 
+        <!--  <dx-form 
          #targetformTop
          (onFieldDataChanged)="form_targetformTop($event)"
-         id="form" [colCount]="12" [formData]="formtop"  validationGroup="groupName">
+         id="form" [colCount]="12" [formData]="formtop"  validationGroup="groupName"> -->
+        <dx-form 
+          #targetformTop
+          id="form" [colCount]="12" [formData]="persearch"  validationGroup="groupName">
           <span>Form width:</span>
-          <dxi-item
+          <!-- <dxi-item
           dataField="Buyer"
           editorType="dxSelectBox"
           [editorOptions]="{ items: buyeritem, searchEnabled: true, value: '' }"
           [colSpan]="3"
         >
-          <dxi-validation-rule
-            type="required"
-            message="Buyer is required"
-          ></dxi-validation-rule>
         </dxi-item>
         <dxi-item
         dataField="Vendor"
@@ -42,15 +41,11 @@
         </dxi-item>
         <dxi-item
         dataField="Part_no"
-        editorType="dxSelectBox"
-        [editorOptions]="{ items: partnoitem, searchEnabled: true, value: '' }"
         [colSpan]="3"
        >
         </dxi-item>
         <dxi-item
         dataField="NO_PO"
-        editorType="dxSelectBox"
-        [editorOptions]="{ items: nopoitem, searchEnabled: true, value: '' }"
         [colSpan]="3"
         >
         </dxi-item>
@@ -95,7 +90,7 @@
           text="Label"
           editorType="dxCheckBox"
           [colSpan]="1"
-          ></dxi-item>
+          ></dxi-item> -->
           <!-- <dxi-item
           dataField="Domestic"
           text="Label"
@@ -136,7 +131,7 @@
         itemType="button"
         [buttonOptions]="buttonOptions"
         [colSpan]="2">
-      ></dxi-item>
+      </dxi-item>
         </dx-form>
         <!-- <dx-radio-group
         [items]="priorities"
@@ -168,91 +163,106 @@
       (onExporting)="onExporting($event)"
       (onRowUpdated)="onEditingupdate($event)"
     >
+    <!-- <dxo-filter-row
+    [visible]="showFilterRow"
+    [applyFilter]="currentFilter"
+    ></dxo-filter-row> -->
     <dxo-scrolling rowRenderingMode="virtual"> </dxo-scrolling>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-pager
       [showPageSizeSelector]="true"
       [allowedPageSizes]="[10,50,100]"
+      [showInfo]="true"
       displayMode="full"
     ></dxo-pager>
 
     <dxo-column-chooser [enabled]="true" mode="select"  [allowSearch]="true" ></dxo-column-chooser>
       <dxo-editing mode="batch" [allowUpdating]="true"></dxo-editing>
       <dxo-selection mode="multiple"></dxo-selection>
-      <dxi-column dataField="id" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_sply_class" [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
-      <dxi-column dataField="cd_sply" [editorOptions]="{ readOnly:true }" [fixed]="true" fixedPosition="left" >
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="id" 
+      [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply_class" 
+      [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply"  
+       [editorOptions]="{ readOnly:true }">
       <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-column>
-      <dxi-column dataField="cd_sply_fact" [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_ord_class" [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
-      <dxi-column dataField="no_po" [editorOptions]="{ readOnly:true}" [fixed]="true" fixedPosition="left" >
-      <dxi-validation-rule type="required"></dxi-validation-rule> </dxi-column>
-      <dxi-column dataField="no_split_deiv_sfx" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="no_parts"  [fixed]="true" fixedPosition="left"  [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="no_adj_dim" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="cd_process" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="no_draw" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_chg_hist_all" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="dt_po" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="tm_po" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="qt_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="dt_delv" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="tm_delv" [editorOptions]="{ readOnly:true}"> </dxi-column>
-      <dxi-column dataField="dt_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="tm_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="qt_rec" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="dt_acptc" [editorOptions]="{ readOnly:true}" ></dxi-column>
-      <dxi-column dataField="tm_acptc" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="qt_acptd" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="qt_ng" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_delv_place" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_destin" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_use_block" [editorOptions]="{ readOnly:true}"></dxi-column>
-      <dxi-column dataField="cd_ord_resn" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_insp_type_eiaj" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cd_procur_person" [editorOptions]="{ readOnly:true}" ></dxi-column>
-      <dxi-column dataField="no_ord_class" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cm_coment" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="cf_rpt_parts_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-      <dxi-column dataField="ck_shortlt1" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckShort"> </dxi-column>
-      <dxi-column dataField="ck_shortlt2" [editorOptions]="{ readOnly:true}"cssClass="cell-highlightedCheckShort"> </dxi-column>
-      <dxi-column dataField="ck_eod" caption="Check_Early_OnTime_Delay"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
-      <dxi-column dataField="early_dv" caption="Early_DV_Over_month" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
-      <dxi-column dataField="iv_term" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedIV" > </dxi-column>
-      <dxi-column dataField="tss_result"  cssClass="cell-highlightedTSS">
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply_fact" 
+        [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_ord_class" 
+        [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_po" 
+        [editorOptions]="{ readOnly:true}">
+      <dxi-validation-rule type="required"></dxi-validation-rule></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_split_deiv_sfx" 
+        [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_parts"  [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_adj_dim" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_process" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_draw" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_chg_hist_all" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_po" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_po" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_delv" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_delv" [editorOptions]="{ readOnly:true}"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_rec" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_acptc" [editorOptions]="{ readOnly:true}" ></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_acptc" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_acptd" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_ng" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_delv_place" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_destin" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_use_block" [editorOptions]="{ readOnly:true}"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_ord_resn" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_insp_type_eiaj" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_procur_person" [editorOptions]="{ readOnly:true}" ></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_ord_class" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cm_coment" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cf_rpt_parts_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_shortlt1" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckShort"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_shortlt2" [editorOptions]="{ readOnly:true}"cssClass="cell-highlightedCheckShort"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_eod" caption="Check_Early_OnTime_Delay"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="early_dv" caption="Early_DV_Over_month" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="iv_term" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedIV" > </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tss_result"  cssClass="cell-highlightedTSS">
         <dxo-lookup [dataSource]="Arr_TSSResult" ></dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="mk_shortlt" cssClass="cell-highlightedShotLT"> </dxi-column>
-      <dxi-column dataField="reason_shortlt"  cssClass="cell-highlightedShotLT" width=180px >
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_shortlt" cssClass="cell-highlightedShotLT"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_shortlt"  cssClass="cell-highlightedShotLT" width=180px >
         <dxo-lookup [dataSource]="rsshortItem"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="detail_shortlt" cssClass="cell-highlightedShotLT" ></dxi-column>
-      <dxi-column dataField="mk_delay"  cssClass="cell-highlightedDelay"> </dxi-column>
-      <dxi-column dataField="reason_delay" cssClass="cell-highlightedDelay" >
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_shortlt" cssClass="cell-highlightedShotLT" ></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_delay"  cssClass="cell-highlightedDelay"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_delay" cssClass="cell-highlightedDelay" >
         <dxo-lookup [dataSource]="rsdelayItem"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="detail_delay" cssClass="cell-highlightedDelay" > </dxi-column>
-      <dxi-column dataField="mk_early" cssClass="cell-highlightedEarly"> </dxi-column>
-      <dxi-column dataField="reason_early"cssClass="cell-highlightedEarly" width=200px >
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_delay" cssClass="cell-highlightedDelay" > </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_early" cssClass="cell-highlightedEarly"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_early"cssClass="cell-highlightedEarly" width=200px >
         <dxo-lookup [dataSource]="rsearlyItem"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="detail_early"cssClass="cell-highlightedEarly"> </dxi-column>
-      <dxi-column dataField="mk_dv" cssClass="cell-highlightedMKDV"></dxi-column>
-      <dxi-column dataField="detail_dv"cssClass="cell-highlightedMKDV" ></dxi-column>
-      <dxi-column dataField="mk_iv" cssClass="cell-highlightedMKIV"></dxi-column>
-      <dxi-column dataField="reason_iv" cssClass="cell-highlightedMKIV" > </dxi-column>
-      <dxi-column dataField="mk_ontime" cssClass="cell-highlightedMKONTIME" > </dxi-column>
-      <dxi-column dataField="status_reason" cellTemplate="cellStatus" cssClass="cell-highlightedMKONTIME"
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_early"cssClass="cell-highlightedEarly"> </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_dv" cssClass="cell-highlightedMKDV"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_dv"cssClass="cell-highlightedMKDV" ></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_iv" cssClass="cell-highlightedMKIV"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_iv" cssClass="cell-highlightedMKIV" > </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_ontime" cssClass="cell-highlightedMKONTIME" > </dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="status_reason" cellTemplate="cellStatus" cssClass="cell-highlightedMKONTIME"
         [fixed]="true" fixedPosition="right" [editorOptions]="{ readOnly:true}"  width=30>
         <dxo-lookup [dataSource]="status_Result"></dxo-lookup>
       </dxi-column>
       <div *dxTemplate="let cellf of 'cellStatus'">
         <div [ngClass] = "{ 'aok': cellf.text == 'OK', 'ang': cellf.text ==  'NG' }" >{{cellf.text}}</div>
       </div>
-      <dxi-column dataField="reason_rk" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedMKONTIME"></dxi-column>
+      <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_rk" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedMKONTIME"></dxi-column>
       <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+      <div *dxTemplate="let info of 'titleHeaderTemplate'">
+        {{info.column.caption.toUpperCase().split(' ').join('_') }}
+    </div>
     </dx-data-grid>
      <!-- Oversea Reason -->
      <dx-data-grid
@@ -279,89 +289,89 @@
      </dxo-editing>
      <dxo-selection mode="multiple"></dxo-selection>
 
-     <dxi-column dataField="cd_sply_class" [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
-     <dxi-column dataField="cd_sply"
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply_class" [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply"
      [editorOptions]="{ readOnly:true }"
      [fixed]="true" fixedPosition="left" 
      >
      <dxi-validation-rule type="required"></dxi-validation-rule>
      </dxi-column>
-     <dxi-column dataField="no_arrange" [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
-     <dxi-column dataField="cd_sply_fact" [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
-    <dxi-column dataField="no_po"
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_arrange" [editorOptions]="{ readOnly:true}" [visible]="false"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_sply_fact" [editorOptions]="{ readOnly:true}"  [visible]="false"></dxi-column>
+    <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_po"
      [editorOptions]="{ readOnly:true}"
      [fixed]="true" fixedPosition="left" 
      >
      <dxi-validation-rule type="required"></dxi-validation-rule>
      </dxi-column>
-     <dxi-column dataField="no_invoice" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="no_split_deiv_sfx" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="no_parts"  [fixed]="true" fixedPosition="left"  [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="no_adj_dim" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="cd_process" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="no_draw" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_chg_hist_all" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="dt_po" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="tm_po" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="qt_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="dt_delv" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="tm_delv" [editorOptions]="{ readOnly:true}"> </dxi-column>
-     <dxi-column dataField="dt_delv_estim" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="dt_delv_dirct" [editorOptions]="{ readOnly:true}"> </dxi-column>
-     <dxi-column dataField="qt_delv_dirct" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="dt_delv_bal" [editorOptions]="{ readOnly:true}"> </dxi-column>
-     <dxi-column dataField="dt_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="tm_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="qt_rec" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="qt_ng" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="dt_acptc" [editorOptions]="{ readOnly:true}" ></dxi-column>
-     <dxi-column dataField="tm_acptc" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="qt_acptd" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_delv_place" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_destin" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_use_block" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="cd_ord_resn" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_insp_type_eiaj" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cd_estim_person" [editorOptions]="{ readOnly:true}"></dxi-column>
-     <dxi-column dataField="no_ord_class" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cm_coment" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="cf_rpt_parts_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
-     <dxi-column dataField="ck_shortlt1" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckShort"> </dxi-column>
-     <dxi-column dataField="ck_shortlt2" [editorOptions]="{ readOnly:true}"cssClass="cell-highlightedCheckShort"> </dxi-column>
-     <dxi-column dataField="ck_eod" caption="Check_Early_OnTime_Delay"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
-     <dxi-column dataField="early_dv" caption="Early_DV_Over_month" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
-     <dxi-column dataField="iv_term" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedIV" > </dxi-column>
-     <dxi-column dataField="tss_result"   cssClass="cell-highlightedTSS">
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_invoice" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_split_deiv_sfx" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_parts"  [fixed]="true" fixedPosition="left"  [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_adj_dim" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_process" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_draw" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_chg_hist_all" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_po" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_po" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_delv" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_delv" [editorOptions]="{ readOnly:true}"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_delv_estim" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_delv_dirct" [editorOptions]="{ readOnly:true}"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_delv_dirct" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_delv_bal" [editorOptions]="{ readOnly:true}"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_rec" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_rec" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_ng" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="dt_acptc" [editorOptions]="{ readOnly:true}" ></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tm_acptc" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="qt_acptd" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_delv_place" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_destin" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_use_block" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_ord_resn" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_insp_type_eiaj" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cd_estim_person" [editorOptions]="{ readOnly:true}"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="no_ord_class" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cm_coment" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="cf_rpt_parts_ord" [editorOptions]="{ readOnly:true}" [visible]="false"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_shortlt1" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckShort"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_shortlt2" [editorOptions]="{ readOnly:true}"cssClass="cell-highlightedCheckShort"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="ck_eod" caption="Check_Early_OnTime_Delay"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="early_dv" caption="Early_DV_Over_month" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedCheckEarly"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="iv_term" [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedIV" > </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="tss_result"   cssClass="cell-highlightedTSS">
        <dxo-lookup [dataSource]="Arr_TSSResult" ></dxo-lookup>
      </dxi-column>
-     <dxi-column dataField="mk_shortlt" cssClass="cell-highlightedShotLT"> </dxi-column>
-     <dxi-column dataField="reason_shortlt"  cssClass="cell-highlightedShotLT" width=180px >
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_shortlt" cssClass="cell-highlightedShotLT"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_shortlt"  cssClass="cell-highlightedShotLT" width=180px >
        <dxo-lookup [dataSource]="rsshortItem"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
      </dxi-column>
-     <dxi-column dataField="detail_shortlt" cssClass="cell-highlightedShotLT" ></dxi-column>
-     <dxi-column dataField="mk_delay"  cssClass="cell-highlightedDelay"> </dxi-column>
-     <dxi-column dataField="reason_delay" cssClass="cell-highlightedDelay" >
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_shortlt" cssClass="cell-highlightedShotLT" ></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_delay"  cssClass="cell-highlightedDelay"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_delay" cssClass="cell-highlightedDelay" >
        <dxo-lookup [dataSource]="rsdelayItem"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
      </dxi-column>
-     <dxi-column dataField="detail_delay" cssClass="cell-highlightedDelay" > </dxi-column>
-     <dxi-column dataField="mk_early" cssClass="cell-highlightedEarly"> </dxi-column>
-     <dxi-column dataField="reason_early"cssClass="cell-highlightedEarly" width=200px >
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_delay" cssClass="cell-highlightedDelay" > </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_early" cssClass="cell-highlightedEarly"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_early"cssClass="cell-highlightedEarly" width=200px >
        <dxo-lookup [dataSource]="rsearlyItem"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
      </dxi-column>
-     <dxi-column dataField="detail_early"cssClass="cell-highlightedEarly"> </dxi-column>
-     <dxi-column dataField="mk_dv" cssClass="cell-highlightedMKDV"></dxi-column>
-     <dxi-column dataField="detail_dv"cssClass="cell-highlightedMKDV" ></dxi-column>
-     <dxi-column dataField="mk_iv" cssClass="cell-highlightedMKIV"></dxi-column>
-     <dxi-column dataField="reason_iv" cssClass="cell-highlightedMKIV" > </dxi-column>
-     <dxi-column dataField="mk_ontime" cssClass="cell-highlightedMKONTIME" > </dxi-column>
-     <dxi-column dataField="status_reason" cellTemplate="cellStatus" cssClass="cell-highlightedMKONTIME"
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_early"cssClass="cell-highlightedEarly"> </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_dv" cssClass="cell-highlightedMKDV"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="detail_dv"cssClass="cell-highlightedMKDV" ></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_iv" cssClass="cell-highlightedMKIV"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_iv" cssClass="cell-highlightedMKIV" > </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="mk_ontime" cssClass="cell-highlightedMKONTIME" > </dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="status_reason" cellTemplate="cellStatus" cssClass="cell-highlightedMKONTIME"
        [fixed]="true" fixedPosition="right" [editorOptions]="{ readOnly:true}"  width=30>
        <dxo-lookup [dataSource]="status_Result"></dxo-lookup>
    </dxi-column>
      <div *dxTemplate="let cellf of 'cellStatus'">
        <div [ngClass] = "{ 'aok': cellf.text == 'OK', 'ang': cellf.text ==  'NG' }" >{{cellf.text}}</div>
    </div>
-     <dxi-column dataField="reason_rk"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedMKONTIME"></dxi-column>
+     <dxi-column headerCellTemplate="titleHeaderTemplate" dataField="reason_rk"  [editorOptions]="{ readOnly:true}" cssClass="cell-highlightedMKONTIME"></dxi-column>
 
      <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
    </dx-data-grid>
@@ -426,4 +436,34 @@
       </form>
       </dx-popup>
 </div>
+
+
+
+<dx-load-panel
+#loadPanel
+shadingColor="rgba(0,0,0,0.4)"
+[position]="{ of: '#gridContainer' }"
+[(visible)]="loadingVisible_domestic"
+[showIndicator]="true"
+[showPane]="true"
+[shading]="true"
+[closeOnOutsideClick]="false"
+(onShown)="onShown_domestic()"
+(onHidden)="onHidden_domestic()"
+>
+</dx-load-panel>
+
+<dx-load-panel
+#loadPanel
+shadingColor="rgba(0,0,0,0.4)"
+[position]="{ of: '#OverseagridContainer' }"
+[(visible)]="loadingVisible_oversea"
+[showIndicator]="true"
+[showPane]="true"
+[shading]="true"
+[closeOnOutsideClick]="false"
+(onShown)="onShown_oversea()"
+(onHidden)="onHidden_oversea()"
+>
+</dx-load-panel>
 

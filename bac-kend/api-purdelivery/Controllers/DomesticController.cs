@@ -20,18 +20,17 @@ namespace api_purdelivery.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class input_domesticController : ControllerBase
+    public class DomesticController : ControllerBase
     {
         private readonly IConfiguration _config;        
         private readonly DataBaseContext _context;
-        public input_domesticController(IConfiguration config,DataBaseContext context )
+        public DomesticController(IConfiguration config,DataBaseContext context )
         {
             _config = config;
             _context = context;
 
         }
-        // GET: api/input_domestic
-        [HttpGet("get_domestic")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<T_Domestic>>> GetT_Domestic()
         {
             return await _context.T_Domestic.ToListAsync();
@@ -39,20 +38,30 @@ namespace api_purdelivery.Controllers
         [HttpPost("gett_euc_domestic")]
         public async Task<ActionResult<IEnumerable<T_Domestic>>> GetT_EUC_Domestic(string dt)
         {
+            var exist = _context.T_Domestic.Any(e=>e.dt_acptc==dt);
+            Console.WriteLine(exist);
+            if(exist){
+                return Conflict("data is already exist");
+            }
+
             var Qry = "SELECT * FROM J302_PUR_DELIVERY WHERE DT_ACPTC = '"+ dt + "' ";
             var httpClient = new HttpClient();
-             Console.WriteLine(dt);
-              Console.WriteLine(Qry);
-                HttpContent body = new StringContent("{\"command\" : \"" + Qry + "\"} ", Encoding.UTF8, "application/json");
-                HttpResponseMessage data = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
-                //data.EnsureSuccessStatusCode();
-                var dataCallApi = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
-                string result = await data.Content.ReadAsStringAsync();
+            Console.WriteLine(dt);
+            Console.WriteLine(Qry);
+            HttpContent body = new StringContent("{\"command\" : \"" + Qry + "\"} ", Encoding.UTF8, "application/json");
+            HttpResponseMessage data = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
+            //data.EnsureSuccessStatusCode();
+            // var dataCallApi = await httpClient.PostAsync("http://cptsvs531:1000/middleware/oracle/euc", body);
+            string result = await data.Content.ReadAsStringAsync();
 
-                req_euc_302 dtEUC = JsonConvert.DeserializeObject<req_euc_302>(result.ToString());
-                List<data> DataVendor = new List<data>(dtEUC.data);
+            req_euc_302 dtEUC = JsonConvert.DeserializeObject<req_euc_302>(result.ToString());
+            List<data> DataVendor = new List<data>(dtEUC.data);
+
+
+            if(!(DataVendor.Count() > 0)){
+                return NotFound("not found domestic data");
+            }
               
-
             DataTable datatable = new DataTable();
 
            		        datatable.Columns.Add("cd_sply_class", typeof(string));
@@ -86,7 +95,7 @@ namespace api_purdelivery.Controllers
                         datatable.Columns.Add("cd_procur_person", typeof(string));
                         datatable.Columns.Add("no_ord_class", typeof(string));
                         datatable.Columns.Add("cm_coment", typeof(string));
-                        datatable.Columns.Add("cf_rpt_parts_ord", typeof(string));               
+                        datatable.Columns.Add("cf_rpt_parts_ord", typeof(string));              
                         datatable.Columns.Add("ck_shortlt1", typeof(string));
                         datatable.Columns.Add("ck_shortlt2", typeof(string));
                         datatable.Columns.Add("ck_eod", typeof(string));
@@ -106,67 +115,67 @@ namespace api_purdelivery.Controllers
                         datatable.Columns.Add("detail_dv", typeof(string));
                         datatable.Columns.Add("mk_iv", typeof(string));
                         datatable.Columns.Add("reason_iv", typeof(string));
-                        datatable.Columns.Add("mk_ontime", typeof(string));
+                        datatable.Columns.Add("mk_ontime", typeof(string));		
                         datatable.Columns.Add("upd_dt", typeof(string));		
                         datatable.Columns.Add("upd_by", typeof(string));
 
             foreach (data item in DataVendor)
             {
                 datatable.Rows.Add( 
-                        item.cd_sply_class,
-                        item.cd_sply,
-                        item.cd_sply_fact,
-                        item.cd_ord_class,
-                        item.no_po,
-                        item.no_split_deiv_sfx,
-                        item.no_parts,
-                        item.no_adj_dim,
-                        item.cd_process,
-                        item.no_draw,
-                        item.cd_chg_hist_all,
-                        item.dt_po,
-                        item.tm_po,
-                        item.qt_ord,
-                        item.dt_delv,
-                        item.tm_delv,
-                        item.dt_rec,
-                        item.tm_rec,
-                        item.qt_rec,
-                        item.dt_acptc,
-                        item.tm_acptc,
-                        item.qt_acptd,
-                        item.qt_ng,
-                        item.cd_delv_place,
-                        item.cd_destin,
-                        item.cd_use_block,
-                        item.cd_ord_resn,
-                        item.cd_insp_type_eiaj,
-                        item.cd_procur_person,
-                        item.no_ord_class,
-                        item.cm_coment,
-                        item.cf_rpt_parts_ord,
-                        item.ck_shortlt1,
-                        item.ck_shortlt2,
-                        item.ck_eod,
-                        item.early_dv,
-                        item.iv_term,
-                        item.tss_result,
-                        item.mk_shortlt,
-                        item.reason_shortlt,
-                        item.detail_shortlt,
-                        item.mk_delay,
-                        item.reason_delay,
-                        item.detail_delay,
-                        item.mk_early,
-                        item.reason_early,
-                        item.detail_early,
-                        item.mk_dv,	
-                        item.detail_dv,
-                        item.mk_iv,
-                        item.reason_iv,
-                        item.mk_ontime,
-                        item.upd_dt,		
-                        item.upd_by );
+                    item.cd_sply_class,
+                    item.cd_sply,
+                    item.cd_sply_fact,
+                    item.cd_ord_class,
+                    item.no_po,
+                    item.no_split_deiv_sfx,
+                    item.no_parts,
+                    item.no_adj_dim,
+                    item.cd_process,
+                    item.no_draw,
+                    item.cd_chg_hist_all,
+                    item.dt_po,
+                    item.tm_po,
+                    item.qt_ord,
+                    item.dt_delv,
+                    item.tm_delv,
+                    item.dt_rec,
+                    item.tm_rec,
+                    item.qt_rec,
+                    item.dt_acptc,
+                    item.tm_acptc,
+                    item.qt_acptd,
+                    item.qt_ng,
+                    item.cd_delv_place,
+                    item.cd_destin,
+                    item.cd_use_block,
+                    item.cd_ord_resn,
+                    item.cd_insp_type_eiaj,
+                    item.cd_procur_person,
+                    item.no_ord_class,
+                    item.cm_coment,
+                    item.cf_rpt_parts_ord,
+                    item.ck_shortlt1,
+                    item.ck_shortlt2,
+                    item.ck_eod,
+                    item.early_dv,
+                    item.iv_term,
+                    item.tss_result,
+                    item.mk_shortlt,
+                    item.reason_shortlt,
+                    item.detail_shortlt,
+                    item.mk_delay,
+                    item.reason_delay,
+                    item.detail_delay,
+                    item.mk_early,
+                    item.reason_early,
+                    item.detail_early,
+                    item.mk_dv,	
+                    item.detail_dv,
+                    item.mk_iv,
+                    item.reason_iv,
+                    item.mk_ontime,		
+                    item.upd_dt,			
+                    item.upd_by );
             }
             string SqlConnectionStr = _config.GetConnectionString("ConnStr109");
             using (SqlConnection destinationConnection = new SqlConnection(SqlConnectionStr))
@@ -233,7 +242,7 @@ namespace api_purdelivery.Controllers
                         destinationConnection.Close();
               }
             }
-
+                
             var someX = (from s in  _context.T_Domestic
                         where s.dt_acptc == dt && 
                         ( !string.IsNullOrEmpty(s.mk_shortlt) || 
@@ -253,7 +262,8 @@ namespace api_purdelivery.Controllers
                    
                     await  _context.T_Input_Domestic.AddAsync(newDT);
             }
-             await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync(); 
+             
 
             return Ok();
         }
@@ -275,7 +285,6 @@ namespace api_purdelivery.Controllers
             if(data.Early){ Qry = Qry +  " union " +  all_data +  " and mk_early is not null " ;}
             if(data.Early_over_month){ Qry =  Qry + " union " +  all_data +  " and mk_dv is not null " ;}
             if(data.IV_Term){ Qry = Qry +  " union " +  all_data +  " and mk_iv is not null " ;}
-            
             Console.WriteLine(Qry);
             List<T_Domestic> lst_domestic = new List<T_Domestic>();
             string SqlConnectionStr = _config.GetConnectionString("ConnStr109");

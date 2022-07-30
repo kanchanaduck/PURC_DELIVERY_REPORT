@@ -28,7 +28,7 @@
     "devextreme-schematics": "^1.2.24",
     "file-saver": "^2.0.5",
     "file-server": "^2.2.0",
-    "rxjs": "~6.6.0",
+    "rxjs": "^7.5.6",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.0",
     "zone.js": "~0.11.4"
@@ -43,7 +43,7 @@
     "devextreme-cli": "latest",
     "devextreme-themebuilder": "^21.2.5",
     "jasmine-core": "~3.8.0",
-    "karma": "~6.3.0",
+    "karma": "^6.3.20",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
