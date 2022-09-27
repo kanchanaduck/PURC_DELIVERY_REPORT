@@ -1,0 +1,724 @@
+
+<h3 class="content-block">Input reason PUR1, PUR2</h3>
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+
+    <dx-tab-panel>
+      <dxi-item title="Domestic">
+        <div *dxTemplate>
+          <div id="form-container1">
+            <dx-form 
+              #targetformTop1
+              id="form1" [colCount]="14"  validationGroup="groupName" [formData]="SearchPanelDomestic"
+              labelMode="floating">
+                <dxi-item
+                  dataField="buyer"
+                  caption="Label"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{ dataSource: buyers, searchEnabled: true, showClearButton: true}"
+                  [colSpan]="3"
+                ></dxi-item>
+                <dxi-item
+                  dataField="supplier"
+                  caption="Label"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{ dataSource: suppliers, searchEnabled: true, showClearButton: true}"
+                  [colSpan]="3"
+                ></dxi-item>
+                <dxi-item
+                  dataField="date_start"
+                  editorType="dxDateBox"
+                  [editorOptions]="{displayFormat:'yyyyMMdd'}"  
+                  [colSpan]="4"
+                ></dxi-item> 
+                <dxi-item
+                  dataField="date_end"
+                  editorType="dxDateBox"
+                  [editorOptions]="{displayFormat:'yyyyMMdd'}"  
+                  [colSpan]="4"
+                ></dxi-item>
+                
+                <dxi-item *ngFor="let item of conditionDomestic"
+                  [dataField]="item"
+                  [caption]="item"
+                  editorType="dxCheckBox"
+                  [editorOptions]="{value:false}"
+                  [colSpan]="2" 
+                  
+                ></dxi-item>
+
+                <dxi-item
+                  icon="download"
+                  itemType="button"
+                  [buttonOptions]="searchDomesticButtonOptions"
+                  [colSpan]="2">
+                </dxi-item>
+                  
+            </dx-form>
+          </div>
+          <hr>
+          <div class="btnreason">
+            <dx-button icon="fieldchooser" text="Input reason multiple item" (onClick)="showInfoDomestic($event)"
+              stylingMode="contained" type="warning" [visible]="is_buyer">
+            </dx-button>
+            <dx-drop-down-button icon="airplane" text="Go to" (onItemClick)="go_to_domestic($event)"
+              stylingMode="outlined" type="success" [items]="gotoButton" keyExpr="text">
+            </dx-drop-down-button>
+            <dx-button *ngFor="let item of checked" icon="todo" text="{{ item.role }} Check" (onClick)="showInfoDomestic($event, item.role)"
+              stylingMode="contained" type="warning" [visible]="item.visible">
+            </dx-button>
+          </div>
+          <dx-data-grid
+            #targetDataGridDomestic
+            id="gridContainer"
+            height="560"
+            [dataSource]="dataSourceDomestic"
+            [columnAutoWidth]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [repaintChangesOnly]="true"
+            (onExporting)="onExporting($event)"
+            (onSelectionChanged)="selectionChanged($event)" 
+          >
+          <dxo-filter-row [visible]="true" [applyFilter]="currentFilter"></dxo-filter-row>
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+          <dxo-scrolling mode="virtual"></dxo-scrolling>
+          <dxo-editing
+            mode="batch"
+            [allowUpdating]="true"
+            [allowAdding]="false"
+            [allowDeleting]="false"
+            [selectTextOnEditStart]="selectTextOnEditStart"
+            [startEditAction]="startEditAction"
+          >
+          </dxo-editing>
+          <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true" ></dxo-column-chooser>
+          <dxo-selection mode="multiple"></dxo-selection>
+          <dxi-column dataField="id" caption="ID" [fixed]="true"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_sply_class" caption="CD_SPLY_CLASS"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_sply" caption="CD_SPLY" [fixed]="true" cssClass="cell-highlightedGreenYellow"
+            [allowEditing]="false"></dxi-column>
+            <dxi-column dataField="no_arrange" caption="NO_ARRANGE" 
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_po" caption="NO_PO" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT"
+            [allowEditing]="false"  [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="no_parts" caption="NO_PARTS" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_process" caption="CD_PROCESS" 
+          [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_draw" caption="NO_DRAW" 
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_chg_hist_all" caption="CD_CHG_HIST_ALL"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="dt_po" caption="DT_PO" cssClass="cell-highlightedKhaki"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="tm_po" caption="TM_PO"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="qt_ord" caption="QT_ORD"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="dt_delv" caption="DT_DELV" cssClass="cell-highlightedKhaki"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="tm_delv" caption="TM_DELV"
+            [allowEditing]="false"> </dxi-column>
+          <dxi-column dataField="dt_rec" caption="DT_REC" cssClass="cell-highlightedKhaki"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="tm_rec" caption="TM_REC" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="qt_rec" caption="QT_REC" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="dt_acptc" caption="DT_ACPTC"  cssClass="cell-highlightedKhaki"
+          [allowEditing]="false" ></dxi-column>
+          <dxi-column dataField="tm_acptc" caption="TM_ACPTC" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="qt_acptd" caption="QT_ACPTD" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="qt_ng" caption="QT_NG" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_delv_place" caption="CD_DELV_PLACE"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_destin" caption="CD_DESTIN"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_use_block" caption="CD_USE_BLOCK" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_ord_resn" caption="CD_ORD_RESN" 
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_insp_type_eiaj" caption="CD_INSP_TYPE_EIAJ" 
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cd_procur_person" caption="CD_PROCUR_PERSON" cssClass="cell-highlightedGreenYellow"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_ord_class" caption="NO_ORD_CLASS" 
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="cf_sply_type" caption="CF_SPLY_TYPE"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="nm_parts_eng" caption="NM_PARTS_ENG"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_kind_parts" caption="CD_KIND_PARTS" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_ctry_orig" caption="CD_CTRY_ORIG" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="mk_import_item" caption="MK_IMPORT_ITEM" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cf_transp_meth" caption="CF_TRANSP_METH" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cm_coment" caption="CM_COMENT" cssClass="cell-highlightedComent"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cf_child_base" caption="CF_CHILD_BASE" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_po_legacy" caption="NO_PO_LEGACY" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cf_rpt_parts_ord" caption="CF_RPT_PARTS_ORD" [visible]="showMoreDomestic"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="dt_entry" caption="DT_ENTRY" [visible]="showMoreDomestic"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="nm_entry_person" caption="NM_ENTRY_PERSON" [visible]="showMoreDomestic"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="dt_renew" caption="DT_RENEW" [visible]="showMoreDomestic"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="nm_renew_person" caption="NM_RENEW_PERSON" [visible]="showMoreDomestic"
+            [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
+          <dxi-column dataField="nm_sply_eng" caption="NM_SPLY_ENG" [visible]="showMoreDomestic"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="remark" caption="REMARK" cssClass="cell-highlightedRemark"></dxi-column>
+          <dxi-column dataField="ck_shortlt1" caption="CK_SHORTLT1"
+            [allowEditing]="false" cssClass="cell-highlightedCheckShort"> </dxi-column>
+          <dxi-column dataField="ck_shortlt2" caption="CK_SHORTLT2"
+            [allowEditing]="false" cssClass="cell-highlightedCheckShort"> </dxi-column>
+          <dxi-column dataField="ck_eod" caption="CHECK_EARLY_ONTIME_DELAY"  
+            [allowEditing]="false" cssClass="cell-highlightedCheckEarly"></dxi-column>
+          <dxi-column dataField="early_dv" caption="EARLY_DV_OVER_MONTH" 
+            [allowEditing]="false" cssClass="cell-highlightedCheckEarly"></dxi-column>
+          <dxi-column dataField="iv_term"  caption="IV_TERM"
+            [allowEditing]="false" cssClass="cell-highlightedIV" > </dxi-column>
+          <dxi-column dataField="tss_result" caption="TSS_RESULT"
+            cssClass="cell-highlightedTSS" [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="tss_result" ></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="mk_shortlt" caption="MK_SHORTLT" [allowEditing]="false"
+            cssClass="cell-highlightedShotLT">    
+          </dxi-column>
+          <dxi-column dataField="reason_shortlt" caption="REASON_SHORTLT" cssClass="cell-highlightedShotLT" width="180px"
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_domestic_shortlt"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_shortlt" caption="DETAIL_SHORTLT"
+            cssClass="cell-highlightedShotLT" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_delay" caption="MK_DELAY" [allowEditing]="false"
+            cssClass="cell-highlightedDelay"> </dxi-column>
+          <dxi-column dataField="reason_delay" caption="REASON_DELAY" cssClass="cell-highlightedDelay" width="180px" 
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_domestic_delay" valueExpr="reason"  displayExpr="reason"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_delay" caption="DETAIL_DELAY"
+            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_early" caption="MK_EARLY" [allowEditing]="false"
+            cssClass="cell-highlightedEarly"></dxi-column>
+          <dxi-column dataField="reason_early" caption="REASON_EARLY" cssClass="cell-highlightedEarly" width=180px 
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_domestic_early"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_early" caption="DETAIL_EARLY"
+            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_dv" caption="MK_DV" [allowEditing]="false"
+            cssClass="cell-highlightedMKDV"></dxi-column>
+          <dxi-column dataField="detail_dv" caption="DETAIL_DV"
+            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_iv"  caption="MK_IV" [allowEditing]="false"
+            cssClass="cell-highlightedMKIV"></dxi-column>
+          <dxi-column dataField="reason_iv" caption="REASON_IV"
+            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_ontime" caption="MK_ONTIME"
+            [allowEditing]="false" cssClass="cell-highlightedMKONTIME"></dxi-column>
+          <dxi-column dataField="other_result" caption="OTHER_DEPT_CHECK" [allowEditing]="is_other"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="leader_result" caption="LEADER_CHECK"  [allowEditing]="is_leader"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="manager_result" caption="MANAGER_CHECK" [allowEditing]="is_manager"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="purc_result" caption="PURC_CHECK" [allowEditing]="is_purc"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+          <div *dxTemplate="let cellf of 'cellStatus'">
+            <div [ngClass] = "{ 'aok': cellf.text == 'OK', 'ang': cellf.text ==  'NG' }" >{{cellf.text}}</div>
+          </div>
+          <dxo-summary>
+            <dxi-total-item
+              column="no_po"
+              summaryType="count"
+            >
+            </dxi-total-item>
+          </dxo-summary>
+        </dx-data-grid>
+        <p>Count: {{countRowsDomestic }}</p>
+      </div>
+      </dxi-item> >
+      <dxi-item title="Oversea">
+        <div *dxTemplate>
+          <div id="form-container2">
+            <dx-form 
+              #targetformTop2
+              id="form2" [colCount]="14"  validationGroup="groupName" [formData]="SearchPanelOversea"
+              labelMode="floating">
+                <dxi-item
+                  dataField="buyer"
+                  caption="Label"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{ dataSource: buyers, searchEnabled: true, showClearButton: true}"
+                  [colSpan]="3"
+                ></dxi-item>
+                <dxi-item
+                  dataField="supplier"
+                  caption="Label"
+                  editorType="dxSelectBox"
+                  [editorOptions]="{ dataSource: suppliers, searchEnabled: true, showClearButton: true}"
+                  [colSpan]="3"
+                ></dxi-item>
+                <dxi-item
+                  dataField="date_start"
+                  editorType="dxDateBox"
+                  [editorOptions]="{displayFormat:'yyyyMMdd'}"  
+                  [colSpan]="4"
+                ></dxi-item> 
+                <dxi-item
+                  dataField="date_end"
+                  editorType="dxDateBox"
+                  [editorOptions]="{displayFormat:'yyyyMMdd'}"  
+                  [colSpan]="4"
+                ></dxi-item>
+                
+                <dxi-item *ngFor="let item of conditionOversea"
+                  [dataField]="item"
+                  [caption]="item"
+                  editorType="dxCheckBox"
+                  [editorOptions]="{value:false}"
+                  [colSpan]="2" 
+                  
+                ></dxi-item>
+
+                <dxi-item
+                  icon="download"
+                  itemType="button"
+                  [buttonOptions]="searchOverseaButtonOptions"
+                  [colSpan]="2">
+                </dxi-item>
+                  
+            </dx-form>
+          </div>
+          <hr>
+          <div class="btnreason">
+            <dx-button icon="fieldchooser" text="Input reason multiple item" (onClick)="showInfoOversea($event)"
+              stylingMode="contained" type="warning" [visible]="is_buyer">
+            </dx-button>
+            <dx-drop-down-button icon="airplane" text="Go to" (onItemClick)="go_to_oversea($event)"
+              stylingMode="outlined" type="success" [items]="gotoButton" keyExpr="text">
+            </dx-drop-down-button>
+            <dx-button *ngFor="let item of checked" icon="todo" text="{{ item.role }} Check" (onClick)="showInfoDomestic($event, item.role)"
+              stylingMode="contained" type="warning" [visible]="item.visible">
+            </dx-button>
+          </div> 
+          <dx-data-grid
+            #targetDataGridOversea
+            id="gridContainer2"
+            height="560"
+            [dataSource]="dataSourceOversea"
+            [columnAutoWidth]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [repaintChangesOnly]="true"
+            (onExporting)="onExporting($event)"
+            (onSelectionChanged)="selectionChanged($event)" 
+          >
+          <dxo-filter-row [visible]="true" [applyFilter]="currentFilter"></dxo-filter-row>
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+          <dxo-scrolling mode="virtual"></dxo-scrolling>
+          <dxo-editing
+            mode="batch"
+            [allowUpdating]="true"
+            [allowAdding]="false"
+            [allowDeleting]="false"
+            [selectTextOnEditStart]="selectTextOnEditStart"
+            [startEditAction]="startEditAction"
+          >
+          </dxo-editing>
+          <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true" ></dxo-column-chooser>
+          <dxo-selection mode="multiple"></dxo-selection>
+          <dxi-column dataField="id" caption="ID" [fixed]="true"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_sply_class" caption="CD_SPLY_CLASS" [fixed]="true"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_fact" caption="CD_FACT" [fixed]="true" cssClass="cell-highlightedGreenYellow"
+            [editorOptions]="{ readOnly:true }"></dxi-column>
+          <dxi-column dataField="cd_sply" caption="CD_SPLY" [fixed]="true"
+            [allowEditing]="false"></dxi-column>
+            <dxi-column dataField="no_arrange" caption="NO_ARRANGE" [fixed]="true"
+            [editorOptions]="{ readOnly:true }" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_po" caption="NO_PO" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_cust_clea" caption="NO_CUST_CLEA" 
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_invoice" caption="NO_INVOICE" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_parts" caption="NO_PARTS" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cd_process" caption="CD_PROCESS" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="no_draw" caption="NO_DRAW" 
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_chg_hist_all" caption="CD_CHG_HIST_ALL"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_chg_hist" caption="NO_CHG_HIST"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_chg_hist_sfx" caption="NO_CHG_HIST_SFX"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="no_invent_cntl_poi" caption="NO_INVENT_CNTL_POI"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="dt_po" caption="DT_PO" cssClass="cell-highlightedBlue"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="tm_po" caption="TM_PO"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="qt_ord" caption="QT_ORD"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="dt_delv" caption="DT_DELV"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="tm_delv" caption="TM_DELV"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="dt_delv_estim" caption="DT_DELV_ESTIM"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="dt_delv_dirct" caption="DT_DELV_DIRCT"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="qt_delv_dirct" caption="QT_DELV_DIRCT"	
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="dt_delv_bal" caption="DT_DELV_BAL" cssClass="cell-highlightedBlue"
+            [allowEditing]="false"> </dxi-column>
+          <dxi-column dataField="dt_rec" caption="DT_REC"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="tm_rec" caption="TM_REC" 
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="qt_rec" caption="QT_REC" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="qt_und_insp" caption="QT_UND_INSP"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="qt_climacs_insp" caption="QT_UND_INSP"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="qt_ng" caption="QT_NG"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cr_delv_lot" caption="CR_DELV_LOT"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="qt_insp_cmpl" caption="QT_INSP_CMPL"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_delv_place" caption="CD_DELV_PLACE"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_delv_place_offici" caption="CD_DELV_PLACE_OFFICI"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_destin" caption="CD_DESTIN"
+            [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_use_block" caption="CD_USE_BLOCK"
+            [allowEditing]="false"></dxi-column>	
+          <dxi-column dataField="cd_piece" caption="CD_PIECE"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_insp_type_eiaj" caption="CD_INSP_TYPE_EIAJ"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_procur_person" caption="CD_PROCUR_PERSON"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>
+          <dxi-column dataField="cd_estim_person" caption="CD_ESTIM_PERSON" cssClass="cell-highlightedGreenYellow"
+            [allowEditing]="false" ></dxi-column>	
+          <dxi-column dataField="cf_rpt_parts_ord" caption="CF_RPT_PARTS_ORD"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_curr" caption="CD_CURR"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="no_ord_class" caption="NO_ORD_CLASS"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cf_sply_type" caption="CF_SPLY_TYPE"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="nm_parts_eng" caption="NM_PARTS_ENG"
+            [allowEditing]="false"></dxi-column>	
+          <dxi-column datafield="cd_kind_parts" caption="CD_KIND_PARTS"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column datafield="cd_ctry_orig" caption="CD_CTRY_ORIG"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column datafield="cd_cosmos_maker" caption="CD_COSMOS_MAKER"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column datafield="cm_coment" caption="CM_COMENT"
+            [allowEditing]="false"></dxi-column>	
+          <dxi-column datafield="cf_child_base" caption="CF_CHILD_BASE"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="dt_oblig_purch" caption="DT_OBLIG_PURCH"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="no_container" caption="NO_CONTAINER"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="dt_entry" caption="DT_ENTRY"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="nm_entry_person" caption="NM_ENTRY_PERSON"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="dt_renew" caption="DT_RENEW"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="nm_renew_person" caption="NM_RENEW_PERSON"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="cd_ord_resn" caption="CD_ORD_RESN"
+            [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>	
+          <dxi-column dataField="nm_sply_eng" caption="NM_SPLY_ENG"
+            [allowEditing]="false"></dxi-column>	
+          <dxi-column dataField="remark" caption="REMARK" cssClass="cell-highlightedRemark"></dxi-column>
+          <dxi-column dataField="ck_shortlt1" caption="CK_SHORTLT1"
+            [allowEditing]="false" cssClass="cell-highlightedCheckShort"> </dxi-column>
+          <dxi-column dataField="ck_shortlt2" caption="CK_SHORTLT2"
+            [allowEditing]="false" cssClass="cell-highlightedCheckShort"> </dxi-column>
+          <dxi-column dataField="ck_eod" caption="CHECK_EARLY_ONTIME_DELAY"  
+            [allowEditing]="false" cssClass="cell-highlightedCheckEarly"></dxi-column>
+          <dxi-column dataField="early_dv" caption="EARLY_DV_OVER_MONTH" 
+            [allowEditing]="false" cssClass="cell-highlightedCheckEarly"></dxi-column>
+          <dxi-column dataField="iv_term"  caption="IV_TERM"
+            [allowEditing]="false" cssClass="cell-highlightedIV" > </dxi-column>
+          <dxi-column dataField="tss_result" caption="TSS_RESULT" [allowEditing]="is_buyer"
+            cssClass="cell-highlightedTSS">
+            <dxo-lookup [dataSource]="tss_result" ></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="mk_shortlt" caption="MK_SHORTLT" [allowEditing]="false"
+            cssClass="cell-highlightedShotLT">    
+          </dxi-column>
+          <dxi-column dataField="reason_shortlt" caption="REASON_SHORTLT" cssClass="cell-highlightedShotLT" width="180px"
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_oversea_shortlt"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_shortlt" caption="DETAIL_SHORTLT"
+            cssClass="cell-highlightedShotLT" ></dxi-column>
+          <dxi-column dataField="mk_delay"  caption="MK_DELAY" [allowEditing]="false"
+            cssClass="cell-highlightedDelay"> </dxi-column>
+          <dxi-column dataField="reason_delay" caption="REASON_DELAY" cssClass="cell-highlightedDelay" width="180px" 
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_oversea_delay" valueExpr="reason"  displayExpr="reason"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_delay" caption="DETAIL_DELAY"
+            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_early" caption="MK_EARLY" [allowEditing]="false"
+            cssClass="cell-highlightedEarly"></dxi-column>
+          <dxi-column dataField="reason_early" caption="REASON_EARLY" cssClass="cell-highlightedEarly" width=180px 
+            [allowEditing]="is_buyer">
+            <dxo-lookup [dataSource]="reason_oversea_early"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="detail_early" caption="DETAIL_EARLY"
+            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_dv" caption="MK_DV" [allowEditing]="false"
+            cssClass="cell-highlightedMKDV"></dxi-column>
+          <dxi-column dataField="detail_dv" caption="DETAIL_DV"
+            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_iv"  caption="MK_IV" [allowEditing]="false"
+            cssClass="cell-highlightedMKIV"></dxi-column>
+          <dxi-column dataField="reason_iv" caption="REASON_IV"
+            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer"></dxi-column>
+          <dxi-column dataField="mk_ontime" caption="MK_ONTIME"
+            [allowEditing]="false" cssClass="cell-highlightedMKONTIME"></dxi-column>
+          <dxi-column dataField="other_result" caption="OTHER_DEPT_CHECK" [allowEditing]="is_other"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="leader_result" caption="LEADER_CHECK"  [allowEditing]="is_leader"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="manager_result" caption="MANAGER_CHECK" [allowEditing]="is_manager"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxi-column dataField="purc_result" caption="PURC_CHECK" [allowEditing]="is_purc"
+            cellTemplate="cellStatus">
+            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+          </dxi-column>
+          <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+          <div *dxTemplate="let cellf of 'cellStatus'">
+            <div [ngClass] = "{ 'aok': cellf.text == 'OK', 'ang': cellf.text ==  'NG' }" >{{cellf.text}}</div>
+          </div>
+          <dxo-summary>
+            <dxi-total-item
+              column="ID"
+              summaryType="count"
+            >
+            </dxi-total-item>
+          </dxo-summary>
+          </dx-data-grid>
+          
+          <p>Count: {{countRowsOversea }}</p>
+        </div>
+      </dxi-item>
+    </dx-tab-panel>
+
+  </div> 
+</div> 
+    
+
+<dx-popup
+  #domesticInputMultipleReason
+  [width]="600"
+  [height]="550"
+  [showTitle]="true"
+  title="Domestic: input reason multiple item"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  container=".dx-viewport"
+  [(visible)]="popupDomesticVisible">
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="submitButtonDomesticOptions">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonDomesticOptions">
+  </dxi-toolbar-item>
+  <form >
+    <div *dxTemplate="let data of 'content'">
+			<dx-form id="reasonFormDomestic" #reasonFormDomestic [formData]="reasonFormDomestic">
+				<dxi-item itemType="group" cssClass="first-group" [colCount]="4">
+					<dxi-item itemType="group" [colSpan]="4">
+						<dxi-item
+							dataField="tss_result"
+							editorType="dxSelectBox"
+							[editorOptions]="{ items: tss_result }">
+						</dxi-item>
+						<dxi-item dataField="reason_shortlt"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_domestic_shortlt, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_shortlt"></dxi-item>
+						<dxi-item
+							dataField="reason_delay"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_domestic_delay, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_delay"></dxi-item>
+						<dxi-item
+							dataField="reason_early"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_domestic_early, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_early"></dxi-item>
+						<dxi-item dataField="detail_over_month" ></dxi-item>
+						<dxi-item dataField="reason_iv"></dxi-item>
+					</dxi-item>
+				</dxi-item>
+			</dx-form>
+      </div>
+  </form>
+</dx-popup>
+
+
+
+
+<dx-popup
+  [width]="300"
+  [height]="150"
+  [showTitle]="true"
+  title="{{ domestic_who_check }} check"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [showCloseButton]="false"
+  container=".dx-viewport"
+  [(visible)]="popupCheckDomesticVisible">
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="okCheckButtonDomestic">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="ngCheckButtonDomestic">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeCheckButtonDomestic"
+  >
+  </dxi-toolbar-item>
+  <dxo-position at="center" my="center"> </dxo-position>
+  <div *dxTemplate="let data of 'content'">
+    <p>Please select checked result with {{ countRowsDomesticChecked }} rows.</p>
+  </div>
+</dx-popup>
+
+<dx-popup
+  [width]="300"
+  [height]="150"
+  [showTitle]="true"
+  title="{{ oversea_who_check }} check"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [showCloseButton]="false"
+  container=".dx-viewport"
+  [(visible)]="popupCheckOverseaVisible">
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="okCheckButtonOversea">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="ngCheckButtonOversea">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeCheckButtonOversea"
+  >
+  </dxi-toolbar-item>
+  <dxo-position at="center" my="center"> </dxo-position>
+  <div *dxTemplate="let data of 'content'">
+    <p>Please select checked result with {{ countRowsOverseaChecked }} rows.</p>
+  </div>
+</dx-popup>

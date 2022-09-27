@@ -1,0 +1,149 @@
+<!-- <h2 class="content-block">Input Dl3 Evalio</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+        <dx-toolbar>
+            <dxi-item location="center" widget="dxButton" locateInMenu="never">
+              <div *dxTemplate>
+                <div class="toolbar-label"><b>Delivery Control Evalio</b></div>
+              </div>
+            </dxi-item>
+            <dxi-item
+              location="after"
+              widget="dxSelectBox"
+              locateInMenu="auto"
+              [options]="selectBoxOptions"
+            >
+            </dxi-item>
+    
+          </dx-toolbar>
+
+            <dx-data-grid
+            id="gridContainer"
+            [dataSource]="evalio"
+            [columnAutoWidth]="true"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [repaintChangesOnly]="true"
+            (onSelectionChanged)="selectionChanged($event)"
+            (onExporting)="onExporting($event)"
+          >
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-search-panel
+          [visible]="true"
+          [width]="240"
+          placeholder="Search..."
+        ></dxo-search-panel>
+          <dxo-paging [pageSize]="15"></dxo-paging>
+          <dxo-pager
+            [showPageSizeSelector]="true"
+            [allowedPageSizes]="[10,50,100]"
+          ></dxo-pager>
+          <dxo-editing mode="batch" [allowUpdating]="true">
+          </dxo-editing>
+          <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+          <dxo-selection mode="multiple"></dxo-selection>
+            <dxi-column dataField="pr_no"
+            [editorOptions]="{ readOnly:true }"
+            >
+            </dxi-column>
+            <dxi-column dataField="po_no"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="issuedate"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="delivery_date"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="today"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="delay"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="lt"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="resp_suppliercpt"  [editorOptions]="{ readOnly: !editable }" 
+              cssClass="cell-highlighted"
+              caption="Response by Supplier/CPT"
+              [width]="250">
+            <dxo-lookup [dataSource]="reason_evalio" displayExpr="reason" valueExpr="reason">
+            </dxo-lookup>
+            </dxi-column>
+            <dxi-column dataField="remark_and_reason" 
+            caption="Remark and Reason"
+            [width]="250"
+            cssClass="cell-highlightedRemark"
+            [editorOptions]="{ readOnly: editable }">
+            </dxi-column>
+            <dxi-column dataField="no"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="item"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="item_name"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="quantity"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="remain"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="unit"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="unit_price"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="currency"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="vendor_code"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="vendor_name"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="prepareby"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="center_code"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="center_name"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="expense_code"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxi-column dataField="equip_budget_code"
+            [editorOptions]="{ readOnly:true}"
+            >
+            </dxi-column>
+            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+          </dx-data-grid>
+    </div>
+</div>

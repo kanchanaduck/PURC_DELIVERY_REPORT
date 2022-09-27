@@ -1,0 +1,56 @@
+<h3 class="content-block">Pull data PUR1, PUR2 from EUC</h3>
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+    <dx-box direction="row">
+      <dxi-item class="box-item" [ratio]="1"> 
+        <dx-form #form_domestic [formData]="date" [colCount]="8">
+          <dxi-item
+            itemType="empty"
+            [colSpan]="1"
+          ></dxi-item> 
+          <dxi-item
+            dataField="domestic"
+            editorType="dxDateBox"
+            [editorOptions]="{displayFormat:'yyyyMMdd'}"   
+            [colSpan]="6"
+          ></dxi-item> 
+          <dxi-item
+            icon="download"
+            itemType="button"
+            [buttonOptions]="buttonOptions1" 
+            [colSpan]="1"
+          ></dxi-item> 
+        </dx-form> 
+      </dxi-item>
+      <dxi-item class="box-item" [ratio]="1"> 
+        <dx-form id="form_oversea" [formData]="date" [colCount]="8">
+          <dxi-item
+            itemType="empty"
+            [colSpan]="1"
+          ></dxi-item> 
+          <dxi-item
+            dataField="oversea"
+            editorType="dxDateBox"
+            [editorOptions]="{displayFormat:'yyyyMMdd'}"   
+            [colSpan]="6"
+          ></dxi-item> 
+          <dxi-item
+            icon="download"
+            itemType="button"
+            [buttonOptions]="buttonOptions2" 
+            [colSpan]="1"
+          ></dxi-item> 
+        </dx-form> 
+      </dxi-item>
+    </dx-box>
+
+
+  </div>
+</div>
+
+
+<dx-load-panel
+    [hideOnOutsideClick]="true"
+    [(visible)]="isLoadPanelVisible"
+    (onShown)="onShown()">
+</dx-load-panel>

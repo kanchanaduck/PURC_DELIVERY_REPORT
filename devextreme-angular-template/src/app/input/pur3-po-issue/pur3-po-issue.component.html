@@ -1,0 +1,166 @@
+
+<!-- <h2 class="content-block">PO Issued</h2> -->
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+    <dx-toolbar>
+      <!-- <dxi-item location="before" widget="dxButton" locateInMenu="auto" [options]="refreshButtonOptions">
+      </dxi-item> -->
+      <dxi-item location="center" widget="dxButton" locateInMenu="never">
+        <div *dxTemplate>
+          <div class="toolbar-label"><b>PO issued</b></div>
+        </div>
+      </dxi-item>
+      <dxi-item location="after" widget="dxSelectBox" locateInMenu="auto" [options]="selectBoxOptions">
+      </dxi-item>
+    </dx-toolbar>
+
+    <!-- <dx-data-grid id="gridContainer" [dataSource]="POIssue" [columnAutoWidth]="true" [showBorders]="true"
+      [rowAlternationEnabled]="true" [repaintChangesOnly]="true" 
+      (onExporting)="onExporting($event)"
+      height="650"
+      > -->
+      <dx-data-grid
+      #griddomestic
+      id="gridContainer"
+      [dataSource]="POIssue"
+      [columnAutoWidth]="true"
+      [showBorders]="true"
+      [rowAlternationEnabled]="true"
+      [repaintChangesOnly]="true"
+      (onExporting)="onExporting($event)"
+      height="600"
+    >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+      <dxi-column dataField="item_name" ></dxi-column>
+      <dxi-column dataField="requested_quantity"></dxi-column>
+      <dxi-column dataField="unit_price"></dxi-column>
+      <dxi-column dataField="item_code"></dxi-column>
+      <dxi-column dataField="expense_from"></dxi-column>
+      <dxi-column dataField="account_code"></dxi-column>
+      <dxi-column dataField="expense_item"></dxi-column>
+      <dxi-column dataField="control"></dxi-column>
+      <dxi-column dataField="unit_order"></dxi-column>
+      <dxi-column dataField="supplier_code"></dxi-column>
+      <dxi-column dataField="supplier_name"></dxi-column>
+      <dxi-column dataField="req_code"></dxi-column>
+      <dxi-column dataField="req_info"></dxi-column>
+      <dxi-column dataField="req_email"></dxi-column>
+      <dxi-column dataField="req_date"></dxi-column>
+      <dxi-column dataField="approver_info"></dxi-column>
+      <dxi-column dataField="req_receive_date"></dxi-column>
+      <dxi-column dataField="order_date"  cssClass="cell-highlightedCheck"></dxi-column>
+      <dxi-column dataField="order_number"></dxi-column>
+      <dxi-column dataField="budget_code"></dxi-column>
+      <dxi-column dataField="asset_code"></dxi-column>
+      <dxi-column dataField="usage_at"></dxi-column>
+      <dxi-column dataField="receive_at"></dxi-column>
+      <dxi-column dataField="req_due_date"></dxi-column>
+      <dxi-column dataField="delivery_date"></dxi-column>
+      <dxi-column dataField="model"></dxi-column>
+      <dxi-column dataField="inspection_category"></dxi-column>
+      <dxi-column dataField="approved_req_amount"></dxi-column>
+      <dxi-column dataField="ordered_quantity"></dxi-column>
+      <dxi-column dataField="finish_flag"></dxi-column>
+      <dxi-column dataField="maker_name"></dxi-column>
+      <dxi-column dataField="contact_person"></dxi-column>
+      <dxi-column dataField="amount_delivered"></dxi-column>
+      <dxi-column dataField="ok_amount"></dxi-column>
+      <dxi-column dataField="ng_amount"></dxi-column>
+      <dxi-column dataField="cancel_date"></dxi-column>
+      <dxi-column dataField="temporary_unit_price_flag"></dxi-column>
+      <dxi-column dataField="temporary_unit_price"></dxi-column>
+      <dxi-column dataField="standard_unit_price"></dxi-column>
+      <dxi-column dataField="check"  cssClass="cell-highlightedCheck"></dxi-column>
+      <dxi-column dataField="req_unit"></dxi-column>
+      <dxi-column dataField="req_company_code"></dxi-column>
+      <dxi-column dataField="ordered_company_code"></dxi-column>
+      <dxi-column dataField="company_pic_receiving"></dxi-column>
+      <dxi-column dataField="company_pic_inspection"></dxi-column>
+      <dxi-column dataField="quotation_no"></dxi-column>
+      <dxi-column dataField="full_po_no"></dxi-column>
+      <dxi-column dataField="full_order_no"></dxi-column>
+      <dxi-column dataField="full_maker_code"></dxi-column>
+      <dxi-column dataField="full_budget_code"></dxi-column>
+      <dxi-column dataField="full_buyer_code"></dxi-column>
+      <dxi-column dataField="chemical_subs_no"></dxi-column>
+      <dxi-column dataField="unspsc_code"></dxi-column>
+      <dxi-column dataField="supp_selection_reason_code"></dxi-column>
+      <dxi-column dataField="unit_price_reason_code"></dxi-column>
+      <dxi-column dataField="standard_unit_price_code"></dxi-column>
+      <dxi-column dataField="buyer_name"></dxi-column>
+      <dxi-column dataField="order_approver1" ></dxi-column>
+      <dxi-column dataField="order_approver2"></dxi-column>
+      <dxi-column dataField="order_approver3"></dxi-column>
+      <dxi-column dataField="order_approver4"></dxi-column>
+      <dxi-column dataField="pr_approve_date"></dxi-column>
+      <dxi-column dataField="rfq1"></dxi-column>
+      <dxi-column dataField="rfq2"></dxi-column>
+      <dxi-column dataField="rfq3"></dxi-column>
+      <dxi-column dataField="attached_file_flag"></dxi-column>
+      <dxi-column dataField="attached_file_name"></dxi-column>
+      <dxi-column dataField="subcontract_class"></dxi-column>
+      <dxi-column dataField="order_reason_class"></dxi-column>
+      <dxi-column dataField="install_adjust_flag"></dxi-column>
+      <dxi-column dataField="receipt_regis_date"></dxi-column>
+      <dxi-column dataField="receipt_regis_quantity"></dxi-column>
+      <dxi-column dataField="receipt_regis_person"></dxi-column>
+      <dxi-column dataField="approver_msg1"></dxi-column>
+      <dxi-column dataField="approver_msg2"></dxi-column>
+      <dxi-column dataField="receiving_creat_date"></dxi-column>
+      <dxi-column dataField="inspec_receive_creat_date"></dxi-column>
+      <dxi-column dataField="receive_creat_pic"></dxi-column>
+      <dxi-column dataField="inspec_receive_pic"></dxi-column>
+      <dxi-column dataField="update_date"></dxi-column>
+      <dxi-column dataField="update_person"></dxi-column>
+      <dxi-column dataField="creation_date"></dxi-column>
+      <dxi-column dataField="creation_person"></dxi-column>
+      <dxi-column dataField="order_sheet_output_class"></dxi-column>
+      <dxi-column dataField="dept_incharge_code"></dxi-column>
+      <dxi-column dataField="currency_code"></dxi-column>
+      <dxi-column dataField="accounting_month"></dxi-column>
+      <dxi-column dataField="req_compny_name"></dxi-column>
+      <dxi-column dataField="ordered_person_name"></dxi-column>
+      <dxi-column dataField="receive_pic_name"></dxi-column>
+      <dxi-column dataField="inspec_pic_name"></dxi-column>
+      <dxi-column dataField="catalog_validity"></dxi-column>
+      <dxi-column dataField="full_quotation_no"></dxi-column>
+      <dxi-column dataField="full_quotation_replyno"></dxi-column>
+      <dxi-column dataField="quotation_req_date"></dxi-column>
+      <dxi-column dataField="quotation_reply_date"></dxi-column>
+      <dxi-column dataField="officlal_unitprice_changeplan_date"></dxi-column>
+      <dxi-column dataField="maximum_unit_price"></dxi-column>
+      <dxi-column dataField="direct_delivery_class"></dxi-column>
+      <dxi-column dataField="order_lead_time"></dxi-column>
+      <dxi-column dataField="supp_comment"></dxi-column>
+      <dxi-column dataField="inspec_timeday"></dxi-column>
+      <dxi-column dataField="unit_price_reply_quotation"></dxi-column>
+      <dxi-column dataField="lead_time_reply_quotation"></dxi-column>
+      <dxi-column dataField="supp_reply_quotation"></dxi-column>
+      <dxi-column dataField="order_cheapest_supp_quotation"></dxi-column>
+      <dxi-column dataField="inspec_creditdebit_approver"></dxi-column>
+      <dxi-column dataField="delivery_time_flag"></dxi-column>
+      <dxi-column dataField="order_remain_quantity"></dxi-column>
+      <dxi-column dataField="risk_level_class"></dxi-column>
+      <dxi-column dataField="arrival_req_date_plan"></dxi-column>
+      <dxi-column dataField="etd_actual"></dxi-column>
+      <dxi-column dataField="send_delivery_actual_date"></dxi-column>
+      <dxi-column dataField="arrival_method"></dxi-column>
+      <dxi-column dataField="trade_condition"></dxi-column>
+      <dxi-column dataField="source_document_no"></dxi-column>
+      <dxi-column dataField="source_breakdown_no"></dxi-column>
+      <dxi-column dataField="discourse_to"></dxi-column>
+      <dxi-column dataField="rfq_no"></dxi-column>
+      <dxi-column dataField="program_update_date"></dxi-column>
+
+      <dxo-export [enabled]="true"></dxo-export>
+    </dx-data-grid>
+  </div>
+
+</div>

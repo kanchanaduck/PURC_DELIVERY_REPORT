@@ -1,0 +1,179 @@
+<h3 class="content-block">Reason PUR1, PUR2</h3>
+
+<div class="content-block dx-card responsive-paddings alert-info">
+    Only PURC can edit this page.
+</div>
+
+<div class="content-block dx-card responsive-paddings">
+        <dx-tab-panel>
+
+            <dxi-item title="Domestic">
+                <div *dxTemplate>
+                    <dx-box>
+                        <dxi-item [ratio]="1">
+                            <h5>Early</h5>
+                            <dx-data-grid
+                            id="grid_reason_domestic_early"
+                            [dataSource]="reason_domestic_early"
+                            [repaintChangesOnly]="true"
+                            [showBorders]="true"
+                            height="560"
+                            >
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxo-editing
+                                mode="batch"
+                                [refreshMode]="refreshMode"
+                                [allowAdding]="is_purc"
+                                [allowUpdating]="is_purc"
+                                [allowDeleting]="is_purc"
+                            >
+                            </dxo-editing>
+                            <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxi-column dataField="reason" dataType="text"></dxi-column>
+                            </dx-data-grid>
+                        </dxi-item>
+                        <dxi-item [ratio]="1">
+                            <h5>Delay</h5>
+                            <dx-data-grid
+                            id="grid_reason_domestic_delay"
+                            [dataSource]="reason_domestic_delay"
+                            [repaintChangesOnly]="true"
+                            [showBorders]="true"
+                            height="560"
+                            >
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxo-editing
+                                mode="batch"
+                                [refreshMode]="refreshMode"
+                                [allowAdding]="is_purc"
+                                [allowUpdating]="is_purc"
+                                [allowDeleting]="is_purc"
+                            >
+                            </dxo-editing>
+                            <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                
+                            <dxi-column dataField="reason" dataType="text"></dxi-column>
+                
+                            </dx-data-grid>
+                
+                        </dxi-item>
+                        <dxi-item [ratio]="1">
+                            <h5>Short LT</h5>
+                            <dx-data-grid
+                            id="grid_reason_domestic_shortlt"
+                            [dataSource]="reason_domestic_shortlt"
+                            [repaintChangesOnly]="true"
+                            [showBorders]="true"
+                            height="560"
+                            >
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxo-editing
+                                mode="batch"
+                                [refreshMode]="refreshMode"
+                                [allowAdding]="is_purc"
+                                [allowUpdating]="is_purc"
+                                [allowDeleting]="is_purc"
+                            >
+                            </dxo-editing>
+                            <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                
+                            <dxi-column dataField="reason" dataType="text"></dxi-column>
+                
+                            </dx-data-grid>
+                
+                        </dxi-item> 
+                    </dx-box>
+                </div>
+            </dxi-item>
+
+            <dxi-item title="Oversea">
+                <div *dxTemplate>
+                    <dx-box>
+                    <dxi-item [ratio]="1">
+                        <h5>Early</h5>
+                        <dx-data-grid
+                        id="grid_reason_oversea_early"
+                        [dataSource]="reason_oversea_early"
+                        [repaintChangesOnly]="true"
+                        [showBorders]="true"
+                        height="560"
+                        >
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+                        <dxo-editing
+                            mode="batch"
+                            [refreshMode]="refreshMode"
+                            [allowAdding]="is_purc"
+                            [allowUpdating]="is_purc"
+                            [allowDeleting]="is_purc"
+                        >
+                        </dxo-editing>
+                        <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+                        <dxi-column dataField="reason" dataType="text"></dxi-column>
+                        </dx-data-grid>
+            
+                    </dxi-item>
+                    <dxi-item [ratio]="1">
+                        <h5>Delay</h5>
+                        <dx-data-grid
+                        id="grid_reason_oversea_delay"
+                        [dataSource]="reason_oversea_delay"
+                        [repaintChangesOnly]="true"
+                        [showBorders]="true"
+                        height="560"
+                        >
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+                        <dxo-editing
+                            mode="batch"
+                            [refreshMode]="refreshMode"
+                            [allowAdding]="is_purc"
+                            [allowUpdating]="is_purc"
+                            [allowDeleting]="is_purc"
+                        >
+                        </dxo-editing>
+                        <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+            
+                        <dxi-column dataField="reason" dataType="text"></dxi-column>
+            
+                        </dx-data-grid>
+            
+                    </dxi-item>
+                    <dxi-item [ratio]="1">
+                        <h5>Short LT</h5>
+                        <dx-data-grid
+                        id="grid_reason_oversea_shortlt"
+                        [dataSource]="reason_oversea_shortlt"
+                        [repaintChangesOnly]="true"
+                        [showBorders]="true"
+                        height="560"
+                        >
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+                        <dxo-editing
+                            mode="batch"
+                            [refreshMode]="refreshMode"
+                            [allowAdding]="is_purc"
+                            [allowUpdating]="is_purc"
+                            [allowDeleting]="is_purc"
+                        >
+                        </dxo-editing>
+                        <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                        <dxo-scrolling mode="virtual"></dxo-scrolling>
+            
+                        <dxi-column dataField="reason" dataType="text"></dxi-column>
+            
+                        </dx-data-grid>
+            
+                    </dxi-item> 
+            
+                </dx-box>
+                </div>
+            </dxi-item>
+        </dx-tab-panel>
+
+
+
+</div>

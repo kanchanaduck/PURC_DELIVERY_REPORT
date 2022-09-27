@@ -1,0 +1,82 @@
+
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+    <dx-box width="100%">
+
+      <dxi-item [ratio]="1">
+                <div>Delay domestic</div>
+                <dx-data-grid
+                id="grid_reason_delay_domestic"
+                [dataSource]="reason_delay_domestic"
+                [repaintChangesOnly]="true"
+                [showBorders]="true"
+                >
+                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-editing
+                    mode="cell"
+                    [refreshMode]="refreshMode"
+                    [allowAdding]="true"
+                    [allowUpdating]="true"
+                    [allowDeleting]="true"
+                >
+                </dxo-editing>
+
+                <dxi-column dataField="reason" dataType="text"></dxi-column>
+
+                </dx-data-grid>
+
+      </dxi-item>
+
+
+            <dxi-item [ratio]="1">
+                <div>Delay oversea</div>
+                <dx-data-grid
+                id="grid_reason_delay_oversea"
+                [dataSource]="reason_delay_oversea"
+                [repaintChangesOnly]="true"
+                [showBorders]="true"
+                >
+                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-editing
+                    mode="cell"
+                    [refreshMode]="refreshMode"
+                    [allowAdding]="true"
+                    [allowUpdating]="true"
+                    [allowDeleting]="true"
+                >
+                </dxo-editing>
+
+                <dxi-column dataField="reason" dataType="text"></dxi-column>
+
+                </dx-data-grid>
+
+            </dxi-item>
+
+
+            <dxi-item [ratio]="1">
+                <div>Evalio</div>
+                <dx-data-grid
+                id="grid_reason_evalio"
+                [dataSource]="reason_evalio"
+                [repaintChangesOnly]="true"
+                [showBorders]="true"
+                >
+                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-editing
+                    mode="cell"
+                    [refreshMode]="refreshMode"
+                    [allowAdding]="true"
+                    [allowUpdating]="true"
+                    [allowDeleting]="true"
+                >
+                </dxo-editing>
+
+                <dxi-column dataField="reason" dataType="text"></dxi-column>
+
+                </dx-data-grid>
+
+            </dxi-item>
+
+        </dx-box>
+    </div>
+</div>

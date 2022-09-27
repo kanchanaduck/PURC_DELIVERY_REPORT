@@ -1,0 +1,129 @@
+<div class="content-block">
+  <div class="dx-card responsive-paddings" >
+    <dx-toolbar>
+      <!-- <dxi-item
+        location="before"
+        widget="dxButton"
+        locateInMenu="auto"
+        [options]="refreshButtonOptions"
+      >
+      </dxi-item> -->
+      <dxi-item location="center" widget="dxButton" locateInMenu="never">
+        <div *dxTemplate>
+          <div class="toolbar-label"><b>Upload data PUR-3</b></div>
+        </div>
+      </dxi-item>
+    </dx-toolbar>
+       <div id="form-container">
+        <form method="post" enctype="multipart/form-data">
+          <dx-form>
+          <dxi-item>
+          <dxo-label text="1.Delivery Control (Domestic)"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._1_delivery_domestic"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="2.Delivery Control (Oversea)"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._2_delivery_oversea"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="3.PO Issued"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._3_delivery_po_issued"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="4.Delay (Domestic)"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._4_delivery_delay_domestic"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="5.Delay (Oversea)"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._5_delivery_delay_oversea"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="6.PU CHAMP"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._6_delivery_pu_champ"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="7.Delivery Control (Evalio)"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._7_delivery_evalio"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div></dxi-item>
+        <dxi-item>
+          <dxo-label text="8.Short LT Early Delay"></dxo-label>
+          <div class="fileuploader-container">
+          <dx-file-uploader
+            name="file"
+            [maxFileSize]="4000000"
+            uploadMode="useButtons"
+            [(uploadUrl)]="upload_url._8_shortlt"
+            [allowedFileExtensions]="['.xlsx']"
+          >
+          </dx-file-uploader>
+          <span class="note">Maximum file size: <span>4 MB</span>.</span>
+        </div>
+        </dxi-item>
+      </dx-form>
+      </form>
+       </div> 
+ </div>
+ </div>

@@ -1,0 +1,118 @@
+::ng-deep #form-container {
+    margin: 10px 10px 0px;
+  }
+  
+  ::ng-deep .long-title h3 {
+    font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+    font-weight: 200;
+    font-size: 23px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .dx-widget{
+    font-size: 11px;
+    }
+    ::ng-deep .toolbar-label,
+    ::ng-deep .toolbar-label > b {
+      font-size: 16px;
+    }
+    ::ng-deep .dx-button.dx-button-warning {
+      background-color: #ffc107;
+  }
+
+    ::ng-deep .dx-header-row .cell-highlightedGreenYellow {
+      color: rgb(0, 0, 0);
+      background-color: greenyellow;
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedKhaki {
+      color: rgb(0, 0, 255);
+      background-color:khaki;
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedBlue {
+      color: rgb(0, 0, 255);
+      background-color:powderblue;
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedComent {
+      color: rgb(0, 0, 0);
+      background-color:rgb(216, 228, 188);
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedRemark {
+      color: rgb(255, 0, 0);
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedCheckEarly {
+      color: rgb(0, 0, 0);
+      background-color: #f8c567;
+      font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedCheckShort {
+    color: rgb(0, 0, 0);
+    background-color: #f39fc2;
+    font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedIV {
+      color: rgb(0, 0, 0);
+      background-color: #bd88f8;
+      font-style: italic;
+      }
+    ::ng-deep .dx-header-row .cell-highlightedTSS {
+    color: rgb(0, 0, 0);
+    background-color: #81c2f8;
+    font-style: italic;
+    }
+    ::ng-deep .dx-header-row .cell-highlightedShotLT {
+      color: rgb(0, 0, 0);
+      background-color: #d8b3e9;
+      font-style: italic;
+      }
+    ::ng-deep .dx-header-row .cell-highlightedDelay {
+      color: rgb(0, 0, 0);
+      background-color: #94daf0;
+      font-style: italic;
+      }    
+    ::ng-deep .dx-header-row .cell-highlightedEarly {
+      color: rgb(0, 0, 0);
+      background-color: #eec718;
+      font-style: italic;
+      }         
+    ::ng-deep .dx-header-row .cell-highlightedMKDV {
+      color: rgb(0, 0, 0);
+      background-color: #fced6b;
+      font-style: italic;
+      }        
+    ::ng-deep .dx-header-row .cell-highlightedMKIV {
+      color: rgb(0, 0, 0);
+      background-color: #ac90f7;
+      font-style: italic;
+      }   
+    ::ng-deep .dx-header-row .cell-highlightedMKONTIME {
+      color: rgb(0, 0, 0);
+      background-color: #67ca8d;
+      font-style: italic;
+      } 
+
+.toolbar-label{
+  color: mediumblue;
+}
+.ang{
+  color: rgb(245, 11, 11) !important; 
+}
+.aok{
+  color: mediumblue !important;
+}
+::ng-deep .dx-header-row {
+  font-weight: bold !important; 
+  font-size: 11px !important;
+}
+.dx-editor-outlined.dx-texteditor-with-floating-label, .dx-editor-outlined.dx-texteditor-with-label {
+   margin-top: 0px;
+}
+
+.btnreason{
+  position: absolute;
+  z-index: 1;
+}

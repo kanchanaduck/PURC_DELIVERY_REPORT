@@ -1,0 +1,39 @@
+::ng-deep .options {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+  }
+  
+  ::ng-deep .caption {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  ::ng-deep .option {
+    margin-top: 10px;
+  }
+  ::ng-deep .dx-header-row {
+    font-weight: bold !important; 
+    font-size: 13px !important;
+  }
+  .dx-widget{
+    font-size: 12px;
+    padding-bottom: 10px ;
+    }
+    ::ng-deep .toolbar-label,
+    ::ng-deep .toolbar-label > b {
+      font-size: 16px;
+    }
+    .adaptiveRowStyle { 
+      background-color: #9bbfe0;
+      font-size: 12pt
+  }
+  .stcomplete{
+    color: rgb(26, 177, 6) !important; 
+    }
+  .stovertime{
+    color: rgb(250, 17, 17) !important; 
+    }
+  .stwait{
+    color: rgb(205, 174, 0) !important;
+    }

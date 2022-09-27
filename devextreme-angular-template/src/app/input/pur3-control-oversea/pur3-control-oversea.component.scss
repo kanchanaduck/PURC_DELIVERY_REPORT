@@ -1,0 +1,38 @@
+::ng-deep #form-container {
+    margin: 10px 10px 30px;
+  }
+  
+  ::ng-deep .long-title h3 {
+    font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+    font-weight: 200;
+    font-size: 23px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .dx-widget{
+  font-size: 11px;
+  padding-bottom: 10px ;
+  }
+::ng-deep .toolbar-label,
+::ng-deep .toolbar-label > b {
+  font-size: 16px;
+}
+.toolbar-label{
+  color: mediumblue;
+}
+
+::ng-deep .dx-header-row {
+  font-weight: bold !important; 
+  font-size: 13px !important;
+}
+
+::ng-deep .dx-header-row .cell-highlightedYellow {
+  color: black;
+  font-style: italic;
+  background-color: #ffd000;
+}
+::ng-deep .dx-header-row .cell-highlightedGreen {
+  color: black;
+  font-style: italic;
+  background-color: #88ff00;
+}

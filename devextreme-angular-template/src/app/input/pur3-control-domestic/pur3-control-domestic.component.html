@@ -1,0 +1,232 @@
+<!-- <h2 class="content-block">Delivery Control Domestic</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+      <dx-toolbar>
+        <dxi-item location="center" widget="dxButton" locateInMenu="never">
+          <div *dxTemplate>
+            <div class="toolbar-label"><b>Control domestic</b></div>
+          </div>
+        </dxi-item>
+        <dxi-item
+          location="after"
+          widget="dxSelectBox"
+          locateInMenu="auto"
+          [options]="selectBoxOptions"
+        >
+        </dxi-item>
+
+      </dx-toolbar>
+        <dx-data-grid
+        #griddomestic
+        id="gridContainer"
+        [dataSource]="Domestic"
+        [columnAutoWidth]="true"
+        [showBorders]="true"
+        [rowAlternationEnabled]="true"
+        [repaintChangesOnly]="true"
+        (onExporting)="onExporting($event)"
+        height="600"
+      >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+        <dxi-column dataField="status"
+        [editorOptions]="{ readOnly:true }"
+        fixedPosition="left" 
+        >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="po_number"
+        [editorOptions]="{ readOnly:true}"
+        fixedPosition="left" 
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="po_line_number"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="po_shipm_number"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="req_no"
+        [editorOptions]="{ readOnly:true}"
+        fixedPosition="left" 
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="req_details_no"
+        [editorOptions]="{ readOnly:true}"
+        fixedPosition="left" 
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="order_company_code"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="order_wdw_code"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="pur_incharge"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="buyer_pic_company_name"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="buyer_pic_belong_name"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="buyer_pic_telephone"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="buyer_pic_mailddress"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="supplier"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="supplier_site"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="item_desc"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="maker_code"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="maker_name"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="type"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="pur_order_qty"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="delivery_balanced_qty"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="balanced_order_qty"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="unit"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="inspectionyn"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="inspection_dept"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="remark_risk_degree"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="order_date"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="promised_date"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="today"
+        cssClass="cell-highlightedGreen"
+        >
+        </dxi-column>
+        <dxi-column dataField="delay"
+        cssClass="cell-highlightedGreen"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="lt"
+        cssClass="cell-highlightedYellow"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="check"
+        cssClass="cell-highlightedYellow"
+        [editorOptions]="{ readOnly:false}"
+        >
+        </dxi-column>
+        <dxi-column dataField="name_requis"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="request_company"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="request_dept"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="requester_telephone"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="request_email"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxi-column dataField="remarks"
+        [editorOptions]="{ readOnly:true}"
+        >
+        </dxi-column>
+        <dxo-export [enabled]="true" ></dxo-export>
+        <!-- <dxo-toolbar>
+          <dxi-item location="before">
+            <dxo-lookup [dataSource]="dateupOptions" >
+
+            </dxo-lookup>
+            <dx-select-box
+              [dataSource]="dateupOptions"
+              placeholder="Select title"
+              [width]="150"
+              [value]="date_up"
+            >
+            </dx-select-box>
+          </dxi-item>
+        </dxo-toolbar> -->
+      </dx-data-grid>
+    </div>
+</div>

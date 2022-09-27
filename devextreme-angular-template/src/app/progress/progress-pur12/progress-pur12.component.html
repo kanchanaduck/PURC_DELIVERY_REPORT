@@ -1,0 +1,65 @@
+<h3 class="content-block">Daily progressive PUR1, PUR2 </h3>
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+      <dx-toolbar>
+        <dxi-item
+          location="after"
+          widget="dxSelectBox"
+          locateInMenu="auto"
+          [options]="monthlyOptions"
+        >
+        </dxi-item>
+      </dx-toolbar>
+
+      <dx-box>
+        <dxi-item [ratio]="1">
+          <h5>Domestic</h5>
+          <dx-data-grid
+            id="gridContainerDomestic"
+            [dataSource]="progressiveDomestic"
+            keyExpr="ID"
+            [showBorders]="true">
+            <dxi-column dataField="dt_acptc" caption="DT_ACPTC"></dxi-column> 
+            <dxi-column dataField="buyer_input" caption="BUYER INPUTTED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="leader_check" caption="LEADER CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="manager_check" caption="MANAGER CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="other_check" caption="OTHER DEPT CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="purc_check" caption="PURC CHECKED" cellTemplate="celldw"></dxi-column>
+
+            <div *dxTemplate="let cellf of 'celldw'">
+              <div  [ngClass]="cellSt_CheckStyles(cellf.text)">{{cellf.text}}</div>
+            </div>
+
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+            <dxo-paging [pageSize]="31"></dxo-paging>
+          </dx-data-grid>
+        </dxi-item>
+
+        
+        <dxi-item [ratio]="1">
+          <h5>Oversea</h5>
+          <dx-data-grid
+            id="gridContainerOversea"
+            [dataSource]="progressiveOversea"
+            keyExpr="ID"
+            [showBorders]="true">
+            <dxi-column dataField="dt_rec" caption="DT_REC"></dxi-column> 
+            <dxi-column dataField="buyer_input" caption="BUYER INPUTTED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="leader_check" caption="LEADER CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="manager_check" caption="MANAGER CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="other_check" caption="OTHER DEPT CHECKED" cellTemplate="celldw"></dxi-column>
+            <dxi-column dataField="purc_check" caption="PURC CHECKED" cellTemplate="celldw"></dxi-column>
+
+            <div *dxTemplate="let cellf of 'celldw'">
+              <div  [ngClass]="cellSt_CheckStyles(cellf.text)">{{cellf.text}}</div>
+            </div>
+
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+            <dxo-paging [pageSize]="31"></dxo-paging>
+          </dx-data-grid>
+        </dxi-item>
+    </dx-box>
+      
+    </div>
+</div>
+

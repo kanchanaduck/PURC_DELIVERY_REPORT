@@ -1,0 +1,324 @@
+<!-- <h2 class="content-block">Input Dl3 Puchamp</h2> -->
+<div class="content-block">
+    <div class="dx-card responsive-paddings">
+        <div class="form">
+        <dx-toolbar>
+            <dxi-item
+              location="before"
+              widget="dxButton"
+              locateInMenu="auto"
+              [options]="refreshButtonOptions"
+            >
+            </dxi-item>
+
+            <dxi-item location="center" widget="dxButton" locateInMenu="never">
+              <div *dxTemplate>
+                <div class="toolbar-label"><b>PU CHAMP</b></div>
+              </div>
+            </dxi-item>
+          
+            <dxi-item
+              location="after"
+              widget="dxSelectBox"
+              locateInMenu="auto"
+              [options]="selectBoxOptions"
+            >
+            </dxi-item>
+
+          </dx-toolbar>
+
+          <div class="dx-field" style="position: absolute;z-index: 1;"> 
+            <div class="dx-field-value">
+              <dx-radio-group
+                [items]="priorities"
+                [value]="priorities[0]"
+                layout="horizontal"
+                (onValueChanged)="onValueChanged($event)"
+              >
+              </dx-radio-group>
+            </div>
+          </div>
+        </div>
+    <!---------Grid Abnormal--------->
+      <dx-data-grid
+        id="gridContainerABnorm"
+        [dataSource]="PUabnormalDT"
+        [columnAutoWidth]="true"
+        [showBorders]="true"
+        [rowAlternationEnabled]="true"
+        [repaintChangesOnly]="true"
+        (onSelectionChanged)="selectionChanged($event)"
+        (onExporting)="onExporting($event)"
+        [visible]="AbnormGridVisible"
+      >
+      
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+
+      <dxo-paging [pageSize]="15"></dxo-paging>
+      <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[10,50,100]"
+      ></dxo-pager>
+      <dxo-editing mode="batch" [allowUpdating]="true">
+      </dxo-editing>
+      <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+      <dxo-selection mode="multiple"></dxo-selection>
+        <dxi-column dataField="req_no"
+        [editorOptions]="{ readOnly:true }"
+        >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="req_details_no"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="pur_incharge"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Item_Des"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <!-- <dxi-validation-rule type="required"></dxi-validation-rule>
+          <dxi-validation-rule type="email"></dxi-validation-rule> -->
+        </dxi-column>
+        <dxi-column dataField="maker"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="type"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="pur_req_qty"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="unit"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Ship_To"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="date_pass_af_rec"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="rec_date_pur_req"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="req_delivery_date"
+        [editorOptions]="{ readOnly:true}"
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Action"
+        cssClass="cell-highlightedAction"
+        [fixed]="true" fixedPosition="right" 
+        >
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+      </dx-data-grid>
+    <!----------Grid PU---------->
+      <dx-data-grid
+        id="gridContainerPU"
+        [dataSource]="PUnewDT"
+        [columnAutoWidth]="true"
+        [showBorders]="true"
+        [rowAlternationEnabled]="true"
+        [repaintChangesOnly]="true"
+        (onSelectionChanged)="selectionChanged($event)"
+        (onExporting)="onExporting($event)"
+        [visible]="PUGridVisible"
+      >
+      
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-search-panel
+      [visible]="true"
+      [width]="240"
+      placeholder="Search..."
+    ></dxo-search-panel>
+
+      <dxo-paging [pageSize]="15"></dxo-paging>
+      <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[10,50,100]"
+      ></dxo-pager>
+      <dxo-selection mode="multiple"></dxo-selection>
+      <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+      <dxi-column dataField="req_no"
+      [editorOptions]="{ readOnly:true }"
+      >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="req_details_no"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="pur_incharge"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="Item_Des"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <!-- <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule type="email"></dxi-validation-rule> -->
+      </dxi-column>
+      <dxi-column dataField="maker"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="type"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="pur_req_qty"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="unit"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="Ship_To"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="date_pass_af_rec"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="rec_date_pur_req"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+      <dxi-column dataField="req_delivery_date"
+      [editorOptions]="{ readOnly:true}"
+      >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+      </dx-data-grid>
+    <!----------Grid New---------->
+      <dx-data-grid 
+      id="gridContainerNew"
+      [dataSource]="PUDT"
+      [columnAutoWidth]="true"
+      [showBorders]="true"
+      [rowAlternationEnabled]="true"
+      [repaintChangesOnly]="true"
+      (onSelectionChanged)="selectionChanged($event)"
+      (onExporting)="onExporting($event)"
+      [visible]="NewGridVisible"
+    >
+    
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-search-panel
+    [visible]="true"
+    [width]="240"
+    placeholder="Search..."
+  ></dxo-search-panel>
+
+    <dxo-paging [pageSize]="15"></dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10,50,100]"
+    ></dxo-pager>
+    <dxo-selection mode="multiple"></dxo-selection>
+    <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+    <dxi-column dataField="req_no"
+    [editorOptions]="{ readOnly:true }"
+    [fixed]="true" fixedPosition="left" 
+    >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="req_details_no"
+    [editorOptions]="{ readOnly:true}"
+    [fixed]="true" fixedPosition="left" 
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="pur_incharge"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="Item_Des"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <!-- <dxi-validation-rule type="required"></dxi-validation-rule>
+      <dxi-validation-rule type="email"></dxi-validation-rule> -->
+    </dxi-column>
+    <dxi-column dataField="maker"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="type"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="pur_req_qty"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="unit"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="Ship_To"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="date_pass_af_rec"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="rec_date_pur_req"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="req_delivery_date"
+    [editorOptions]="{ readOnly:true}"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+     
+      <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+      </dx-data-grid>
+    </div>
+</div>
