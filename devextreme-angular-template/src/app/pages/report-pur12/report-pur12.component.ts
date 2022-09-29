@@ -30,15 +30,22 @@ export class ReportPur12Component implements OnInit {
     { name: 'Jai', email: 'jai87@gmail.com' },
   ];
   yesterday: Date = new Date(new Date().setDate(new Date().getDate()-1)); 
-  date: any = {
-    domestic: this.yesterday,
-    oversea: this.yesterday
+
+  domestic_date: any = {
+    date_start: this.yesterday,
+    date_end: this.yesterday,
+  }
+
+  oversea_date: any = {
+    date_start: this.yesterday,
+    date_end: this.yesterday
   }
 
   isLoadPanelVisible: boolean = false;
 
   buttonOptions1 :any = {
     stylingMode: "contained",
+    text: "pull",
     type: "success",
     icon: "download",
     useSubmitBehavior: "true",
@@ -50,6 +57,7 @@ export class ReportPur12Component implements OnInit {
 
   buttonOptions2 :any = {
     stylingMode: "contained",
+    text: "pull",
     type: "success",
     icon: "download",
     useSubmitBehavior: "true",
@@ -71,28 +79,14 @@ export class ReportPur12Component implements OnInit {
     this.employee = []//service.getEmployee();
     this.positions = []//service.getPositions();
     this.dataPur12 = []//service.getReportPUR12();
-
-    this.refreshButtonOptions = {
-      icon: 'refresh',
-      onClick: () => {
-        notify('Refresh button has been clicked!');
-      },
-    };
   }
 
- /*  form_upload (e: any) {
-      if(e.dataField == "domestic" && e.value != null){ this.domestic = this.convert(e.value);}
-      else if(e.dataField == "oversea" && e.value != null){ this.oversea = this.convert(e.value);}
-      else if(e.dataField == "oversea" && e.value == null){ this.oversea = ""; }
-      else if(e.dataField == "domestic" && e.value == null){ this.domestic = ""; }
-
-  } */
-
   async pull_domestic(){
-    if(this.date.domestic != "" && this.date.domestic != undefined){ 
+    for (var d = new Date(this.domestic_date.date_start); d <= new Date(this.domestic_date.date_end); d.setDate(d.getDate() + 1)) {
       try {
-        await axios.post(`${environment.api}Domestic/EUC?dt=${this.service.convertdate(this.date.domestic)}`, null, Settings.headers)
-        this.show_success();
+        let message = await axios.post(`${environment.api}Domestic/EUC?dt=${this.service.convertdate(new Date(d))}`, null, Settings.headers)    
+        console.log(message)
+        this.show_success(message.data);  
       } 
       catch (error: any) {
         this.show_error(error)
@@ -101,10 +95,11 @@ export class ReportPur12Component implements OnInit {
   }
 
   async pull_oversea(){
-    if(this.date.oversea != "" && this.date.oversea != undefined){ 
+    for (var d = new Date(this.oversea_date.date_start); d <= new Date(this.oversea_date.date_end); d.setDate(d.getDate() + 1)) {
       try {
-        await axios.post(`${environment.api}Oversea/EUC?dt=${this.service.convertdate(this.date.oversea)}`, null, Settings.headers)    
-        this.show_success();  
+        let message = await axios.post(`${environment.api}Oversea/EUC?dt=${this.service.convertdate(new Date(d))}`, null, Settings.headers)    
+        console.log(message)
+        this.show_success(message.data);  
       } 
       catch (error: any) {
         this.show_error(error)
@@ -118,13 +113,46 @@ export class ReportPur12Component implements OnInit {
     }, 1000);
   }
 
-  show_success(){
-    notify("Complete!", "success");
+  show_success(message){
+    notify({
+      message: message, 
+      height: 60,
+      width: 300,
+      minWidth: 150,
+      type: "success", 
+      animation: {
+        show: {
+          type: 'fade', duration: 400, from: 0, to: 1,
+        },
+        hide: { type: 'fade', duration: 40, to: 0 },
+      },
+    },
+      {
+        position: 'bottom center',
+        direction: 'up-push'
+      });
   }
 
   show_error(error: any){
     var text = typeof error.response.data === 'object'? error.response.data.title:error.response.data
-    notify("Error! "+text, "error");
+    notify({
+      message: text, 
+      height: 60,
+      width: 300,
+      minWidth: 150,
+      type: "error", 
+      animation: {
+        show: {
+          type: 'fade', duration: 400, from: 0, to: 1,
+        },
+        hide: { type: 'fade', duration: 40, to: 0 },
+      },
+    },
+    {
+      position: 'bottom center',
+      direction: 'up-push'
+    });
+
   }
 
   ngOnInit(): void {

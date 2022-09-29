@@ -12,7 +12,6 @@ export const navigation = [
       {
         text: 'PUR1, PUR2',
         path: '/pages/report-pur1-2',
-        visible: true
       },
       {
         text: 'PUR 3',
@@ -35,43 +34,43 @@ export const navigation = [
         items: [
           {
             text: 'Control domestic',
-            path: '/input/pur3-control-domestic'
-            , icon: 'edit'
+            path: '/input/pur3-control-domestic', 
+            icon: 'edit'
           },
           {
             text: 'Control oversea',
-            path: '/input/pur3-control-oversea'
-            , icon: 'edit'
+            path: '/input/pur3-control-oversea', 
+            icon: 'edit'
           },
           {
             text: 'PO issued',
-            path: '/input/pur3-poissued'
-            , icon: 'edit'
+            path: '/input/pur3-poissued', 
+            icon: 'edit'
           },
           {
             text: 'Delay domestic',
-            path: '/input/pur3-delay-domestic'
-            , icon: 'edit'
+            path: '/input/pur3-delay-domestic', 
+            icon: 'edit'
           },
           {
             text: 'Delay oversea',
-            path: '/input/pur3-delay-oversea'
-            , icon: 'edit'
+            path: '/input/pur3-delay-oversea', 
+            icon: 'edit'
           },
           {
             text: 'PU CHAMP',
-            path: '/input/pur3-puchamp'
-            , icon: 'edit'
+            path: '/input/pur3-puchamp', 
+            icon: 'edit'
           },
           {
             text: 'Control evalio',
-            path: '/input/pur3-evalio'
-            , icon: 'edit'
+            path: '/input/pur3-evalio', 
+            icon: 'edit'
           },
           {
             text: 'Short LT early delay',
-            path: '/input/pur3-shot-lt'
-            , icon: 'edit'
+            path: '/input/pur3-shot-lt', 
+            icon: 'edit'
           }
         ],
         visible: false
@@ -93,19 +92,18 @@ export const navigation = [
       },
     ],
   },
-  
   {
     text: 'Reason management',
     icon: 'preferences',
     items: [
       {
         text: 'PUR1, PUR2',
-        path: 'reason/reason-pur1-2',
+        path: '/reason/reason-pur1-2',
         visible: true
       },
       {
         text: 'PUR3',
-        path: 'reason/reason-pur3',
+        path: '/reason/reason-pur3',
         visible: false
       },
     ]

@@ -38,7 +38,7 @@ namespace api_purdelivery.Controllers
             var exist = _context.T_Domestic.Any(e=>e.dt_acptc==dt);
             Console.WriteLine(exist);
             if(exist){
-                return Conflict("data is already exist");
+                return Conflict(@$"{dt} data is already exist.");
             }
 
             var Qry = "SELECT * FROM J302_PUR_DELIVERY WHERE DT_ACPTC = '"+ dt + "' ";
@@ -53,7 +53,7 @@ namespace api_purdelivery.Controllers
             DataTable dtDomestic = JsonConvert.DeserializeObject<DataTable>(dtEUC.data.ToString());
 
             if(!(dtDomestic.Rows.Count > 0)){
-                return NotFound("Not found domestic data");
+                return NotFound(@$"Not found {dt} domestic data.");
             }
 
             string SqlConnectionStr = _config["ConnectionStrings:ConnStr109"];
@@ -82,9 +82,8 @@ namespace api_purdelivery.Controllers
               destinationConnection.Close();
             }
 
-            return Ok();
+            return Ok(@$"Pull {dt} domestic data success.");
         }
-
         [HttpGet]
         public async Task<ActionResult<T_Domestic>> GetT_domestic_search(
             string date_start, string date_end, string buyer, string supplier,
@@ -187,6 +186,8 @@ namespace api_purdelivery.Controllers
                 x.reason_early = data[0].reason_early;
                 x.detail_early = data[0].detail_early;
                 x.reason_iv = data[0].reason_iv;
+                x.buyer_input = User.FindFirst("username").Value;
+                x.buyer_date = DateTime.Now;
             });
                
             await _context.SaveChangesAsync();
@@ -201,7 +202,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.other_result = result;
+                x.other_result = String.IsNullOrEmpty(result)? null:result;
                 x.other_check = User.FindFirst("username").Value;
                 x.other_date = DateTime.Now;
             });
@@ -218,7 +219,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.leader_result = result;
+                x.leader_result = String.IsNullOrEmpty(result)? null:result;
                 x.leader_check = User.FindFirst("username").Value;
                 x.leader_date = DateTime.Now;
             });
@@ -236,7 +237,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.manager_result = result;
+                x.manager_result = String.IsNullOrEmpty(result)? null:result;
                 x.manager_check = User.FindFirst("username").Value;
                 x.manager_date = DateTime.Now;
             });
@@ -254,7 +255,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.purc_result = result;
+                x.purc_result = String.IsNullOrEmpty(result)? null:result;
                 x.purc_check = User.FindFirst("username").Value;
                 x.purc_date = DateTime.Now;
             });

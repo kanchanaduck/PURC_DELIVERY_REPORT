@@ -5,7 +5,7 @@ export class AppInfoService {
   constructor() {}
 
   public get title() {
-    return 'PURC - Delivery report';
+    return 'Delivery report';
   }
 
   public get currentYear() {

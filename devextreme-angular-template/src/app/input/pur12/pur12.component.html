@@ -59,7 +59,7 @@
           <hr>
           <div class="btnreason">
             <dx-button icon="fieldchooser" text="Input reason multiple item" (onClick)="showInfoDomestic($event)"
-              stylingMode="contained" type="warning" [visible]="is_buyer">
+              stylingMode="contained" type="warning" [visible]="is_buyer || is_purc">
             </dx-button>
             <dx-drop-down-button icon="airplane" text="Go to" (onItemClick)="go_to_domestic($event)"
               stylingMode="outlined" type="success" [items]="gotoButton" keyExpr="text">
@@ -98,25 +98,25 @@
           <dxo-selection mode="multiple"></dxo-selection>
           <dxi-column dataField="id" caption="ID" [fixed]="true"
             [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
-          <dxi-column dataField="cd_sply_class" caption="CD_SPLY_CLASS"
+          <dxi-column dataField="cd_sply_class" caption="CD_SPLY_CLASS" [fixed]="true"
             [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
           <dxi-column dataField="cd_sply" caption="CD_SPLY" [fixed]="true" cssClass="cell-highlightedGreenYellow"
             [allowEditing]="false"></dxi-column>
-            <dxi-column dataField="no_arrange" caption="NO_ARRANGE" 
+            <dxi-column dataField="no_arrange" caption="NO_ARRANGE" [fixed]="true" 
             [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
-          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT"
+          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS"
+          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="no_po" caption="NO_PO" 
+          <dxi-column dataField="no_po" caption="NO_PO" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT"
+          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT" [fixed]="true"
             [allowEditing]="false"  [visible]="showMoreDomestic"></dxi-column>
-          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX"
+          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX" [fixed]="true"
             [allowEditing]="false" [visible]="showMoreDomestic"></dxi-column>
-          <dxi-column dataField="no_parts" caption="NO_PARTS" 
+          <dxi-column dataField="no_parts" caption="NO_PARTS" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM"
+          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM" [fixed]="true" 
             [allowEditing]="false"></dxi-column>
           <dxi-column dataField="cd_process" caption="CD_PROCESS" 
           [allowEditing]="false"></dxi-column>
@@ -204,42 +204,42 @@
           <dxi-column dataField="iv_term"  caption="IV_TERM"
             [allowEditing]="false" cssClass="cell-highlightedIV" > </dxi-column>
           <dxi-column dataField="tss_result" caption="TSS_RESULT"
-            cssClass="cell-highlightedTSS" [allowEditing]="is_buyer">
+            cssClass="cell-highlightedTSS" [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="tss_result" ></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="mk_shortlt" caption="MK_SHORTLT" [allowEditing]="false"
             cssClass="cell-highlightedShotLT">    
           </dxi-column>
           <dxi-column dataField="reason_shortlt" caption="REASON_SHORTLT" cssClass="cell-highlightedShotLT" width="180px"
-            [allowEditing]="is_buyer">
+            [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="reason_domestic_shortlt"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_shortlt" caption="DETAIL_SHORTLT"
-            cssClass="cell-highlightedShotLT" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedShotLT" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_delay" caption="MK_DELAY" [allowEditing]="false"
             cssClass="cell-highlightedDelay"> </dxi-column>
           <dxi-column dataField="reason_delay" caption="REASON_DELAY" cssClass="cell-highlightedDelay" width="180px" 
-            [allowEditing]="is_buyer">
+            [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="reason_domestic_delay" valueExpr="reason"  displayExpr="reason"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_delay" caption="DETAIL_DELAY"
-            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_early" caption="MK_EARLY" [allowEditing]="false"
             cssClass="cell-highlightedEarly"></dxi-column>
           <dxi-column dataField="reason_early" caption="REASON_EARLY" cssClass="cell-highlightedEarly" width=180px 
-            [allowEditing]="is_buyer">
-            <dxo-lookup [dataSource]="reason_domestic_early"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
+            [allowEditing]="is_buyer || is_purc">
+            <dxo-lookup [dataSource]="reason_domestic_early" valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_early" caption="DETAIL_EARLY"
-            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_dv" caption="MK_DV" [allowEditing]="false"
             cssClass="cell-highlightedMKDV"></dxi-column>
           <dxi-column dataField="detail_dv" caption="DETAIL_DV"
-            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_iv"  caption="MK_IV" [allowEditing]="false"
             cssClass="cell-highlightedMKIV"></dxi-column>
           <dxi-column dataField="reason_iv" caption="REASON_IV"
-            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_ontime" caption="MK_ONTIME"
             [allowEditing]="false" cssClass="cell-highlightedMKONTIME"></dxi-column>
           <dxi-column dataField="other_result" caption="OTHER_DEPT_CHECK" [allowEditing]="is_other"
@@ -256,7 +256,7 @@
           </dxi-column>
           <dxi-column dataField="purc_result" caption="PURC_CHECK" [allowEditing]="is_purc"
             cellTemplate="cellStatus">
-            <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
+            <dxo-lookup [dataSource]="checked_result" hint="purc_check" title="1234"></dxo-lookup>
           </dxi-column>
           <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
           <div *dxTemplate="let cellf of 'cellStatus'">
@@ -328,7 +328,7 @@
           <hr>
           <div class="btnreason">
             <dx-button icon="fieldchooser" text="Input reason multiple item" (onClick)="showInfoOversea($event)"
-              stylingMode="contained" type="warning" [visible]="is_buyer">
+              stylingMode="contained" type="warning" [visible]="is_buyer || is_purc">
             </dx-button>
             <dx-drop-down-button icon="airplane" text="Go to" (onItemClick)="go_to_oversea($event)"
               stylingMode="outlined" type="success" [items]="gotoButton" keyExpr="text">
@@ -375,23 +375,23 @@
             [allowEditing]="false"></dxi-column>
             <dxi-column dataField="no_arrange" caption="NO_ARRANGE" [fixed]="true"
             [editorOptions]="{ readOnly:true }" [visible]="showMoreOversea"></dxi-column>
-          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT"
+          <dxi-column dataField="cd_sply_fact" caption="CD_SPLY_FACT" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS"
+          <dxi-column dataField="cd_ord_class" caption="CD_ORD_CLASS" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="no_po" caption="NO_PO" 
+          <dxi-column dataField="no_po" caption="NO_PO" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="no_cust_clea" caption="NO_CUST_CLEA" 
+          <dxi-column dataField="no_cust_clea" caption="NO_CUST_CLEA" [fixed]="true"
             [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
-          <dxi-column dataField="no_invoice" caption="NO_INVOICE" 
+          <dxi-column dataField="no_invoice" caption="NO_INVOICE" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT"
+          <dxi-column dataField="mk_po_chk_digit" caption="MK_PO_CHK_DIGIT" [fixed]="true"
             [allowEditing]="false"  [visible]="showMoreOversea"></dxi-column>
-          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX"
+          <dxi-column dataField="no_split_deiv_sfx" caption="NO_SPLIT_DEIV_SFX" [fixed]="true"
             [allowEditing]="false" [visible]="showMoreOversea"></dxi-column>
-          <dxi-column dataField="no_parts" caption="NO_PARTS" 
+          <dxi-column dataField="no_parts" caption="NO_PARTS" [fixed]="true"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM"
+          <dxi-column dataField="no_adj_dim" caption="NO_ADJ_DIM" [fixed]="true"
             [allowEditing]="false"></dxi-column>
           <dxi-column dataField="cd_process" caption="CD_PROCESS" 
             [allowEditing]="false"></dxi-column>
@@ -502,7 +502,7 @@
             [allowEditing]="false" cssClass="cell-highlightedCheckEarly"></dxi-column>
           <dxi-column dataField="iv_term"  caption="IV_TERM"
             [allowEditing]="false" cssClass="cell-highlightedIV" > </dxi-column>
-          <dxi-column dataField="tss_result" caption="TSS_RESULT" [allowEditing]="is_buyer"
+          <dxi-column dataField="tss_result" caption="TSS_RESULT" [allowEditing]="is_buyer || is_purc"
             cssClass="cell-highlightedTSS">
             <dxo-lookup [dataSource]="tss_result" ></dxo-lookup>
           </dxi-column>
@@ -510,7 +510,7 @@
             cssClass="cell-highlightedShotLT">    
           </dxi-column>
           <dxi-column dataField="reason_shortlt" caption="REASON_SHORTLT" cssClass="cell-highlightedShotLT" width="180px"
-            [allowEditing]="is_buyer">
+            [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="reason_oversea_shortlt"  valueExpr="reason"  displayExpr="reason"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_shortlt" caption="DETAIL_SHORTLT"
@@ -518,27 +518,27 @@
           <dxi-column dataField="mk_delay"  caption="MK_DELAY" [allowEditing]="false"
             cssClass="cell-highlightedDelay"> </dxi-column>
           <dxi-column dataField="reason_delay" caption="REASON_DELAY" cssClass="cell-highlightedDelay" width="180px" 
-            [allowEditing]="is_buyer">
+            [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="reason_oversea_delay" valueExpr="reason"  displayExpr="reason"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_delay" caption="DETAIL_DELAY"
-            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedDelay" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_early" caption="MK_EARLY" [allowEditing]="false"
             cssClass="cell-highlightedEarly"></dxi-column>
           <dxi-column dataField="reason_early" caption="REASON_EARLY" cssClass="cell-highlightedEarly" width=180px 
-            [allowEditing]="is_buyer">
+            [allowEditing]="is_buyer || is_purc">
             <dxo-lookup [dataSource]="reason_oversea_early"  valueExpr="reason"  displayExpr="reason" ></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="detail_early" caption="DETAIL_EARLY"
-            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedEarly" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_dv" caption="MK_DV" [allowEditing]="false"
             cssClass="cell-highlightedMKDV"></dxi-column>
           <dxi-column dataField="detail_dv" caption="DETAIL_DV"
-            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedMKDV" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_iv"  caption="MK_IV" [allowEditing]="false"
             cssClass="cell-highlightedMKIV"></dxi-column>
           <dxi-column dataField="reason_iv" caption="REASON_IV"
-            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer"></dxi-column>
+            cssClass="cell-highlightedMKIV" [allowEditing]="is_buyer || is_purc"></dxi-column>
           <dxi-column dataField="mk_ontime" caption="MK_ONTIME"
             [allowEditing]="false" cssClass="cell-highlightedMKONTIME"></dxi-column>
           <dxi-column dataField="other_result" caption="OTHER_DEPT_CHECK" [allowEditing]="is_other"
@@ -546,7 +546,7 @@
             <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="leader_result" caption="LEADER_CHECK"  [allowEditing]="is_leader"
-            cellTemplate="cellStatus">
+            cellTemplate="cellStatus" [hint]="leader_check">
             <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="manager_result" caption="MANAGER_CHECK" [allowEditing]="is_manager"
@@ -554,7 +554,7 @@
             <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
           </dxi-column>
           <dxi-column dataField="purc_result" caption="PURC_CHECK" [allowEditing]="is_purc"
-            cellTemplate="cellStatus">
+            cellTemplate="cellStatus" [hint]="purc_check">
             <dxo-lookup [dataSource]="checked_result"></dxo-lookup>
           </dxi-column>
           <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
@@ -604,9 +604,7 @@
   </dxi-toolbar-item>
   <form >
     <div *dxTemplate="let data of 'content'">
-			<dx-form id="reasonFormDomestic" #reasonFormDomestic [formData]="reasonFormDomestic">
-				<dxi-item itemType="group" cssClass="first-group" [colCount]="4">
-					<dxi-item itemType="group" [colSpan]="4">
+			<dx-form id="reasonFormDomestic" #reasonFormDomestic [formData]="reasonDomesticData">
 						<dxi-item
 							dataField="tss_result"
 							editorType="dxSelectBox"
@@ -643,14 +641,78 @@
 						<dxi-item dataField="detail_early"></dxi-item>
 						<dxi-item dataField="detail_over_month" ></dxi-item>
 						<dxi-item dataField="reason_iv"></dxi-item>
-					</dxi-item>
-				</dxi-item>
 			</dx-form>
       </div>
   </form>
 </dx-popup>
 
 
+<dx-popup
+  #overseaInputMultipleReason
+  [width]="600"
+  [height]="550"
+  [showTitle]="true"
+  title="Oversea: input reason multiple item"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [showCloseButton]="false"
+  container=".dx-viewport"
+  [(visible)]="popupOverseaVisible">
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="submitButtonOverseaOptions">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    [options]="closeButtonOverseaOptions">
+  </dxi-toolbar-item>
+  <form >
+    <div *dxTemplate="let data of 'content'">
+			<dx-form id="reasonFormOversea" #reasonFormOversea [formData]="reasonOverseaData">
+						<dxi-item
+							dataField="tss_result"
+							editorType="dxSelectBox"
+							[editorOptions]="{ items: tss_result }">
+						</dxi-item>
+						<dxi-item dataField="reason_shortlt"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_oversea_shortlt, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_shortlt"></dxi-item>
+						<dxi-item
+							dataField="reason_delay"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_oversea_delay, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_delay"></dxi-item>
+						<dxi-item
+							dataField="reason_early"
+							editorType="dxSelectBox"
+							[editorOptions]="{ 
+								dataSource: reason_oversea_early, 
+								searchEnabled: true, 
+								displayExpr : 'reason' , 
+								valueExpr: 'reason' }">
+						</dxi-item>
+						<dxi-item dataField="detail_early"></dxi-item>
+						<dxi-item dataField="detail_over_month" ></dxi-item>
+						<dxi-item dataField="reason_iv"></dxi-item>
+			</dx-form>
+      </div>
+  </form>
+</dx-popup>
 
 
 <dx-popup
@@ -674,6 +736,12 @@
     toolbar="bottom"
     location="before"
     [options]="ngCheckButtonDomestic">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="unCheckButtonDomestic">
   </dxi-toolbar-item>
   <dxi-toolbar-item
     widget="dxButton"
@@ -709,6 +777,12 @@
     toolbar="bottom"
     location="before"
     [options]="ngCheckButtonOversea">
+  </dxi-toolbar-item>
+  <dxi-toolbar-item
+    widget="dxButton"
+    toolbar="bottom"
+    location="before"
+    [options]="unCheckButtonOversea">
   </dxi-toolbar-item>
   <dxi-toolbar-item
     widget="dxButton"

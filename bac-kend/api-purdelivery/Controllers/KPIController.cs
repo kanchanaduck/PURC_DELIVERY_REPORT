@@ -44,7 +44,6 @@ namespace api_purdelivery.Controllers
         {
             return Ok(await _context.T_KPI.Select(e=>e.year).Distinct().OrderByDescending(e => e).ToArrayAsync());
         }
-        [AllowAnonymous]
         [HttpGet("Create/{year}")]
         public async Task<ActionResult> create_kpi(int year=2022)
         {

@@ -86,7 +86,7 @@ async list(url:string) {
   // .pipe(
   //   catchError(this.handleError)
   // );
-  return await this.http.get(`${environment.api}${url}`)
+  return this.http.get(`${environment.api}${url}`)
 }
 
 
@@ -157,6 +157,7 @@ handleError(error: HttpErrorResponse) {
     }
     return false;
   }
+
 
   is_purc(){
     let _user: any = this.service_jwt()

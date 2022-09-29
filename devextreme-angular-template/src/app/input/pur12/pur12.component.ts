@@ -17,11 +17,10 @@ export class Pur12Component{
   
   @ViewChild("reasonFormDomestic") reasonFormDomestic!: DxFormComponent;
   @ViewChild('targetDataGridDomestic', { static: false }) dataGridDomestic: DxDataGridComponent;
-
   
   @ViewChild("reasonFormOversea") reasonFormOversea!: DxFormComponent;
   @ViewChild('targetDataGridOversea', { static: false }) dataGridOversea: DxDataGridComponent;
- 
+
   buyers: any;
   suppliers: any;
   
@@ -33,7 +32,7 @@ export class Pur12Component{
   reason_oversea_shortlt: any;
 
   tss_result: any = ["Effect", "No effect"];
-  checked_result: string[] = ['OK','NG'];
+  checked_result: string[] = ['OK','NG',''];
 
   dataSourceDomestic: any = [];
   dataSourceOversea: any = [];
@@ -59,11 +58,11 @@ export class Pur12Component{
 
   selectTextOnEditStart = true;
 
-  reasonDomesticData: any = {}
-  reasonOverseaData: any = {}
-
   yesterday: Date = new Date(new Date().setDate(new Date().getDate()-1)); 
 
+  reasonDomesticData: any = {};
+  reasonOverseaData: any = {};
+  
   SearchPanelDomestic: any = {
     date_start: this.yesterday,
     date_end: this.yesterday
@@ -78,7 +77,7 @@ export class Pur12Component{
   conditionOversea: any = ["ShortLT", "Delay", "OnTime", "Early", "OverMonth"]
   
   gotoButton: any = [
-    { text: "Buyer", goto: "mk_shortlt" },
+    { text: "Buyer", goto: "tss_result" },
     { text: "Other", goto: "other_result" },
     { text: "Leader", goto: "leader_result" },
     { text: "Manager", goto: "manager_result" },
@@ -99,10 +98,12 @@ export class Pur12Component{
 
   okCheckButtonDomestic: any;
   ngCheckButtonDomestic: any;
+  unCheckButtonDomestic: any;
   closeCheckButtonDomestic: any;
 
   okCheckButtonOversea: any;
   ngCheckButtonOversea: any;
+  unCheckButtonOversea: any;
   closeCheckButtonOversea: any;
   
   domestic_who_check: string;
@@ -282,6 +283,15 @@ export class Pur12Component{
         that.popupCheckDomesticVisible=false;
       },
     };
+
+    this.unCheckButtonDomestic = {
+      text: 'Unchecked',
+      type: "warning",
+      onClick(e:any) {
+        that.unDomesticChecked(e)
+        that.popupCheckDomesticVisible=false;
+      },
+    };
    
     this.closeCheckButtonDomestic = {
       text: 'Close',
@@ -335,6 +345,15 @@ export class Pur12Component{
       },
     };
    
+    this.unCheckButtonOversea = {
+      text: 'Unchecked',
+      type: "warning",
+      onClick(e:any) {
+        that.unOverseaChecked(e)
+        that.popupCheckOverseaVisible=false;
+      },
+    };
+
     this.closeCheckButtonOversea = {
       text: 'Close',
       onClick(e: any) { 
@@ -347,22 +366,23 @@ export class Pur12Component{
   async get_domestic(){
 
     // console.log(this.SearchPanelDomestic)
+    let search = this.SearchPanelDomestic;
 
-    let date_start = this.service.convertdate(this.SearchPanelDomestic.date_start)
-    let date_end =  this.service.convertdate(this.SearchPanelDomestic.date_end)
-    let buyer = this.SearchPanelDomestic.buyer? this.SearchPanelDomestic.buyer:null
-    let supplier = this.SearchPanelDomestic.supplier? this.SearchPanelDomestic.supplier:null
+    let date_start = this.service.convertdate(search.date_start)
+    let date_end =  this.service.convertdate(search.date_end)
+    let buyer = search.buyer? search.buyer:null
+    let supplier = search.supplier? search.supplier:null
 
     let loadUrl = `Domestic?date_start=${date_start}&date_end=${date_end}`
-    loadUrl += this.SearchPanelDomestic.buyer === undefined || this.SearchPanelDomestic.buyer === null ? ``:`&buyer=${buyer}`
-    loadUrl += this.SearchPanelDomestic.supplier === undefined || this.SearchPanelDomestic.supplier === null ? ``:`&supplier=${supplier}`
+    loadUrl += search.buyer === undefined || search.buyer === null ? ``:`&buyer=${buyer}`
+    loadUrl += search.supplier === undefined || search.supplier === null ? ``:`&supplier=${supplier}`
 
-    this.SearchPanelDomestic.Delay? loadUrl += `&Delay=true` : ``
-    this.SearchPanelDomestic.Early? loadUrl += `&Early=true` : ``
-    this.SearchPanelDomestic.IVTerm? loadUrl += `&IVTerm=true` : ``
-    this.SearchPanelDomestic.OnTime? loadUrl += `&OnTime=true` : ``
-    this.SearchPanelDomestic.ShortLT? loadUrl += `&ShortLT=true` : ``
-    this.SearchPanelDomestic.OverMonth? loadUrl += `&OverMonth=true` : ``
+    search.Delay? loadUrl += `&Delay=true` : ``
+    search.Early? loadUrl += `&Early=true` : ``
+    search.IVTerm? loadUrl += `&IVTerm=true` : ``
+    search.OnTime? loadUrl += `&OnTime=true` : ``
+    search.ShortLT? loadUrl += `&ShortLT=true` : ``
+    search.OverMonth? loadUrl += `&OverMonth=true` : ``
 
     // console.log(loadUrl)
 
@@ -392,22 +412,23 @@ export class Pur12Component{
   async get_oversea(){
 
     // console.log(this.SearchPanelOversea)
+    let search = this.SearchPanelDomestic
 
-    let date_start = this.service.convertdate(this.SearchPanelOversea.date_start)
-    let date_end =  this.service.convertdate(this.SearchPanelOversea.date_end)
-    let buyer = this.SearchPanelOversea.buyer? this.SearchPanelOversea.buyer:null
-    let supplier = this.SearchPanelOversea.supplier? this.SearchPanelOversea.supplier:null
+    let date_start = this.service.convertdate(search.date_start)
+    let date_end =  this.service.convertdate(search.date_end)
+    let buyer = search.buyer? search.buyer:null
+    let supplier = search.supplier? search.supplier:null
 
     let loadUrl = `Oversea?date_start=${date_start}&date_end=${date_end}`
-    loadUrl += this.SearchPanelOversea.buyer === undefined || this.SearchPanelOversea.buyer === null ? ``:`&buyer=${buyer}`
-    loadUrl += this.SearchPanelOversea.supplier === undefined || this.SearchPanelOversea.supplier === null ? ``:`&supplier=${supplier}`
+    loadUrl += search.buyer === undefined || search.buyer === null ? ``:`&buyer=${buyer}`
+    loadUrl += search.supplier === undefined || search.supplier === null ? ``:`&supplier=${supplier}`
 
-    this.SearchPanelOversea.Delay? loadUrl += `&Delay=true` : ``
-    this.SearchPanelOversea.Early? loadUrl += `&Early=true` : ``
-    this.SearchPanelOversea.IVTerm? loadUrl += `&IVTerm=true` : ``
-    this.SearchPanelOversea.OnTime? loadUrl += `&OnTime=true` : ``
-    this.SearchPanelOversea.ShortLT? loadUrl += `&ShortLT=true` : ``
-    this.SearchPanelOversea.OverMonth? loadUrl += `&OverMonth=true` : ``
+    search.Delay? loadUrl += `&Delay=true` : ``
+    search.Early? loadUrl += `&Early=true` : ``
+    search.IVTerm? loadUrl += `&IVTerm=true` : ``
+    search.OnTime? loadUrl += `&OnTime=true` : ``
+    search.ShortLT? loadUrl += `&ShortLT=true` : ``
+    search.OverMonth? loadUrl += `&OverMonth=true` : ``
 
     // console.log(loadUrl)
 
@@ -476,6 +497,8 @@ export class Pur12Component{
         ...this.reasonDomesticData
       })
     );
+    console.log("this.reasonDomesticData",this.reasonDomesticData)
+    console.log("data",data)
     try {
       await axios.post(`${environment.api}Domestic/InputReasonMultiple`, data, Settings.headers)
       this.service.show_success()
@@ -520,6 +543,24 @@ export class Pur12Component{
     }
   }
 
+  
+  async unDomesticChecked(e:any){
+    let data : any[] = [];
+    this.selectedItemKeys.forEach(c => data.push(
+      {
+        ID: c
+      })
+    );
+    try {
+      await axios.post(`${environment.api}Domestic/${this.domestic_who_check}Checked?result`, data, Settings.headers)
+      this.service.show_success()
+      this.get_domestic()
+    } 
+    catch (error) {
+      this.service.show_error(error)
+    }
+  }
+
   async submit_oversea_reason(e:any){
     let data : any[] = [];
     this.selectedItemKeys.forEach(c => data.push(
@@ -528,6 +569,9 @@ export class Pur12Component{
         ...this.reasonOverseaData
       })
     );
+    // reasonFormOversea
+    console.log(this.reasonOverseaData)
+    console.log(data)
     try {
       await axios.post(`${environment.api}Oversea/InputReasonMultiple`, data, Settings.headers)
       this.service.show_success()
@@ -564,6 +608,23 @@ export class Pur12Component{
     );
     try {
       await axios.post(`${environment.api}Oversea/${this.oversea_who_check}Checked?result=NG`, data, Settings.headers)
+      this.service.show_success()
+      this.get_oversea()
+    } 
+    catch (error) {
+      this.service.show_error(error)
+    }
+  }
+
+  async unOverseaChecked(e:any){
+    let data : any[] = [];
+    this.selectedItemKeys.forEach(c => data.push(
+      {
+        ID: c
+      })
+    );
+    try {
+      await axios.post(`${environment.api}Oversea/${this.oversea_who_check}Checked?result`, data, Settings.headers)
       this.service.show_success()
       this.get_oversea()
     } 

@@ -2,7 +2,7 @@
 
 <div class="content-block dx-card responsive-paddings alert-info">
   <ul>
-    <li>PURC: create users and roles, reset password, reason management, and check reason</li>
+    <li>PURC: create users and roles, reset password, reason management, input reason like a Buyer and check reason</li>
     <li>Buyer: input buyers reason</li>
     <li>Other: check reason</li>
     <li>Manager: check reason</li>
@@ -12,10 +12,16 @@
 
 <div class="content-block dx-card responsive-paddings">
   <dx-data-grid
-    id="gridContainer"
+    height="520"
     [dataSource]="users"
+    [columnAutoWidth]="true"
     [showBorders]="true"
+    [rowAlternationEnabled]="true"
+    [repaintChangesOnly]="true"
   >
+  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+  <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+  <dxo-scrolling mode="virtual"></dxo-scrolling>
   <dxo-editing
       mode="form"
       [allowUpdating]="is_purc"

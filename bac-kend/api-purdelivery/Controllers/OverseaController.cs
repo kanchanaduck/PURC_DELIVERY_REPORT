@@ -38,7 +38,7 @@ namespace api_purdelivery.Controllers
             var exist = _context.T_Oversea.Any(e=>e.dt_rec==dt);
             Console.WriteLine(exist);
             if(exist){
-                return Conflict("data is already exist");
+                return Conflict(@$"{dt} data is already exist.");
             }
 
             var Qry = "SELECT * FROM J327_PUR_DELIVERY WHERE DT_REC= '"+ dt + "' ";
@@ -53,7 +53,7 @@ namespace api_purdelivery.Controllers
             DataTable dtOversea = JsonConvert.DeserializeObject<DataTable>(dtEUC.data.ToString());
 
             if(!(dtOversea.Rows.Count > 0)){
-                return NotFound("Not found oversea data");
+                return NotFound(@$"Not found {dt} oversea data.");
             }
 
             string SqlConnectionStr = _config["ConnectionStrings:ConnStr109"];
@@ -82,7 +82,7 @@ namespace api_purdelivery.Controllers
               destinationConnection.Close();
             }
 
-            return Ok();
+            return Ok(@$"Pull {dt} oversea data success.");
         }
 
         [HttpGet]
@@ -185,6 +185,8 @@ namespace api_purdelivery.Controllers
                 x.reason_early = data[0].reason_early;
                 x.detail_early = data[0].detail_early;
                 x.reason_iv = data[0].reason_iv;
+                x.buyer_date = DateTime.Now;
+                x.buyer_input = User.FindFirst("username").Value;
             });
                
             await _context.SaveChangesAsync();
@@ -199,7 +201,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Oversea.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.other_result = result;
+                x.other_result = String.IsNullOrEmpty(result)? null:result;
                 x.other_check = User.FindFirst("username").Value;
                 x.other_date = DateTime.Now;
             });
@@ -216,7 +218,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Oversea.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.leader_result = result;
+                x.leader_result = String.IsNullOrEmpty(result)? null:result;
                 x.leader_check = User.FindFirst("username").Value;
                 x.leader_date = DateTime.Now;
             });
@@ -234,7 +236,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Oversea.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.manager_result = result;
+                x.manager_result = String.IsNullOrEmpty(result)? null:result;
                 x.manager_check = User.FindFirst("username").Value;
                 x.manager_date = DateTime.Now;
             });
@@ -252,7 +254,7 @@ namespace api_purdelivery.Controllers
             var cust = _context.T_Oversea.Where(x => ids.Contains(x.ID) ).ToList();
             cust.ForEach(x=>
             {
-                x.purc_result = result;
+                x.purc_result = String.IsNullOrEmpty(result)? null:result;
                 x.purc_check = User.FindFirst("username").Value;
                 x.purc_date = DateTime.Now;
             });

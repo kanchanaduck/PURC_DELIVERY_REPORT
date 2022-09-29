@@ -48,6 +48,18 @@ namespace api_purdelivery.Controllers
                 .ToListAsync();
             return Ok(users);
         }
+        // GET: api/014496/Roles
+        [HttpGet]
+        [Route("/api/{username}/Roles")]
+        public async Task<ActionResult<IEnumerable<T_User>>> get_username_roles(string username)
+        {
+            var user =  await _context.T_User.Where(e=>e.username==username).Include(e=>e.roles).FirstOrDefaultAsync();
+            if(user==null){
+                return NotFound("ไม่พบ username นี้");
+            }
+            var roles =  user.roles.Select(e=>e.role).ToArray();
+            return Ok(roles);
+        }
         // GET: api/Roles
         [HttpGet]
         [Route("/api/Roles")]
