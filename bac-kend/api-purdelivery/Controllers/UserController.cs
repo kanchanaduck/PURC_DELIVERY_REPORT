@@ -161,6 +161,7 @@ namespace api_purdelivery.Controllers
                         tb.username = register.username;
                         tb.name = res.data[0].FIRSTNAME_EN+" "+res.data[0].LASTNAME_EN;
                         tb.dept = res.data[0].DEPT_ABB;
+                        tb.email = res.data[0].EMAIL;
                         tb.active = true;
                         var hashsalt = _repository.EncryptPassword(register.username);
                         tb.passwordhash = hashsalt.Hash;
@@ -180,6 +181,7 @@ namespace api_purdelivery.Controllers
                                 username = user.username,
                                 name = user.name,
                                 dept = user.dept,
+                                email = user.email,
                                 roles = user.roles.Select(x => x.role) 
                             })
                         .Where(user => user.username==register.username)

@@ -29,6 +29,8 @@ namespace api_purdelivery
         public string reset_password_by { get; set; }
         public string name { get; set; }
         public string dept { get; set; }
+        [EmailAddress]
+        public string email { get; set; }
         public List<T_Role_Claim> roles { get; set; }
     }
     public class T_Role
