@@ -412,7 +412,7 @@ export class Pur12Component{
   async get_oversea(){
 
     // console.log(this.SearchPanelOversea)
-    let search = this.SearchPanelDomestic
+    let search = this.SearchPanelOversea
 
     let date_start = this.service.convertdate(search.date_start)
     let date_end =  this.service.convertdate(search.date_end)
