@@ -17,6 +17,7 @@ using api_purdelivery;
 using System.Data;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http.Json;
 
 namespace api_purdelivery.Controllers
 {
@@ -192,6 +193,149 @@ namespace api_purdelivery.Controllers
             await _context.SaveChangesAsync();
             
             return NoContent();
+        }
+        [HttpGet("Email")]
+        public async Task<ActionResult> inform_buyer(string dt_rec)
+        {
+            var ng = await _context.T_Oversea.Select(e=>new {
+                                e.manager_result, 
+                                e.purc_result, 
+                                e.leader_result, 
+                                e.other_result, 
+                                e.cd_sply, 
+                                e.no_parts, 
+                                e.no_po, 
+                                e.cd_procur_person, 
+                                e.dt_rec
+                            })
+                            .Where(e=>e.dt_rec==dt_rec && (
+                                e.manager_result=="NG" ||
+                                e.purc_result=="NG" ||
+                                e.leader_result=="NG" ||
+                                e.other_result=="NG"
+                            )) 
+                            .ToListAsync();
+
+            if(ng.Count()<=0){
+                return NotFound(@$"Not found NG check in {dt_rec}.");
+            }
+
+            var has_buyer_pur1 = ng.Any(e=>e.cd_procur_person.Contains("1K01"));
+            var has_buyer_pur2 = ng.Any(e=>e.cd_procur_person.Contains("1K02"));
+            var has_buyer_pdc = ng.Any(e=>e.cd_procur_person.Contains("1K0900"));
+
+            string[] email_buyer_pur1 = {};
+            string[] email_buyer_pur2 = {};
+            string[] email_buyer_pdc = {};
+
+            string[] email_purc =  _context.T_User.Where(e=>e.dept=="PURC").Select(e=>e.email).ToArray();
+
+            string email_to = "";
+            email_to += string.Join(";", email_purc)+";";
+
+
+            if(has_buyer_pur1){
+                email_buyer_pur1 = _context.T_User.Where(e=>e.dept=="PUR1").Select(e=>e.email).ToArray();
+                email_to += string.Join(";", email_buyer_pur1)+";";
+            }
+
+            if(has_buyer_pur2){
+                email_buyer_pur2 = _context.T_User.Where(e=>e.dept=="PUR2").Select(e=>e.email).ToArray();
+                email_to += string.Join(";", email_buyer_pur2)+";";
+            }
+
+            if(has_buyer_pdc){
+                email_buyer_pdc = _context.T_User.Where(e=>e.dept=="PDC").Select(e=>e.email).ToArray();
+                email_to += string.Join(";", email_buyer_pdc)+";";
+            }
+            
+            string css = @$"    <style>
+                        html{{
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 14px;
+                        }}
+                        table {{
+                            font-family: Arial, Helvetica, sans-serif;
+                            border-collapse: collapse;
+                            width: 80%;
+                            font-size: 14px;
+                        }}
+                        table td, table th {{
+                            border: 1px solid #ddd;
+                            padding: 2px;
+                        }}
+                        
+                        table tr:nth-child(even){{ background-color: #f2f2f2;}}
+                        
+                        table tr:hover {{ background-color: #ddd;}}
+                        
+                        table th {{
+                            padding-top: 4px;
+                            padding-bottom: 4px;
+                            text-align: left;
+                            background-color: #04AA6D;
+                            color: white;
+                        }}
+            </style>";
+
+            var email_body_subject = @$"[Test] [Delivery report] Please revise NG reason in Delivery report - Oversea - {dt_rec}";
+            var email_body_text = @$"{css}Dear All concern, <br>
+            Please revise NG reason in Delivery report below, <br>";
+            
+            email_body_text += "<table>";
+            email_body_text += "<tr>";
+            email_body_text += "<th>NO.</th>";
+            email_body_text += "<th>MANAGER_CHECK</th>";
+            email_body_text += "<th>PURC_CHECK</th>";
+            email_body_text += "<th>LEADER_CHECK</th>";
+            email_body_text += "<th>OTHER_CHECK</th>";
+            email_body_text += "<th>CD_SPLY</th>";
+            email_body_text += "<th>NO_PARTS</th>";
+            email_body_text += "<th>NO_PO</th>";
+            email_body_text += "<th>CD_PROCUR_PERSON</th>";
+            email_body_text += "<th>DT_REC</th>";
+            email_body_text += "</tr>";
+            email_body_text += "</thead>";
+
+            var i = 1;
+            foreach (var item in ng)
+            {
+                email_body_text += "<tr>";
+                email_body_text += @$"<td>{i}</td>";
+                email_body_text += @$"<td>{ item.manager_result }</td>";
+                email_body_text += @$"<td>{ item.purc_result }</td>";
+                email_body_text += @$"<td>{ item.leader_result }</td>";
+                email_body_text += @$"<td>{ item.other_result }</td>";
+                email_body_text += @$"<td>{ item.cd_sply }</td>";
+                email_body_text += @$"<td>{ item.no_parts }</td>";
+                email_body_text += @$"<td>{ item.no_po }</td>";
+                email_body_text += @$"<td>{ item.cd_procur_person }</td>";
+                email_body_text += @$"<td>{ item.dt_rec }</td>";
+                email_body_text += "</tr>";
+            }
+
+            email_body_text += "</table>";
+
+            var myObject = new
+            {
+                from = User.FindFirst("email").Value,
+                to = email_to,//"kanchana@mail.canon",
+                subject = email_body_subject,
+                html = email_body_text
+            };
+
+            var httpClient = new HttpClient();
+            JsonContent body = JsonContent.Create(myObject);
+            HttpResponseMessage data = await httpClient.PostAsync("http://cptsvs531:1000/middleware/email/sendmail", body);
+            string result = await data.Content.ReadAsStringAsync();
+            // Console.WriteLine(result);
+            dynamic response = JsonConvert.DeserializeObject(result.ToString());
+            if(Convert.ToBoolean(response.success)){
+                return Ok();
+            }
+            else{
+                return BadRequest();
+            }
         }
         [HttpPost("OtherChecked")]
         public async Task<ActionResult<T_Oversea>> other_check(string result, List<T_Oversea> data)

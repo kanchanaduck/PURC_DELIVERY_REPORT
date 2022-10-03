@@ -149,9 +149,11 @@ namespace api_purdelivery
                                     Console.WriteLine(data);
                                     var username = data["user"]["username"];
                                     var name = data["user"]["name"];
+                                    var email = data["user"]["email"];
 
                                     identity.AddClaim(new Claim("username", username.ToString()));
                                     identity.AddClaim(new Claim("name", name.ToString()));
+                                    identity.AddClaim(new Claim("email", email.ToString()));
                                 }
                             }
                         }

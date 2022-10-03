@@ -43,6 +43,7 @@ namespace api_purdelivery.Controllers
                         username = user.username,
                         name = user.name,
                         dept = user.dept,
+                        email = user.email,
                         roles = user.roles.Select(x => x.role) 
                     })
                 .ToListAsync();
@@ -103,6 +104,7 @@ namespace api_purdelivery.Controllers
                                                 username = user.username,
                                                 name = user.name,
                                                 dept = user.dept,
+                                                email = user.email,
                                                 roles = user.roles.Select(x => x.role) 
                                         })
                                         .FirstOrDefaultAsync();
@@ -112,6 +114,7 @@ namespace api_purdelivery.Controllers
                     {
                         name = username.name,
                         username = Input.username,
+                        email = username.email,
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo,
                     });

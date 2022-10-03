@@ -35,9 +35,12 @@ namespace api_purdelivery.Controllers
             _repository = repository;
         }
         [HttpGet]
-        public async Task<ActionResult> kpi(int year=2022, string dept=null)
+        public async Task<ActionResult> kpi(string year, string dept=null)
         {
-            return Ok(await _context.T_KPI.Where(e=>e.year==year && (e.dept==dept || dept==null)).ToListAsync());
+            if(String.IsNullOrEmpty(year)){
+                year = DateTime.Now.Year.ToString();
+            }
+            return Ok(await _context.T_KPI.Where(e=>Convert.ToString(e.year)==year && (e.dept==dept || dept==null)).ToListAsync());
         }
         [HttpGet("Years")]
         public async Task<ActionResult> kpi_year()

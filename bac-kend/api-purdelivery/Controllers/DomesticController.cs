@@ -195,24 +195,6 @@ namespace api_purdelivery.Controllers
             
             return NoContent();
         }
-        [HttpPost("OtherChecked")]
-        public async Task<ActionResult<T_Domestic>> other_check(string result, List<T_Domestic> data)
-        {
-            int[] ids = data.Select(e=>e.ID).ToArray();
-
-            var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
-            cust.ForEach(x=>
-            {
-                x.other_result = String.IsNullOrEmpty(result)? null:result;
-                x.other_check = User.FindFirst("username").Value;
-                x.other_date = DateTime.Now;
-            });
-
-            await _context.SaveChangesAsync();
-            
-            return NoContent();
-        }
-        [AllowAnonymous]
         [HttpGet("Email")]
         public async Task<ActionResult> inform_buyer(string dt_acptc)
         {
@@ -268,9 +250,37 @@ namespace api_purdelivery.Controllers
                 email_to += string.Join(";", email_buyer_pdc)+";";
             }
 
+            string css = @$"    <style>
+                        html{{
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 14px;
+                        }}
+                        table {{
+                            font-family: Arial, Helvetica, sans-serif;
+                            border-collapse: collapse;
+                            width: 80%;
+                            font-size: 14px;
+                        }}
+                        table td, table th {{
+                            border: 1px solid #ddd;
+                            padding: 2px;
+                        }}
+                        
+                        table tr:nth-child(even){{ background-color: #f2f2f2;}}
+                        
+                        table tr:hover {{ background-color: #ddd;}}
+                        
+                        table th {{
+                            padding-top: 4px;
+                            padding-bottom: 4px;
+                            text-align: left;
+                            background-color: #04AA6D;
+                            color: white;
+                        }}
+            </style>";
+
             var email_body_subject = @$"[Test] [Delivery report] Please revise NG reason in Delivery report - Domestic - {dt_acptc}";
-            var email_body_text = @$"Dear All concern, <br>
-            กานทดสอบเว็บนึดนึงนะคะ ไม่ต้องตกใจ
+            var email_body_text = @$"{css}Dear All concern, <br>
             Please revise NG reason in Delivery report below, <br>";
             
             email_body_text += "<table>";
@@ -309,8 +319,8 @@ namespace api_purdelivery.Controllers
 
             var myObject = new
             {
-                from = "kanchana@mail.canon",
-                to = /*email_to+*/"kanchana@mail.canon",
+                from = User.FindFirst("email").Value,
+                to = email_to,//"kanchana@mail.canon",
                 subject = email_body_subject,
                 html = email_body_text
             };
@@ -328,7 +338,23 @@ namespace api_purdelivery.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost("OtherChecked")]
+        public async Task<ActionResult<T_Domestic>> other_check(string result, List<T_Domestic> data)
+        {
+            int[] ids = data.Select(e=>e.ID).ToArray();
 
+            var cust = _context.T_Domestic.Where(x => ids.Contains(x.ID) ).ToList();
+            cust.ForEach(x=>
+            {
+                x.other_result = String.IsNullOrEmpty(result)? null:result;
+                x.other_check = User.FindFirst("username").Value;
+                x.other_date = DateTime.Now;
+            });
+
+            await _context.SaveChangesAsync();
+            
+            return NoContent();
+        }
         [HttpPost("LeaderChecked")]
         public async Task<ActionResult<T_Domestic>> leader_check(string result, List<T_Domestic> data)
         {

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import DataSource from 'devextreme/data/data_source';
 import { Settings } from 'src/app/shared/services/setting';
+import axios from 'axios';
 
 // if (!/localhost/.test(document.location.host)) {
 //   enableProdMode();
@@ -22,12 +23,43 @@ if (environment.production) {
 })
 export class ProgressPur12Component implements OnInit {
 
+
   progressiveDomestic: any;
   progressiveOversea: any;
   selectBoxOptions: any;
   monthlyOptions: any;
   monthlyData: any;
   this_month: string = `${new Date().getFullYear()}${('0' + (new Date().getMonth()+1)).slice(-2)}`
+
+  yesterday: Date = new Date(new Date().setDate(new Date().getDate()-1)); 
+
+
+  email: any = {
+    date_domestic: this.yesterday,
+    date_oversea: this.yesterday
+  }
+
+  buttonOptions1 :any = {
+    stylingMode: "contained",
+    text: "Send email domestic",
+    type: "success",
+    icon: "email",
+    useSubmitBehavior: "true",
+    onClick: () => {
+      this.send_email_domestic()
+    },
+  }
+
+  buttonOptions2 :any = {
+    stylingMode: "contained",
+    text: "Send email oversea",
+    type: "success",
+    icon: "email",
+    useSubmitBehavior: "true",
+    onClick: () => {
+      this.send_email_oversea()
+    },
+  }
 
 
   constructor(public service: ApiService, private http: HttpClient ) { 
@@ -56,6 +88,27 @@ export class ProgressPur12Component implements OnInit {
     };
 
 
+  }
+
+  async send_email_domestic() {
+    try{
+      await axios.get(`${environment.api}Domestic/Email?dt_acptc=${this.service.convertdate(this.email.date_domestic)}`, Settings.headers);
+      this.service.show_success()
+    }
+    catch (error: any) {
+      console.log(error)
+      this.service.show_error(error)
+    }
+  }
+
+  async send_email_oversea() {
+    try{
+      await axios.get(`${environment.api}Oversea/Email?dt_rec=${this.service.convertdate(this.email.date_oversea)}`, Settings.headers);
+      this.service.show_success()
+    }
+    catch (error: any) {
+      this.service.show_error(error)
+    }
   }
 
   getdata(monthly:string){

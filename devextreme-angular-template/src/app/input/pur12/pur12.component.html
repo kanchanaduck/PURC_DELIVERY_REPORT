@@ -333,7 +333,7 @@
             <dx-drop-down-button icon="airplane" text="Go to" (onItemClick)="go_to_oversea($event)"
               stylingMode="outlined" type="success" [items]="gotoButton" keyExpr="text">
             </dx-drop-down-button>
-            <dx-button *ngFor="let item of checked" icon="todo" text="{{ item.role }} Check" (onClick)="showInfoDomestic($event, item.role)"
+            <dx-button *ngFor="let item of checked" icon="todo" text="{{ item.role }} Check" (onClick)="showInfoOversea($event, item.role)"
               stylingMode="contained" type="warning" [visible]="item.visible">
             </dx-button>
           </div> 
