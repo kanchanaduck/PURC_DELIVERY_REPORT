@@ -83,10 +83,6 @@ export class Pur12Component{
     { text: "Manager", goto: "manager_result" },
     { text: "PURC", goto: "purc_result" }
   ];
-
-
-  countRowsDomestic: number;
-  countRowsOversea: number;
   
   countRowsDomesticChecked: number;
   countRowsOverseaChecked: number;
@@ -392,8 +388,6 @@ export class Pur12Component{
       update: (key, values) => this.service.sendRequest(`Domestic/Update/${key}`, 'PUT', values),
     });
 
-   this.countRowsDomestic =  await this.dataGridDomestic.instance.totalCount()
-
   }
 
   go_to_domestic(what: any) {
@@ -438,7 +432,6 @@ export class Pur12Component{
       update: (key, values) => this.service.sendRequest(`Oversea/Update/${key}`, 'PUT', values),
     });
 
-    this.countRowsOversea =  await this.dataGridOversea.instance.totalCount()
 
   }
 

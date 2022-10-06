@@ -48,7 +48,7 @@
             ],
             "styles": [
               "node_modules/devextreme/dist/css/dx.common.css",
-              "src/themes/generated/dx.generic.custom-scheme.css",
+              "node_modules/devextreme/dist/css/dx.greenmist.compact.css",
               "src/styles.scss",
               "src/dx-styles.scss"
             ],

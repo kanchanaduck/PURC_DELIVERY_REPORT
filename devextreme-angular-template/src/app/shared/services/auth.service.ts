@@ -41,6 +41,7 @@ export class AuthService {
         // console.log(this._user)
         sessionStorage.setItem("PURC_delivery_report_token", this._user.token)
         sessionStorage.setItem("PURC_delivery_report_name", this._user.name)
+        sessionStorage.setItem("PURC_delivery_report_username", this._user.username)
         location.href = `home`
       },
       (error) => { 
